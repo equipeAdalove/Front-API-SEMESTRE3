@@ -3,6 +3,7 @@ import { ThemeProvider } from "@/components/theme-provider/theme-provider";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import DashboardInit from "./pages/DashboardInit"; // Página inicial do Dashboard
 import Sidebar from "./components/ui/sidebar";
+import BuscarNcm from "./pages/BuscarNcm";
 
 function App() {
   return (
@@ -17,6 +18,9 @@ function App() {
               <Route path="/" element={<DashboardInit />} />
               <Route path="/dashboard" element={<DashboardInit />} />
               <Route path="/estado/:nome" element={<DashboardInit />} />
+
+              <Route path="/buscar-ncm" element={<BuscarNcm />} />
+              
             </Routes>
           </div>
         </div>
