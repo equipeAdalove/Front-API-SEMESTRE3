@@ -14,11 +14,19 @@ export default function DashboardInit() {
   };
 
   return (
-    <div className="flex">
+    <div
+      className="flex"
+      style={{
+        backgroundColor: "var(--color-background)",
+        color: "var(--color-foreground)",
+      }}
+    >
       <main className="flex-1 p-6">
         <div className="flex justify-between items-center mb-6">
           <div>
-            <p className="text-sm text-gray-400">Pages / Dashboard</p>
+            <p style={{ color: "var(--muted-foreground)" }} className="text-sm">
+              Pages / Dashboard
+            </p>
             <h1 className="text-4xl font-bold">Dashboard</h1>
           </div>
           <ToggleMapaLista modoMapa={modoMapa} setModoMapa={setModoMapa} />

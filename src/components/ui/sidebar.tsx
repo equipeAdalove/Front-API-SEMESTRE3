@@ -65,11 +65,25 @@ export default function Sidebar() {
       </nav>
 
       {/* Footer */}
-      <Card className="p-4 text-center">
+      <Card
+        className="p-4 text-center"
+        style={{
+          backgroundColor: "var(--color-popover)",
+          color: "var(--color-popover-foreground)",
+        }}
+      >
         <img src="/logo.png" alt="Adalove" className="mx-auto w-12 h-12" />
         <p className="text-sm mt-2">Equipe AdaLove®</p>
-        <p className="text-xs text-gray-500">
-          Acesse nosso GitHub para saber mais sobre o projeto
+        <p className="text-xs text-white-500">
+          Acesse nosso{" "}
+          <a
+            href="https://github.com/equipeAdalove/API-SEMESTRE3"
+            target="_blank"
+          >
+            {" "}
+            <u> GitHub</u>
+          </a>{" "}
+          para saber mais sobre o projeto
         </p>
       </Card>
 
