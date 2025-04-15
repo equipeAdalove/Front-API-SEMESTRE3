@@ -6,7 +6,13 @@ import ThemeSwitcher from "../theme-provider/ButtonThemeSwitcher";
 
 export default function Sidebar() {
   return (
-    <aside className="h-screen w-64 bg-white dark:bg-gray-800 text-black dark:text-white shadow-md flex flex-col p-4">
+    <aside
+      className="h-screen w-64 shadow-md flex flex-col p-4"
+      style={{
+        backgroundColor: "var(--color-sidebar)", // Usando a variável da cor de fundo da sidebar
+        color: "var(--color-sidebar-foreground)", // Cor do texto
+      }}
+    >
       {/* Header */}
       <h1 className="text-2xl font-bold text-purple-700 text-center">
         Ada<span className="text-gray-900 dark:text-white">Trade</span>
