@@ -11,7 +11,7 @@ export default function RankingTableProdutos() {
     <table className="w-full text-left text-sm">
       <thead>
         <tr className="text-[var(--muted-foreground)]">
-          <th className="pb-2">NAME</th>
+          <th className="pb-2">NOME</th>
           <th className="pb-2">VALOR FOB (US$ Milhões)</th>
           <th className="pb-2">VARIAÇÃO</th>
           <th className="pb-2">PARTICIPAÇÃO</th>
