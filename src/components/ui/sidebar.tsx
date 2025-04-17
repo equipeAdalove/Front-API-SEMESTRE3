@@ -20,7 +20,7 @@ export default function Sidebar() {
 
       {/* Navigation - Centralizado Verticalmente */}
       <nav className="flex-1 flex flex-col justify-center">
-        <ul className="space-y-2">
+        <ul className="space-y-4">
           <li>
             <Link to="/dashboard">
               <Button
