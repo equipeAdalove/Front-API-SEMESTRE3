@@ -77,7 +77,7 @@ export default function Sidebar() {
         }}
       >
         <img src="/adalove.jpeg" alt="Adalove" className="mx-auto w-16 h-16 rounded-full" />        <p className="text-sm mt-2">Equipe AdaLove®</p>
-        <p className="text-xs text-white-500">
+        <p className="text-sm text-white-500">
           Acesse nosso{" "}
           <a
             href="https://github.com/equipeAdalove/API-SEMESTRE3"
