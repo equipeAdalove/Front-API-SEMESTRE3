@@ -27,7 +27,7 @@ export default function Sidebar() {
                 variant="ghost"
                 className="w-full flex items-center gap-3 justify-start"
               >
-                <Home size={20} /> 
+                <Home style={{ transform: "scale(1.5)" }} /> 
                 <span style={{fontSize: "1.2rem" }}>Dashboard</span>
               </Button>
             </Link>
@@ -38,7 +38,7 @@ export default function Sidebar() {
                 variant="ghost"
                 className="w-full flex items-center gap-3 justify-start"
               >
-                <BarChart size={20} /> 
+                <BarChart style={{ transform: "scale(1.6)" }} /> 
                 <span style={{fontSize: "1.2rem" }}>Buscar NCM</span>
               </Button>
             </Link>
@@ -49,7 +49,7 @@ export default function Sidebar() {
                 variant="ghost"
                 className="w-full flex items-center gap-3 justify-start"
               >
-                <Map size={20} /> 
+                <Map style={{ transform: "scale(1.5)" }} /> 
                 <span style={{fontSize: "1.2rem" }}>Visualizar Mapa</span>
               </Button>
             </Link>
@@ -60,7 +60,7 @@ export default function Sidebar() {
                 variant="ghost"
                 className="w-full flex items-center gap-3 justify-start"
               >
-                <FileBarChart2 size={20} /> 
+                <FileBarChart2 style={{ transform: "scale(1.5)" }} /> 
                 <span style={{fontSize: "1.2rem" }}>Exportar - Power BI</span>
               </Button>
             </Link>
