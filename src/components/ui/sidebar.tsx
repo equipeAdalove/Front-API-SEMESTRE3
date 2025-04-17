@@ -14,13 +14,13 @@ export default function Sidebar() {
       }}
     >
       {/* Header */}
-      <h1 className="text-4xl font-bold text-purple-700 text-center">
+      <h1 className="mt-11 text-4xl font-bold text-purple-700 text-center">
         Ada<span className="text-gray-900 dark:text-white">Trade</span>
       </h1>
 
       {/* Navigation - Centralizado Verticalmente */}
       <nav className="flex-1 flex flex-col justify-center">
-        <ul className="space-y-4">
+        <ul className="space-y-5">
           <li>
             <Link to="/dashboard">
               <Button
