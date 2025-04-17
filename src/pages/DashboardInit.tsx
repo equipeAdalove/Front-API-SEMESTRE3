@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import LineChartComponent from "@/components/charts/LineChartComponent";
 import InfoCard from "@/components/cards/InfoCard";
 import RankingTable from "@/components/tables/RankingTable";
+import ThemeSwitcher from "@/components/theme-provider/ButtonThemeSwitcher"; // ajuste o caminho se necessário
+
 
 export default function DashboardInit() {
   const navigate = useNavigate();
@@ -54,6 +56,7 @@ export default function DashboardInit() {
             >
               Exportação
             </button>
+            <ThemeSwitcher />
           </div>
         </div>
 

@@ -2,7 +2,6 @@ import { Home, BarChart, Map, FileBarChart2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Link } from "react-router-dom";
-import ThemeSwitcher from "../theme-provider/ButtonThemeSwitcher";
 
 export default function Sidebar() {
   return (
@@ -91,11 +90,6 @@ export default function Sidebar() {
           para saber mais sobre o projeto
         </p>
       </Card>
-
-      {/* Theme Switcher - Agora no rodapé */}
-      <div className="mt-4 flex justify-center">
-        <ThemeSwitcher />
-      </div>
     </aside>
   );
 }

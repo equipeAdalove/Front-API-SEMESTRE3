@@ -5,6 +5,7 @@ import InfoCard from "@/components/cards/InfoCard";
 import PieChartComponent from "@/components/charts/PieChartComponent";
 import RankingTableMunicipios from "@/components/tables/RankingTableMunicipios";
 import RankingTableProdutos from "@/components/tables/RankingTableProdutos";
+import ThemeSwitcher from "@/components/theme-provider/ButtonThemeSwitcher";
 
 export default function ImportacaoPage() {
   const navigate = useNavigate();
@@ -58,6 +59,7 @@ export default function ImportacaoPage() {
             >
               Importação
             </button>
+            <ThemeSwitcher />
           </div>
         </div>
 
