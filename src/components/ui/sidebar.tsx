@@ -14,7 +14,7 @@ export default function Sidebar() {
       }}
     >
       {/* Header */}
-      <h1 className="text-2xl font-bold text-purple-700 text-center">
+      <h1 className="text-4xl font-bold text-purple-700 text-center">
         Ada<span className="text-gray-900 dark:text-white">Trade</span>
       </h1>
 
@@ -27,7 +27,8 @@ export default function Sidebar() {
                 variant="ghost"
                 className="w-full flex items-center gap-3 justify-start"
               >
-                <Home size={20} /> Dashboard
+                <Home size={20} /> 
+                <span style={{fontSize: "1.2rem" }}>Dashboard</span>
               </Button>
             </Link>
           </li>
@@ -37,7 +38,8 @@ export default function Sidebar() {
                 variant="ghost"
                 className="w-full flex items-center gap-3 justify-start"
               >
-                <BarChart size={20} /> Buscar NCM
+                <BarChart size={20} /> 
+                <span style={{fontSize: "1.2rem" }}>Buscar NCM</span>
               </Button>
             </Link>
           </li>
@@ -47,7 +49,8 @@ export default function Sidebar() {
                 variant="ghost"
                 className="w-full flex items-center gap-3 justify-start"
               >
-                <Map size={20} /> Visualizar Mapa
+                <Map size={20} /> 
+                <span style={{fontSize: "1.2rem" }}>Visualizar Mapa</span>
               </Button>
             </Link>
           </li>
@@ -57,7 +60,8 @@ export default function Sidebar() {
                 variant="ghost"
                 className="w-full flex items-center gap-3 justify-start"
               >
-                <FileBarChart2 size={20} /> Exportar - Power BI
+                <FileBarChart2 size={20} /> 
+                <span style={{fontSize: "1.2rem" }}>Exportar - Power BI</span>
               </Button>
             </Link>
           </li>
