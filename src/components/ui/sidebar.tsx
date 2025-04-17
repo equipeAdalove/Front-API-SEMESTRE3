@@ -72,8 +72,7 @@ export default function Sidebar() {
           color: "var(--color-popover-foreground)",
         }}
       >
-        <img src="/logo.png" alt="Adalove" className="mx-auto w-12 h-12" />
-        <p className="text-sm mt-2">Equipe AdaLove®</p>
+        <img src="/adalove.jpeg" alt="Adalove" className="mx-auto w-12 h-12 rounded-full" />        <p className="text-sm mt-2">Equipe AdaLove®</p>
         <p className="text-xs text-white-500">
           Acesse nosso{" "}
           <a
