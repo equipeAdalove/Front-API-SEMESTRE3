@@ -1,5 +1,6 @@
 import { Search } from "lucide-react";
 import { useState } from "react";
+import ThemeSwitcher from "@/components/theme-provider/ButtonThemeSwitcher"; // certifique-se de que o caminho está correto
 
 // Interface do tipo de dado que será retornado na busca
 interface ResultadoNCM {
@@ -8,19 +9,14 @@ interface ResultadoNCM {
 }
 
 export default function BuscarNcm() {
-  // Estado para armazenar o texto digitado na busca
   const [busca, setBusca] = useState("");
-  // Estado para guardar o resultado da busca
   const [resultado, setResultado] = useState<ResultadoNCM | null>(null);
 
-  // Função chamada ao clicar no botão "Buscar"
   const handleBuscar = () => {
-    // Simulação de resultado estático
     if (busca === "491110") {
       setResultado({
         codigo: "491110",
-        descricao:
-          "Impressos publicitários, catálogos comerciais e semelhantes",
+        descricao: "Impressos publicitários, catálogos comerciais e semelhantes",
       });
     } else {
       setResultado(null);
@@ -28,65 +24,60 @@ export default function BuscarNcm() {
   };
 
   return (
-    // Container principal da página com suporte a modo claro e escuro
     <main
       className="min-h-screen w-full p-6"
       style={{
-        backgroundColor: "var(--color-background)", // Usando a variável de fundo do tema
-        color: "var(--color-foreground)", // Usando a variável de texto
+        backgroundColor: "var(--color-background)",
+        color: "var(--color-foreground)",
       }}
     >
       <div className="flex justify-between items-center mb-10 flex-wrap gap-4">
+        {/* Título e breadcrumb */}
         <div>
           <p className="text-sm text-gray-400">Pages / Buscar NCM</p>
-          <h1 className="text-4xl font-bold"> Buscar NCM</h1>
+          <h1 className="text-4xl font-bold">Buscar NCM</h1>
         </div>
 
-        {/* Container da barra de busca */}
-        <div className="relative w-full max-w-lg">
-          <input
-            type="text"
-            placeholder="Digite o código NCM"
-            className="w-full rounded-xl px-10 py-3"
-            style={{
-              backgroundColor: "var(--color-input)", // Cor de fundo do input
-              color: "var(--color-foreground)", // Cor do texto
-              borderColor: "var(--color-border)", // Cor da borda
-            }}
-            value={busca}
-            onChange={(e) => setBusca(e.target.value)} // Atualiza o estado da busca
-          />
-
-          {/* Ícone da lupa posicionado no lado esquerdo do input */}
+        {/* Container da barra de busca + ThemeSwitcher */}
+        <div className="flex items-center gap-2 bg-[var(--color-input)] px-4 py-2 rounded-xl shadow-md w-full max-w-lg">
           <Search
-            className="absolute left-3 top-1/2 transform -translate-y-1/2"
-            style={{
-              color: "var(--color-muted-foreground)", // Cor do ícone
-            }}
+            className="text-[var(--color-muted-foreground)]"
             size={18}
           />
 
-          {/* Botão "Buscar" posicionado à direita do input */}
+          <input
+            type="text"
+            placeholder="Digite o código NCM"
+            className="flex-1 bg-transparent focus:outline-none text-[var(--color-foreground)] placeholder-[var(--color-muted-foreground)]"
+            value={busca}
+            onChange={(e) => setBusca(e.target.value)}
+          />
+
           <button
             onClick={handleBuscar}
-            className="absolute right-2 top-1/2 transform -translate-y-1/2 px-4 py-1 rounded-lg text-sm"
+            className="px-4 py-1 rounded-lg text-sm"
             style={{
-              backgroundColor: "var(--color-primary)", // Cor de fundo do botão
-              color: "var(--color-primary-foreground)", // Cor do texto
+              backgroundColor: "var(--color-primary)",
+              color: "var(--color-primary-foreground)",
             }}
           >
             Buscar
           </button>
+
+          {/* Theme Switcher dentro do container */}
+          <div className="ml-1">
+            <ThemeSwitcher />
+          </div>
         </div>
       </div>
 
-      {/* Se houver resultado, exibe o card com as informações */}
+      {/* Exibição de resultado */}
       {resultado && (
         <div
           className="border rounded-xl p-6 shadow-md"
           style={{
-            backgroundColor: "var(--color-card)", // Cor do card
-            borderColor: "var(--color-border)", // Cor da borda do card
+            backgroundColor: "var(--color-card)",
+            borderColor: "var(--color-border)",
           }}
         >
           <h2
@@ -103,7 +94,6 @@ export default function BuscarNcm() {
             <span>MERCADORIA</span>
           </div>
 
-          {/* Linha com o resultado retornado */}
           <div className="flex justify-between text-lg font-medium">
             <span>{resultado.codigo}</span>
             <span>{resultado.descricao}</span>
