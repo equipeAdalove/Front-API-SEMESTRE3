@@ -5,6 +5,7 @@ import DashboardInit from "./pages/DashboardInit"; // Página inicial do Dashboa
 import Sidebar from "./components/ui/sidebar";
 import BuscarNcm from "./pages/BuscarNcm";
 import ImportacaoPage from "./pages/ImportacaoPage";
+import VisualizarMapa from "./pages/VisualizarMapa";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
               <Route path="/dashboard" element={<DashboardInit />} />
               <Route path="/estado/:nome" element={<DashboardInit />} />
               <Route path="/importacao" element={<ImportacaoPage />} />
+              <Route path="/visualizar-mapa" element={<VisualizarMapa />} />
 
               <Route path="/buscar-ncm" element={<BuscarNcm />} />
               
