@@ -1,55 +1,71 @@
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import BrazilMap from "../components/map/MapaBrasil";
 import ThemeSwitcher from "@/components/theme-provider/ButtonThemeSwitcher";
+import MapaImg from "@/components/images/MapaImportacao.jpeg";
+import MapImg from "@/components/images/MapaExportacao.png";
 
 const NupPage = () => {
-  const [selectedState, setSelectedState] = useState("");
   const navigate = useNavigate();
 
-  const handleSelectState = (state: string) => {
-    setSelectedState(state);
-    console.log("Estado selecionado:", state);
-  };
 
   return (
     <div>
-      <div className="flex items-center justify-between">
+      {/* Topo com título e barra de busca */}
+      <div className="flex justify-between items-center mt-10 mb-10 flex-wrap gap-4 px-10">
         <div>
-          <p className="text-sm text-gray-400">Pages / Visualizar Mapa</p>
-          <h1 className="text-4xl font-bold">Visualizar Mapa</h1>
+          <p className="text-sm text-[var(--muted-foreground)]">Pages / Visualizar Mapas</p>
+          <h1 className="text-4xl font-bold">Visualizar Mapas</h1>
         </div>
+  
+        {/* Apenas o ThemeSwitcher permanece aqui */}
         <div className="flex items-center space-x-6 bg-[var(--color-card)] rounded-3xl px-6 py-3 shadow-lg">
-          <button
-            onClick={() => navigate("/importacao_map")}
-            className="text-[var(--color-primary)] hover:text-[var(--color-primary-light)] focus:outline-none transition-all duration-200"
-          >
-            Importação
-          </button>
-          <button>
-            
-          </button>
-          <button
-            onClick={() => navigate("/exportacao_map")}
-            className="text-[var(--color-primary)] hover:text-[var(--color-primary-light)] focus:outline-none transition-all duration-200"
-          >
-            Exportação
-          </button>
           <ThemeSwitcher />
         </div>
       </div>
+  
+      {/* Container com os dois cards que agora são botões */}
+      <div className="flex gap-6 px-10">
+        <div className="flex-1 grid grid-cols-2 gap-6">
+  
+          {/* Card 1 - Importação */}
+<button
+  onClick={() => navigate("/importacao_mapa")}
+  className="text-left w-[500px] h-[540px] bg-[var(--color-card)] rounded-xl p-4 shadow-md hover:shadow-lg hover:scale-[1.02] transition-all duration-300 ease-in-out group"
+>
+  <img
+    src={MapaImg}
+    alt="Imagem 1"
+    className="w-[500px] h-[440px] object-cover rounded-md mb-4"
+  />
+  <h3 className="text-lg font-semibold text-[var(--color-primary)] mb-1 group-hover:text-purple-500 dark:group-hover:text-white transition-colors duration-300">
+    Importação
+  </h3>
+  <p className="text-sm text-[var(--color-foreground)] group-hover:text-purple-500 dark:group-hover:text-white transition-colors duration-300">
+    Mapa com descrição de importação de estados.
+  </p>
+</button>
 
-      <BrazilMap onSelectState={handleSelectState} />
+{/* Card 2 - Exportação */}
+<button
+  onClick={() => navigate("/exportacao_mapa")}
+  className="text-left w-[500px] h-[540px] bg-[var(--color-card)] rounded-xl p-4 shadow-md hover:shadow-lg hover:scale-[1.02] transition-all duration-300 ease-in-out group ml-15"
+>
+  <img
+    src={MapImg}
+    alt="Imagem 2"
+    className="w-[500px] h-[430px] object-cover rounded-md mb-3"
+  />
+  <h3 className="text-lg font-semibold text-[var(--color-primary)] mb-1 group-hover:text-purple-500 dark:group-hover:text-white transition-colors duration-300">
+    Exportação
+  </h3>
+  <p className="text-sm text-[var(--color-foreground)] group-hover:text-purple-500 dark:group-hover:text-white transition-colors duration-300">
+    Mapa com descrição de rotas de exportações.
+  </p>
+</button>
 
-      {selectedState && (
-        <p className="mt-4 text-md">
-          Você clicou em: <strong>{selectedState}</strong>
-        </p>
-      )}
+
+        </div>
+      </div>
     </div>
   );
-};
-
+}  
 export default NupPage;
-
-
