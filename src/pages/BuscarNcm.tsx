@@ -33,8 +33,8 @@ export default function BuscarNcm() {
     >
       <div className="flex justify-between items-center mb-10 flex-wrap gap-4">
         {/* Título e breadcrumb */}
-        <div>
-          <p className="text-sm text-gray-400">Pages / Buscar NCM</p>
+        <div className="mt-5 px-4">
+          <p className="text-sm text-[var(--muted-foreground)]">Pages / Buscar NCM</p>
           <h1 className="text-4xl font-bold">Buscar NCM</h1>
         </div>
 
