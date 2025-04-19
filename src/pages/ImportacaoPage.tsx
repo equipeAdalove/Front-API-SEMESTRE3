@@ -35,29 +35,29 @@ export default function ImportacaoPage() {
         {/* Topo com Título e Navbar */}
         <div className="flex justify-between items-center mb-6">
           <div>
-            <p className="text-sm text-[var(--muted-foreground)]">Pages / Importação</p>
+            <p className="text-sm text-[var(--muted-foreground)]">Pages / DashBoard </p>
             <h2 className="text-4xl font-bold">Importação</h2>
           </div>
 
           <div className="flex items-center space-x-6 bg-[var(--color-card)] rounded-3xl px-6 py-3 shadow-lg">
             <input
               type="text"
-              placeholder="Buscar por estado"
+              placeholder="São Paulo"
               value={searchQuery}
               onChange={handleSearchChange}
               className="px-4 py-2 bg-transparent rounded-full w-72 text-[var(--color-foreground)] placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]"
             />
             <button
-              onClick={() => navigate("/exportacao")}
-              className="text-[var(--color-primary)] hover:text-[var(--color-primary-light)] transition-all"
-            >
-              Exportação
-            </button>
-            <button
               onClick={() => navigate("/importacao")}
               className="text-[var(--color-primary)] font-semibold"
             >
               Importação
+            </button>
+            <button
+              onClick={() => navigate("/exportacao")}
+              className="text-[var(--color-primary)] hover:text-[var(--color-primary-light)] transition-all"
+            >
+              Exportação
             </button>
             <ThemeSwitcher />
           </div>
