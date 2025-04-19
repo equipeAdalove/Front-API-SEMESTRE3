@@ -1,11 +1,13 @@
 import { ThemeProvider } from "@/components/theme-provider/theme-provider";
-
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
 import DashboardInit from "./pages/DashboardInit";
 import Sidebar from "./components/ui/sidebar";
 import BuscarNcm from "./pages/BuscarNcm";
 import VisualizarMapa from "./pages/VisualizarMapa";
 import ImportacaoPage from "./pages/ImportacaoPage";
+import DashboardEstado from "./pages/ImportacaoPage"; // NOVO: import da nova página específica do estado
+import ImportacaoMap from "./pages/ImportacaoMap";
 
 function App() {
   return (
@@ -18,10 +20,11 @@ function App() {
             <Routes>
               <Route path="/" element={<DashboardInit />} />
               <Route path="/dashboard" element={<DashboardInit />} />
-              <Route path="/estado/:nome" element={<DashboardInit />} />
+              <Route path="/dashboard/:uf" element={<DashboardEstado />} /> {/* NOVA ROTA */}
               <Route path="/importacao" element={<ImportacaoPage />} />
+              <Route path="/importacao_mapa" element={<ImportacaoMap />} />
               <Route path="/visualizar-mapa" element={<VisualizarMapa />} />
-              <Route path="/mapa" element={<VisualizarMapa />} /> {/* Nova rota aqui */}
+              <Route path="/mapa" element={<VisualizarMapa />} />
               <Route path="/buscar-ncm" element={<BuscarNcm />} />
             </Routes>
           </div>
@@ -32,3 +35,4 @@ function App() {
 }
 
 export default App;
+
