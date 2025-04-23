@@ -16,7 +16,8 @@ export default function BuscarNcm() {
     if (busca === "491110") {
       setResultado({
         codigo: "491110",
-        descricao: "Impressos publicitários, catálogos comerciais e semelhantes",
+        descricao:
+          "Impressos publicitários, catálogos comerciais e semelhantes",
       });
     } else {
       setResultado(null);
@@ -34,16 +35,15 @@ export default function BuscarNcm() {
       <div className="flex justify-between items-center mb-10 flex-wrap gap-4">
         {/* Título e breadcrumb */}
         <div className="mt-5 px-4">
-          <p className="text-sm text-[var(--muted-foreground)]">Pages / Buscar NCM</p>
+          <p className="text-sm text-[var(--muted-foreground)]">
+            Pages / Buscar NCM
+          </p>
           <h1 className="text-4xl font-bold">Buscar NCM</h1>
         </div>
 
         {/* Container da barra de busca + ThemeSwitcher */}
         <div className="flex items-center gap-2 bg-[var(--color-input)] px-4 py-2 rounded-xl shadow-md w-full max-w-lg">
-          <Search
-            className="text-[var(--color-muted-foreground)]"
-            size={18}
-          />
+          <Search className="text-[var(--color-muted-foreground)]" size={18} />
 
           <input
             type="text"
