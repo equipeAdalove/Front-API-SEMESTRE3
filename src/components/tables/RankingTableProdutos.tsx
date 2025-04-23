@@ -1,12 +1,15 @@
-const data = [
-  { name: 'Açúcares e Melaços', valor: 'US$ 11.600', variacao: '19,6%', participacao: '16%' },
-  { name: 'Óleos combustíveis de petróleo ou...', valor: 'US$ 862', variacao: '18,6%', participacao: '8,9%' },
-  { name: 'Sucos de Frutas ou de vegetais', valor: 'US$ 573', variacao: '40,6%', participacao: '5,9%' },
-  { name: 'Demais produtos da indústria de...', valor: 'US$ 438', variacao: '-8,69%', participacao: '4,5%' },
-  { name: 'Veículos automóveis de passageiros', valor: 'US$ 424', variacao: '28,4%', participacao: '4,4%' },
-];
+type Produto = {
+  name: string;
+  valor: string;
+  variacao: string;
+  participacao: string;
+};
 
-export default function RankingTableProdutos() {
+interface RankingTableProdutosProps {
+  data: Produto[];
+}
+
+export default function RankingTableProdutos({ data }: RankingTableProdutosProps) {
   return (
     <table className="w-full text-left text-sm">
       <thead>
@@ -22,7 +25,9 @@ export default function RankingTableProdutos() {
           <tr key={idx} className="border-t border-gray-200">
             <td className="py-2">{row.name}</td>
             <td className="py-2">{row.valor}</td>
-            <td className="py-2">{row.variacao}</td>
+            <td className={`py-2 ${row.variacao.startsWith('-') ? 'text-red-500' : 'text-green-500'}`}>
+              {row.variacao}
+            </td>
             <td className="py-2">{row.participacao}</td>
           </tr>
         ))}
