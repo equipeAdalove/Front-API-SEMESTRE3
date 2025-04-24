@@ -14,6 +14,7 @@ import ImportacaoPage from "./pages/ImportacaoPage";
 import DashboardEstado from "./pages/ImportacaoPage";
 import ImportacaoMap from "./pages/ImportacaoMap";
 import LandingPage from "./pages/LandingPage";
+import Tendencias from "./pages/Tendencias";
 
 // Este componente precisa estar DENTRO do Router
 function AppContent() {
@@ -34,6 +35,7 @@ function AppContent() {
           <Route path="/visualizar-mapa" element={<VisualizarMapa />} />
           <Route path="/mapa" element={<VisualizarMapa />} />
           <Route path="/buscar-ncm" element={<BuscarNcm />} />
+          <Route path="/tendencias" element={<Tendencias />} /> 
         </Routes>
       </div>
     </div>
