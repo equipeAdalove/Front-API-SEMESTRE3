@@ -7,7 +7,7 @@ import RankingTableMunicipios from "@/components/tables/RankingTableMunicipios";
 import RankingTableProdutos from "@/components/tables/RankingTableProdutos";
 import ThemeSwitcher from "@/components/theme-provider/ButtonThemeSwitcher";
 
-export default function ImportacaoPage() {
+export default function ExportacaoPage() {
   const navigate = useNavigate();
   const location = useLocation();
   const [searchQuery, setSearchQuery] = useState("São Paulo");
@@ -16,67 +16,65 @@ export default function ImportacaoPage() {
     setSearchQuery(event.target.value);
   };
 
-  const dataImportacao = [
-    { year: "2014", valorAgregado: 32000, quilograma: 260 },
-    { year: "2015", valorAgregado: 18000, quilograma: 220 },
-    { year: "2016", valorAgregado: 47000, quilograma: 210 },
-    { year: "2017", valorAgregado: 25000, quilograma: 310 },
-    { year: "2018", valorAgregado: 60000, quilograma: 280 },
-    { year: "2019", valorAgregado: 42000, quilograma: 430 },
-    { year: "2020", valorAgregado: 70000, quilograma: 390 },
-    { year: "2021", valorAgregado: 30000, quilograma: 500 },
-    { year: "2022", valorAgregado: 65000, quilograma: 250 },
+  const dataExportacao = [
+    { year: "2014", valorAgregado: 120000, quilograma: 160000 },
+    { year: "2015", valorAgregado: 980000, quilograma: 180000 },
+    { year: "2016", valorAgregado: 250000, quilograma: 230000 },
+    { year: "2017", valorAgregado: 900000, quilograma: 260000 },
+    { year: "2018", valorAgregado: 300000, quilograma: 310000 },
+    { year: "2019", valorAgregado: 870000, quilograma: 290000 },
+    { year: "2020", valorAgregado: 400000, quilograma: 370000 },
+    { year: "2021", valorAgregado: 950000, quilograma: 330000 },
+    { year: "2022", valorAgregado: 280000, quilograma: 390000 },
   ];
 
   const pieData = [
-    { name: "Marítima", value: 52 },
-    { name: "Rodoviária", value: 33 },
-    { name: "Aérea", value: 9 },
-    { name: "Fluvial", value: 4 },
-    { name: "Ferroviária", value: 2 },
+    { name: "Marítima", value: 63 },
+    { name: "Aérea", value: 25 },
+    { name: "Outras", value: 12 },
   ];
 
-  const COLORS = ["#FF6347", "#6A5ACD", "#20B2AA", "#FFD700", "#8A2BE2"]; // Definindo cores para o gráfico de pizza
+  const COLORS = ["#FF6347", "#6A5ACD", "#20B2AA"]; // Definindo cores para o gráfico de pizza
 
   const municipiosData = [
-    { municipio: "Uberlândia – MG", valor: "4.789.456.123" },
-    { municipio: "Belo Horizonte – MG", valor: "4.203.112.870" },
-    { municipio: "Contagem – MG", valor: "3.865.900.543" },
-    { municipio: "Betim – MG", valor: "3.441.777.210" },
-    { municipio: "Juiz de Fora – MG", valor: "2.992.311.407" },
-    { municipio: "Montes Claros – MG", valor: "2.478.908.152" },
+    { municipio: "Santos – SP", valor: "6.681.393.984" },
+    { municipio: "São Paulo – SP", valor: "5.213.719.447" },
+    { municipio: "São Bernardo do Campo – SP", valor: "3.738.399.961" },
+    { municipio: "São José dos Campos – SP", valor: "3.680.199.856" },
+    { municipio: "Piracicaba – SP", valor: "3.159.969.189" },
+    { municipio: "Ilhabela – SP", valor: "2.618.590.901" },
   ];
 
   const dadosProdutos = [
     {
-      name: "Soja em grãos",
-      valor: "US$ 28.300",
-      variacao: "12,5%",
-      participacao: "22%",
+      name: "Açúcares e Melaços",
+      valor: "US$ 11.600",
+      variacao: "19,6%",
+      participacao: "16%",
     },
     {
-      name: "Minério de ferro",
-      valor: "US$ 21.500",
-      variacao: "9,8%",
-      participacao: "16,7%",
+      name: "Óleos combustíveis de petróleo ou...",
+      valor: "US$ 862",
+      variacao: "18,6%",
+      participacao: "8,9%",
     },
     {
-      name: "Óleo de soja bruto",
-      valor: "US$ 5.780",
-      variacao: "-3,4%",
+      name: "Sucos de Frutas ou de vegetais",
+      valor: "US$ 573",
+      variacao: "40,6%",
+      participacao: "5,9%",
+    },
+    {
+      name: "Demais produtos da indústria de...",
+      valor: "US$ 438",
+      variacao: "-8,69%",
       participacao: "4,5%",
     },
     {
-      name: "Celulose",
-      valor: "US$ 7.900",
-      variacao: "6,1%",
-      participacao: "6,1%",
-    },
-    {
-      name: "Carne bovina congelada",
-      valor: "US$ 6.200",
-      variacao: "15,2%",
-      participacao: "4,8%",
+      name: "Veículos automóveis de passageiros",
+      valor: "US$ 424",
+      variacao: "28,4%",
+      participacao: "4,4%",
     },
   ];
 
@@ -94,7 +92,7 @@ export default function ImportacaoPage() {
             <p className="text-sm text-[var(--muted-foreground)]">
               Pages / DashBoard{" "}
             </p>
-            <h2 className="text-4xl font-bold">Importação</h2>
+            <h2 className="text-4xl font-bold">Exportação</h2>
           </div>
 
           <div className="flex items-center space-x-6 bg-[var(--color-card)] rounded-3xl px-6 py-3 shadow-lg">
@@ -136,7 +134,7 @@ export default function ImportacaoPage() {
               Valor Agregado / Quilograma Líquido
             </h3>
             <LineChartComponent
-              data={dataImportacao}
+              data={dataExportacao}
               xAxisKey="year"
               lines={[
                 {
@@ -155,39 +153,19 @@ export default function ImportacaoPage() {
 
           <div className="bg-[var(--color-card)] p-6 rounded-2xl shadow-md">
             <h3 className="text-lg font-semibold mb-4">Vias de Transporte</h3>
-            <div className="flex items-center gap-6">
-              <PieChartComponent data={pieData} colors={COLORS} />
-              <div className="text-sm space-y-2">
-                <div>
-                  <span className="font-bold text-[var(--color-foreground)]">
-                    Marítima:
-                  </span>{" "}
-                  52%
+            <PieChartComponent data={pieData} colors={COLORS} />
+            <div className="flex justify-around text-sm mt-4">
+              <div className="text-center">
+                <div className="font-bold text-[var(--color-foreground)]">
+                  Marítima
                 </div>
-                <div>
-                  <span className="font-bold text-[var(--color-foreground)]">
-                    Rodoviária:
-                  </span>{" "}
-                  33%
+                <div>63%</div>
+              </div>
+              <div className="text-center">
+                <div className="font-bold text-[var(--color-foreground)]">
+                  Aérea
                 </div>
-                <div>
-                  <span className="font-bold text-[var(--color-foreground)]">
-                    Aérea:
-                  </span>{" "}
-                  9%
-                </div>
-                <div>
-                  <span className="font-bold text-[var(--color-foreground)]">
-                    Fluvial:
-                  </span>{" "}
-                  4%
-                </div>
-                <div>
-                  <span className="font-bold text-[var(--color-foreground)]">
-                    Ferroviária:
-                  </span>{" "}
-                  2%
-                </div>
+                <div>25%</div>
               </div>
             </div>
           </div>
@@ -196,19 +174,19 @@ export default function ImportacaoPage() {
         {/* Cards de Info */}
         <section className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <InfoCard
-            title="Top Países de Origem – 2024"
-            value="China, EUA, Alemanha"
-            icon="🌐"
+            title="Top Destinos das Exportações – 2024"
+            value="Argentina, China, EUA"
+            icon="🌎"
           />
           <InfoCard
-            title="Top Produtos Importados – 2024"
-            value="Eletrônicos, Fertilizantes, Máquinas"
+            title="Top Produtos Exportados – 2024"
+            value="Soja, Minério de Ferro, Carne Bovina"
             icon="📦"
           />
           <InfoCard
-            title="Empresas Importadoras – 2024"
-            value="+12.350"
-            icon="🏢"
+            title="Empresas Exportadoras – 2024"
+            value="+9.800"
+            icon="🏭"
           />
         </section>
 

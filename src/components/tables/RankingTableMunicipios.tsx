@@ -1,13 +1,13 @@
-const data = [
-  { municipio: 'Santos – SP', valor: '6.681.393.984' },
-  { municipio: 'São Paulo – SP', valor: '5.213.719.447' },
-  { municipio: 'São Bernardo do Campo – SP', valor: '3.738.399.961' },
-  { municipio: 'São José dos Campos – SP', valor: '3.680.199.856' },
-  { municipio: 'Piracicaba – SP', valor: '3.159.969.189' },
-  { municipio: 'Ilhabela – SP', valor: '2.618.590.901' },
-];
+interface MunicipioData {
+  municipio: string;
+  valor: string;
+}
 
-export default function RankingTableMunicipios() {
+interface RankingTableMunicipiosProps {
+  data: MunicipioData[];
+}
+
+export default function RankingTableMunicipios({ data }: RankingTableMunicipiosProps) {
   return (
     <table className="w-full text-left text-sm">
       <thead>

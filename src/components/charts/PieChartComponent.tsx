@@ -1,16 +1,25 @@
-import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts';
+import {
+  PieChart,
+  Pie,
+  Cell,
+  ResponsiveContainer,
+  Tooltip,
+  Legend,
+} from "recharts";
 
-const data = [
-  { name: 'Marítima', value: 63 },
-  { name: 'Aérea', value: 25 },
-  { name: 'Outras', value: 12 },
-];
+interface PieChartComponentProps {
+  data: { name: string; value: number }[]; // Dados flexíveis
+  colors: string[]; // Cores personalizáveis
+  height?: number; // Altura customizável
+}
 
-const COLORS = ['#a855f7', '#7c3aed', '#e5e7eb'];
-
-export default function PieChartComponent() {
+export default function PieChartComponent({
+  data,
+  colors,
+  height = 200,
+}: PieChartComponentProps) {
   return (
-    <ResponsiveContainer width="100%" height={200}>
+    <ResponsiveContainer width="100%" height={height}>
       <PieChart>
         <Pie
           data={data}
@@ -18,12 +27,11 @@ export default function PieChartComponent() {
           cy="50%"
           innerRadius={50}
           outerRadius={70}
-          fill="#8884d8"
           paddingAngle={5}
           dataKey="value"
         >
           {data.map((entry, index) => (
-            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+            <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />
           ))}
         </Pie>
         <Tooltip />

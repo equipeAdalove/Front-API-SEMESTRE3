@@ -16,6 +16,7 @@ import ImportacaoMap from "./pages/ImportacaoMap";
 import LandingPage from "./pages/LandingPage";
 import Tendencias from "./pages/Tendencias";
 import Comparacoes from "./pages/Comparacoes";
+import ExportacaoPage from "./pages/ExportacaoPage";
 
 
 // Este componente precisa estar DENTRO do Router
@@ -33,6 +34,7 @@ function AppContent() {
           <Route path="/dashboard" element={<DashboardInit />} />
           <Route path="/dashboard/:uf" element={<DashboardEstado />} />
           <Route path="/importacao" element={<ImportacaoPage />} />
+          <Route path="/exportacao" element={<ExportacaoPage />} />
           <Route path="/importacao_mapa" element={<ImportacaoMap />} />
           <Route path="/visualizar-mapa" element={<VisualizarMapa />} />
           <Route path="/mapa" element={<VisualizarMapa />} />
