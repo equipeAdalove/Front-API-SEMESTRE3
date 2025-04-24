@@ -1,4 +1,4 @@
-import { Home, BarChart, Map, FileBarChart2, TrendingUp } from "lucide-react";
+import { Home, BarChart, Map, FileBarChart2, TrendingUp, Sliders } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Link } from "react-router-dom";
@@ -74,6 +74,17 @@ export default function Sidebar() {
     >
                 <TrendingUp style={{ transform: "scale(1.5)" }} />
                 <span style={{ fontSize: "1rem" }}>Tendências</span>
+              </Button>
+            </Link>
+          </li>
+          <li>
+          <Link to="/comparacoes">
+              <Button
+                variant="ghost"
+                className="w-full flex items-center gap-3 justify-start"
+    >
+                <Sliders style={{ transform: "scale(1.5)" }} />
+                <span style={{ fontSize: "1rem" }}>Comparações</span>
               </Button>
             </Link>
           </li>

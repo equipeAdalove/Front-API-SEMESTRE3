@@ -15,6 +15,8 @@ import DashboardEstado from "./pages/ImportacaoPage";
 import ImportacaoMap from "./pages/ImportacaoMap";
 import LandingPage from "./pages/LandingPage";
 import Tendencias from "./pages/Tendencias";
+import Comparacoes from "./pages/Comparacoes";
+
 
 // Este componente precisa estar DENTRO do Router
 function AppContent() {
@@ -36,6 +38,8 @@ function AppContent() {
           <Route path="/mapa" element={<VisualizarMapa />} />
           <Route path="/buscar-ncm" element={<BuscarNcm />} />
           <Route path="/tendencias" element={<Tendencias />} /> 
+          <Route path="/comparacoes" element={<Comparacoes />} /> 
+
         </Routes>
       </div>
     </div>
