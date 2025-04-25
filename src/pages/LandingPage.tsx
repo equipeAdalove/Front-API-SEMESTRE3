@@ -71,9 +71,8 @@ export default function LandingPage() {
         {/* Título alinhado à esquerda e mais próximo */}
         <div className="max-w-5xl mx-auto mb-6 text-left">
           <h2 className="text-[#9B7EBD] text-3xl font-bold mb-0">Sobre nós</h2>
-          <h3 className="text-[#2B3674] text-6xl font-extrabold mt-0">AdaLove</h3>
+          <h3 className="text-[#2B3674] text-6xl font-extrabold -mt-2">AdaLove</h3>
         </div>
-
 
         {/* Wrapper flex para texto + imagem */}
         <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center md:items-start gap-10 text-[#2B3674]">
@@ -83,7 +82,8 @@ export default function LandingPage() {
               Somos a <strong>AdaLove</strong>, uma equipe movida pela inovação e pela paixão pela tecnologia. Nossa abordagem ágil nos permite ir além da simples resolução de problemas, buscamos inspirar mudanças positivas e criar soluções impactantes.
               <br></br>
               A equipe foi formada por estudantes da Faculdade de Tecnologia Prof. Jessen Vidal, do curso de Análise e Desenvolvimento de Sistemas.
-              O AdaTrade é um projeto pedagógico desenvolvido dentro da Metodologia API, que promove o ensino baseado em desafios reais (RPBL), que prepara os alunos para enfrentar problemas do mercado com soluções inovadoras e eficientes.
+              <br></br>
+              AdaTrade é um projeto pedagógico desenvolvido dentro da Metodologia API, que promove o ensino baseado em desafios reais (RPBL), que prepara os alunos para enfrentar problemas do mercado com soluções inovadoras e eficientes.
             </p>
           </div>
 
@@ -119,7 +119,7 @@ export default function LandingPage() {
           </div>
 
           <div className="flex flex-col items-center">
-            <img src="src/components/images/adateam/matheus.jpeg" className="w-50 h-50 rounded-full object-cover mb-2" alt="Matheus Germano" />
+            <img src="src/components/images/adateam/matheus.jpg" className="w-50 h-50 rounded-full object-cover mb-2" alt="Matheus Germano" />
             <p className="font-semibold">Matheus Germano</p>
             <a href="https://linkedin.com" className="text-purple-600 text-sm">LinkedIn</a>
           </div>
@@ -129,8 +129,6 @@ export default function LandingPage() {
             <p className="font-semibold">Ramon Amorim</p>
             <a href="https://linkedin.com" className="text-purple-600 text-sm">LinkedIn</a>
           </div>
-          {/* (Repete pros outros membros...) */}
-
 
           <div className="flex flex-wrap justify-center gap-10">
             <div className="flex flex-col items-center">
@@ -140,14 +138,14 @@ export default function LandingPage() {
             </div>
 
             <div className="flex flex-col items-center">
-              <img src="src/components/images/adateam/raphaela.jpeg" className="w-50 h-50 rounded-full object-cover mb-2" alt="Raphaela Monteiro" />
-              <p className="font-semibold">Raphaela Monteiro</p>
+              <img src="src/components/images/adateam/renan.jpg" className="w-50 h-50 rounded-full object-cover mb-2" alt="Renan Tomasi" />
+              <p className="font-semibold">Renan Tomasi</p>
               <a href="https://linkedin.com" className="text-purple-600 text-sm">LinkedIn</a>
             </div>
 
             <div className="flex flex-col items-center">
-              <img src="src/components/images/adateam/raphaela.jpeg" className="w-50 h-50 rounded-full object-cover mb-2" alt="Raphaela Monteiro" />
-              <p className="font-semibold">Raphaela Monteiro</p>
+              <img src="src/components/images/adateam/vitor.jpg" className="w-50 h-50 rounded-full object-cover mb-2" alt="Vitor Ribeiro" />
+              <p className="font-semibold">Vitor Ribeiro</p>
               <a href="https://linkedin.com" className="text-purple-600 text-sm">LinkedIn</a>
             </div>
           </div>
