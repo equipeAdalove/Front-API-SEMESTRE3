@@ -1,53 +1,173 @@
 // src/pages/LandingPage.tsx
 
-import { Link } from "react-router-dom"; // ou use "next/link" se for Next.js
-import ThemeSwitcher from "@/components/theme-provider/ButtonThemeSwitcher";
+import { Link } from "react-router-dom"; // Se estiver usando Next.js, troca para "next/link"
+import ThemeSwitcher from "@/components/theme-provider/ButtonThemeSwitcher"; // Botão de tema
 
 export default function LandingPage() {
   return (
     <main
-      className="min-h-screen flex flex-col justify-between items-center text-center p-10"
+      className="min-h-screen flex flex-col text-center"
       style={{
         backgroundColor: "var(--color-background)",
         color: "var(--color-foreground)",
       }}
     >
-      {/* Header com botão de tema */}
-      <header className="w-full flex justify-end">
-        <ThemeSwitcher />
+      {/* 
+        Header 
+        (Menu com: Início, Funcionalidades, FAQ, Sobre nós, Acessar + ThemeSwitcher)
+      */}
+      <header className="w-full flex justify-between items-center p-6">
+        <div className="text-2xl font-bold">
+          Ada<span className="text-purple-600">Trade</span>
+        </div>
+
+        <nav className="hidden md:flex gap-6 items-center text-sm">
+          <a href="#inicio" className="hover:underline">Início</a>
+          <a href="#funcionalidades" className="hover:underline">Funcionalidades</a>
+          <a href="#faq" className="hover:underline">FAQ</a>
+          <a href="#sobre" className="hover:underline">Sobre nós</a>
+          <Link to="/dashboard">
+            <button className="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700">
+              Acessar
+            </button>
+          </Link>
+          <ThemeSwitcher />
+        </nav>
       </header>
 
-      {/* Conteúdo principal da landing */}
-      <div className="flex-1 flex flex-col justify-center items-center max-w-2xl">
-        <h1 className="text-5xl font-bold mb-6">
-          Dados Precisos, Decisões Inteligentes: Acompanhe o Comércio Exterior
-          com Facilidade
-        </h1>
-        <p className="text-lg text-[var(--muted-foreground)] mb-10">
-          Acompanhe os dados do comércio exterior e as tendências de importação
-          e exportação dos estados brasileiros para otimizar suas estratégias
-          econômicas com AdaTrade{" "}
-        </p>
-
-        {/* Botão que leva à busca */}
+      {/* 
+        Hero Section 
+        (Grande chamada com texto e imagem do polvo)
+      */}
+      <section id="inicio" className="flex flex-col-reverse md:flex-row items-center justify-center p-10 gap-10">
         <Link to="/dashboard">
-          <button
-            className="px-8 py-3 rounded-xl text-lg font-medium shadow-lg transition-all"
-            style={{
-              backgroundColor: "var(--color-primary)",
-              color: "var(--color-primary-foreground)",
-            }}
-          >
+          <button className="bg-purple-600 text-white px-8 py-3 rounded-xl text-lg shadow-lg hover:bg-purple-700">
             Acesse a plataforma
           </button>
         </Link>
-      </div>
+      </section>
 
-      {/* Rodapé simples */}
-      <footer className="text-sm text-[var(--muted-foreground)] mt-10">
-        © {new Date().getFullYear()} Equipe AdaLove - Todos os direitos
-        reservados.
+      {/* 
+        Funcionalidades 
+        (Cards com miniaturas: Dashboard Interativo, Mapa de Calor, Busca por NCM)
+      */}
+      <section id="funcionalidades" className="w-full py-20 bg-purple-100">
+
+      </section>
+
+      {/* 
+        FAQ 
+        (Accordion simples de perguntas)
+      */}
+      <section id="faq" className="w-full py-20">
+
+      </section>
+
+      {/* 
+        Sobre nós 
+        (Texto falando da equipe AdaLove + logo)
+      */}
+      <section className="w-full py-20 bg-purple-100">
+        {/* Título alinhado à esquerda e mais próximo */}
+        <div className="max-w-5xl mx-auto mb-6 text-left">
+          <h2 className="text-[#9B7EBD] text-3xl font-bold mb-0">Sobre nós</h2>
+          <h3 className="text-[#2B3674] text-6xl font-extrabold mt-0">AdaLove</h3>
+        </div>
+
+
+        {/* Wrapper flex para texto + imagem */}
+        <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center md:items-start gap-10 text-[#2B3674]">
+          {/* Texto à esquerda */}
+          <div className="md:w-2/3 space-y-4 text-left text-lg">
+            <p>
+              Somos a <strong>AdaLove</strong>, uma equipe movida pela inovação e pela paixão pela tecnologia. Nossa abordagem ágil nos permite ir além da simples resolução de problemas, buscamos inspirar mudanças positivas e criar soluções impactantes.
+              <br></br>
+              A equipe foi formada por estudantes da Faculdade de Tecnologia Prof. Jessen Vidal, do curso de Análise e Desenvolvimento de Sistemas.
+              O AdaTrade é um projeto pedagógico desenvolvido dentro da Metodologia API, que promove o ensino baseado em desafios reais (RPBL), que prepara os alunos para enfrentar problemas do mercado com soluções inovadoras e eficientes.
+            </p>
+          </div>
+
+          {/* Imagem à direita */}
+          <div className="md:w-1/3 flex justify-center md:justify-end">
+            <img
+              src="src/components/images/ada-logo.png"
+              alt="AdaLove Logo"
+              className="w-[280px] md:w-[320px]"
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* 
+        Nossa Equipe 
+        (Fotos dos membros com link pro LinkedIn)
+      */}
+      <section className="w-full py-20">
+        <h2 className="text-3xl font-bold mb-12">Nossa Equipe</h2>
+        <div className="flex flex-wrap justify-center gap-10">
+          {/* Membro 1 */}
+          <div className="flex flex-col items-center">
+            <img src="src/components/images/adateam/angelina.jpg" className="w-50 h-50 rounded-full object-cover mb-2" alt="Angelina Borroni" />
+            <p className="font-semibold">Angelina Borroni</p>
+            <a href="https://linkedin.com" className="text-purple-600 text-sm">LinkedIn</a>
+          </div>
+
+          <div className="flex flex-col items-center">
+            <img src="src/components/images/adateam/maria.jpg" className="w-50 h-50 rounded-full object-cover mb-2" alt="Maria Fernanda" />
+            <p className="font-semibold">Maria Fernanda</p>
+            <a href="https://linkedin.com" className="text-purple-600 text-sm">LinkedIn</a>
+          </div>
+
+          <div className="flex flex-col items-center">
+            <img src="src/components/images/adateam/matheus.jpeg" className="w-50 h-50 rounded-full object-cover mb-2" alt="Matheus Germano" />
+            <p className="font-semibold">Matheus Germano</p>
+            <a href="https://linkedin.com" className="text-purple-600 text-sm">LinkedIn</a>
+          </div>
+
+          <div className="flex flex-col items-center">
+            <img src="src/components/images/adateam/ramon.jpg" className="w-50 h-50 rounded-full object-cover mb-2" alt="Ramon Amorim" />
+            <p className="font-semibold">Ramon Amorim</p>
+            <a href="https://linkedin.com" className="text-purple-600 text-sm">LinkedIn</a>
+          </div>
+          {/* (Repete pros outros membros...) */}
+
+
+          <div className="flex flex-wrap justify-center gap-10">
+            <div className="flex flex-col items-center">
+              <img src="src/components/images/adateam/raphaela.jpeg" className="w-50 h-50 rounded-full object-cover mb-2" alt="Raphaela Monteiro" />
+              <p className="font-semibold">Raphaela Monteiro</p>
+              <a href="https://linkedin.com" className="text-purple-600 text-sm">LinkedIn</a>
+            </div>
+
+            <div className="flex flex-col items-center">
+              <img src="src/components/images/adateam/raphaela.jpeg" className="w-50 h-50 rounded-full object-cover mb-2" alt="Raphaela Monteiro" />
+              <p className="font-semibold">Raphaela Monteiro</p>
+              <a href="https://linkedin.com" className="text-purple-600 text-sm">LinkedIn</a>
+            </div>
+
+            <div className="flex flex-col items-center">
+              <img src="src/components/images/adateam/raphaela.jpeg" className="w-50 h-50 rounded-full object-cover mb-2" alt="Raphaela Monteiro" />
+              <p className="font-semibold">Raphaela Monteiro</p>
+              <a href="https://linkedin.com" className="text-purple-600 text-sm">LinkedIn</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      {/* 
+        Rodapé 
+        (Logos + créditos)
+      */}
+      <footer className="w-full bg-purple-600 text-white text-sm py-6 mt-10">
+        <div className="flex flex-col md:flex-row justify-between items-center max-w-6xl mx-auto px-4">
+          <p>© {new Date().getFullYear()} AdaLove - Todos os direitos reservados.</p>
+          <div className="flex items-center gap-2 mt-2 md:mt-0">
+            <img src="/images/logo-cps.png" alt="CPS" className="h-6" />
+            <img src="/images/adalove-mini.svg" alt="AdaLove Mini" className="h-6" />
+          </div>
+        </div>
       </footer>
-    </main>
+    </main >
   );
 }
