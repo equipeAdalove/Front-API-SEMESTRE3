@@ -14,9 +14,9 @@ export default function Sidebar() {
     >
       {/* Header */}
       <div className="w-full border-b border-gray-300 pb-4">
-        <h1 className="mt-11 text-4xl font-bold text-purple-700 text-center">
+        <Link to="/" className="block mt-11 text-4xl font-bold text-purple-700 text-center hover:underline">
           Ada<span className="text-gray-900 dark:text-white">Trade</span>
-        </h1>
+        </Link>
       </div>
 
       {/* Navigation - Centralizado Verticalmente */}
