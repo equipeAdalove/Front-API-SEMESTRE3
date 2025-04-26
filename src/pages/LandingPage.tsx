@@ -1,4 +1,6 @@
 // src/pages/LandingPage.tsx
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faGithub, faLinkedin } from "@fortawesome/free-brands-svg-icons";
 
 import { Link } from "react-router-dom"; // Se estiver usando Next.js, troca para "next/link"
 import ThemeSwitcher from "@/components/theme-provider/ButtonThemeSwitcher"; // Botão de tema
@@ -67,15 +69,15 @@ export default function LandingPage() {
         Sobre nós 
         (Texto falando da equipe AdaLove + logo)
       */}
-      <section className="w-full py-20 bg-purple-100">
+      <section className="w-full py-20">
         {/* Título alinhado à esquerda e mais próximo */}
         <div className="max-w-5xl mx-auto mb-6 text-left">
-          <h2 className="text-[#9B7EBD] text-3xl font-bold mb-0">Sobre nós</h2>
-          <h3 className="text-[#2B3674] text-6xl font-extrabold -mt-2">AdaLove</h3>
+          <h2 className="text-[var(--color-primary)] text-3xl font-bold mb-0">Sobre nós</h2>
+          <h3 className="text-[var(--color-foreground)] text-6xl font-extrabold -mt-2">AdaLove</h3>
         </div>
 
         {/* Wrapper flex para texto + imagem */}
-        <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center md:items-start gap-10 text-[#2B3674]">
+        <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center md:items-start gap-10 text-[var(--color-foreground)]">
           {/* Texto à esquerda */}
           <div className="md:w-2/3 space-y-4 text-left text-lg">
             <p>
@@ -103,50 +105,101 @@ export default function LandingPage() {
         (Fotos dos membros com link pro LinkedIn)
       */}
       <section className="w-full py-20">
-        <h2 className="text-3xl font-bold mb-12">Nossa Equipe</h2>
+        <div className="max-w-5xl mx-auto mb-6 text-right">
+          <h3 className="text-[var(--color-primary)] text-6xl font-extrabold -mt-2" >Nossa Equipe:</h3>
+        </div>
+
         <div className="flex flex-wrap justify-center gap-10">
-          {/* Membro 1 */}
           <div className="flex flex-col items-center">
             <img src="src/components/images/adateam/angelina.jpg" className="w-50 h-50 rounded-full object-cover mb-2" alt="Angelina Borroni" />
             <p className="font-semibold">Angelina Borroni</p>
-            <a href="https://linkedin.com" className="text-purple-600 text-sm">LinkedIn</a>
+            <div className="flex gap-3 mt-1">
+              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-600 hover:text-800">
+                <FontAwesomeIcon icon={faLinkedin} size="xl" />
+              </a>
+              <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="text-600 hover:text-800">
+                <FontAwesomeIcon icon={faGithub} size="xl" />
+              </a>
+            </div>
           </div>
 
           <div className="flex flex-col items-center">
             <img src="src/components/images/adateam/maria.jpg" className="w-50 h-50 rounded-full object-cover mb-2" alt="Maria Fernanda" />
             <p className="font-semibold">Maria Fernanda</p>
-            <a href="https://linkedin.com" className="text-purple-600 text-sm">LinkedIn</a>
+            <div className="flex gap-3 mt-1">
+              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-600 hover:text-800">
+                <FontAwesomeIcon icon={faLinkedin} size="xl" />
+              </a>
+              <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="text-600 hover:text-800">
+                <FontAwesomeIcon icon={faGithub} size="xl" />
+              </a>
+            </div>
           </div>
 
           <div className="flex flex-col items-center">
             <img src="src/components/images/adateam/matheus.jpg" className="w-50 h-50 rounded-full object-cover mb-2" alt="Matheus Germano" />
             <p className="font-semibold">Matheus Germano</p>
-            <a href="https://linkedin.com" className="text-purple-600 text-sm">LinkedIn</a>
+            <div className="flex gap-3 mt-1">
+              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-600 hover:text-800">
+                <FontAwesomeIcon icon={faLinkedin} size="xl" />
+              </a>
+              <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="text-600 hover:text-800">
+                <FontAwesomeIcon icon={faGithub} size="xl" />
+              </a>
+            </div>
           </div>
 
           <div className="flex flex-col items-center">
             <img src="src/components/images/adateam/ramon.jpg" className="w-50 h-50 rounded-full object-cover mb-2" alt="Ramon Amorim" />
             <p className="font-semibold">Ramon Amorim</p>
-            <a href="https://linkedin.com" className="text-purple-600 text-sm">LinkedIn</a>
+            <div className="flex gap-3 mt-1">
+              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-600 hover:text-800">
+                <FontAwesomeIcon icon={faLinkedin} size="xl" />
+              </a>
+              <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="text-600 hover:text-800">
+                <FontAwesomeIcon icon={faGithub} size="xl" />
+              </a>
+            </div>
           </div>
 
           <div className="flex flex-wrap justify-center gap-10">
             <div className="flex flex-col items-center">
               <img src="src/components/images/adateam/raphaela.jpeg" className="w-50 h-50 rounded-full object-cover mb-2" alt="Raphaela Monteiro" />
               <p className="font-semibold">Raphaela Monteiro</p>
-              <a href="https://linkedin.com" className="text-purple-600 text-sm">LinkedIn</a>
+              <div className="flex gap-3 mt-1">
+                <a href="https://www.linkedin.com/in/raphaelamonteiro/" target="_blank" rel="noopener noreferrer" className="text-600 hover:text-800">
+                  <FontAwesomeIcon icon={faLinkedin} size="xl" />
+                </a>
+                <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="text-600 hover:text-800">
+                  <FontAwesomeIcon icon={faGithub} size="xl" />
+                </a>
+              </div>
             </div>
 
             <div className="flex flex-col items-center">
               <img src="src/components/images/adateam/renan.jpg" className="w-50 h-50 rounded-full object-cover mb-2" alt="Renan Tomasi" />
               <p className="font-semibold">Renan Tomasi</p>
-              <a href="https://linkedin.com" className="text-purple-600 text-sm">LinkedIn</a>
+              <div className="flex gap-3 mt-1">
+                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-600 hover:text-800">
+                  <FontAwesomeIcon icon={faLinkedin} size="xl" />
+                </a>
+                <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="text-600 hover:text-800">
+                  <FontAwesomeIcon icon={faGithub} size="xl" />
+                </a>
+              </div>
             </div>
 
             <div className="flex flex-col items-center">
               <img src="src/components/images/adateam/vitor.jpg" className="w-50 h-50 rounded-full object-cover mb-2" alt="Vitor Ribeiro" />
               <p className="font-semibold">Vitor Ribeiro</p>
-              <a href="https://linkedin.com" className="text-purple-600 text-sm">LinkedIn</a>
+              <div className="flex gap-3 mt-1">
+                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-600 hover:text-800">
+                  <FontAwesomeIcon icon={faLinkedin} size="xl" />
+                </a>
+                <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="text-600 hover:text-800">
+                  <FontAwesomeIcon icon={faGithub} size="xl" />
+                </a>
+              </div>
             </div>
           </div>
         </div>
