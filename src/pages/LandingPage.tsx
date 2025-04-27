@@ -63,74 +63,67 @@ export default function LandingPage() {
         Funcionalidades 
         (Cards com miniaturas: Dashboard Interativo, Mapa de Calor, Busca por NCM)
       */}
-          <section id="funcionalidades" className="w-full py-20">
-          <div className="max-w-6xl mx-auto px-6">
-              <h2 className="text-6xl font-bold text-center mb-16 text-purple-600 dark:text-purple-400">
-             Funcionalidades do Produto
+          {/* Titulo */}
+            <div className="max-w-6xl mx-auto px-6">
+              <h2 className="text-6xl font-bold text-center mb-1 text-purple-600 dark:text-purple-400">
+                Funcionalidades do Produto
               </h2>
-              {/* Card Dashboard Interativo */}
-              <div className="border border-gray-500 dark:bg-gray-800 rounded-xl shadow-md p-6 mb-2">
-                <div className="flex items-center mb-4">
-                  <div className="bg-purple-100 dark:bg-purple-900 p-3 rounded-lg mr-4">
-                    <LayoutDashboard className="w-6 h-6 text-purple-600 dark:text-purple-400" />
-                  </div>
-                  <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100">Dashboard Interativo</h3>
-                </div>
-                  <p className="text-gray-600 dark:text-gray-300">
-                    Acesse gráficos e visualizações dinâmicas que facilitam a interpretação dos dados de importação e exportação dos estados brasileiros. Identifique tendências e tome decisões estratégicas com base em informações precisas.
-                  </p>
-                </div>
-                {/* Imagem do dashboard*/}
-                <div className="md:w-1/1 mb-8">
-                  <img 
-                    src="src/components/images/funcionalidades/DashImg.png" 
-                    alt="Dashboard Interface" 
-                    className="border border-gray-500 w-full h-auto object-cover rounded-xl shadow-lg" 
-                  />
-                </div>
-              {/* Card Busca por NCM */}
-              <div className="border border-gray-500 dark:bg-gray-800 rounded-xl shadow-md p-6 mb-2">
-                <div className="flex items-center mb-4">
-                  <div className="bg-green-100 dark:bg-green-900 p-3 rounded-lg mr-4">
-                    <Search className="w-6 h-6 text-green-600 dark:text-green-400" />
-                  </div>
-                  <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100">Busca por NCM</h3>
-                </div>
-                <p className="text-gray-600 dark:text-gray-300">
-                  Busca de carga por meio do código NCM (Nomenclatura Comum do Mercosul).
-                </p>
-              </div>
-
-            {/* Imagem do dashboard*/}
-            <div className="md:w-1/1 mb-8">
-              <img 
-                src="src/components/images/funcionalidades/NCMImg.png" 
-                alt="Dashboard Interface" 
-                className="border border-gray-500 w-full h-auto object-cover rounded-xl shadow-lg" 
-              />
             </div>
+        <section id="funcionalidades" className="w-full py-20">
+            {/* Container principal usando flexbox */}
+            <div className="flex flex-col md:flex-row gap-3">
 
-                {/* Card Mapa de Calor */}
-          <div className="border border-gray-500 dark:bg-gray-800 rounded-xl shadow-md p-6 mb-2">
-              <div className="flex items-center mb-4">
-                <div className="bg-blue-100 dark:bg-blue-900 p-3 rounded-lg mr-4 ">
-                  <Map className="w-6 h-6 text-blue-600 dark:text-blue-400" />
-                </div>
-                <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100">Mapa de Calor</h3>
-                </div>
-                <p className="text-gray-600 dark:text-gray-300">
-                  Visualize o desempenho do comércio exterior de cada estado brasileiro em um mapa de calor dinâmico, onde as cores representam variações nos volumes de importação e exportação.
-                </p>
+                      {/* Imagem do dashboard*/}
+                      <div className="md:w-1/1 mb-8">
+                        <img 
+                          src="src/components/images/funcionalidades/DashImg.png" 
+                          alt="Dashboard Interface" 
+                          className="border border-gray-500 w-full h-auto object-cover rounded-xl shadow-lg" 
+                        />
+                      </div>
+
+                  {/* Coluna da direita - Cards */}
+              <div className="md:w-1/2 flex flex-col gap-4">
+                    {/* Card Dashboard Interativo */}
+                    <div className="border border-gray-500 dark:bg-gray-800 rounded-xl shadow-md p-6 mb-2">
+                      <div className="flex items-center mb-4">
+                        <div className="bg-purple-100 dark:bg-purple-900 p-3 rounded-lg mr-4">
+                          <LayoutDashboard className="w-6 h-6 text-purple-600 dark:text-purple-400" />
+                        </div>
+                        <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100">Dashboard Interativo</h3>
+                      </div>
+                        <p className="text-gray-600 dark:text-gray-300">
+                          Acesse gráficos e visualizações dinâmicas que facilitam a interpretação dos dados de importação e exportação dos estados brasileiros. Identifique tendências e tome decisões estratégicas com base em informações precisas.
+                        </p>
+                    </div>
+                    {/* Card Busca por NCM */}
+                    <div className="border border-gray-500 dark:bg-gray-800 rounded-xl shadow-md p-6 mb-2">
+                      <div className="flex items-center mb-4">
+                        <div className="bg-green-100 dark:bg-green-900 p-3 rounded-lg mr-4">
+                          <Search className="w-6 h-6 text-green-600 dark:text-green-400" />
+                        </div>
+                        <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100">Busca por NCM</h3>
+                      </div>
+                      <p className="text-gray-600 dark:text-gray-300">
+                        Busca de carga por meio do código NCM (Nomenclatura Comum do Mercosul).
+                      </p>
+                    </div>
+
+                      {/* Card Mapa de Calor */}
+                <div className="border border-gray-500 dark:bg-gray-800 rounded-xl shadow-md p-6 mb-2">
+                    <div className="flex items-center mb-4">
+                      <div className="bg-blue-100 dark:bg-blue-900 p-3 rounded-lg mr-4 ">
+                        <Map className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+                      </div>
+                      <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100">Mapa de Calor</h3>
+                      </div>
+                      <p className="text-gray-600 dark:text-gray-300">
+                        Visualize o desempenho do comércio exterior de cada estado brasileiro em um mapa de calor dinâmico, onde as cores representam variações nos volumes de importação e exportação.
+                      </p>
+                  </div>
               </div>
-          <div className="md:w-1/1">
-              <img 
-                src="src/components/images/funcionalidades/MapImg.png" 
-                alt="Dashboard Interface" 
-                className="border border-gray-500 w-full h-auto object-cover rounded-xl shadow-lg" 
-              />
             </div>
-        </div>
-        </section>
+      </section>
 
       {/* 
         FAQ 
@@ -342,7 +335,7 @@ export default function LandingPage() {
           <p>© {new Date().getFullYear()} AdaLove - Todos os direitos reservados.</p>
           <div className="flex items-center gap-2 mt-2 md:mt-0">
             <img src="/images/logo-cps.png" alt="CPS" className="h-6" />
-            <img src="/images/adalove-mini.svg" alt="AdaLove Mini" className="h-6" />
+            <img src="/public/adalove-mini.svg" alt="AdaLove Mini" className="h-6" />
           </div>
         </div>
       </footer>
