@@ -51,7 +51,7 @@ export default function LandingPage() {
         Hero Section 
         (Grande chamada com texto e imagem do polvo)
       */}
-      <section id="inicio" className="flex flex-col-reverse md:flex-row items-center justify-center p-10 gap-10">
+      <section id="inicio" className="flex flex-col-reverse md:flex-row items-center justify-center p-10 gap-10 mt-35">
         <Link to="/dashboard">
           <button className="bg-purple-600 text-white px-8 py-3 rounded-xl text-lg shadow-lg hover:bg-purple-700">
             Acesse a plataforma
@@ -64,8 +64,8 @@ export default function LandingPage() {
         (Cards com miniaturas: Dashboard Interativo, Mapa de Calor, Busca por NCM)
       */}
           {/* Titulo */}
-            <div className="max-w-6xl mx-auto px-6">
-              <h2 className="text-6xl font-bold text-center mb-1 text-purple-600 dark:text-purple-400">
+            <div className="max-w-6xl mx-auto px-6 mt-75">
+              <h2 className="text-6xl font-bold text-center text-purple-600 dark:text-purple-400">
                 Funcionalidades do Produto
               </h2>
             </div>
