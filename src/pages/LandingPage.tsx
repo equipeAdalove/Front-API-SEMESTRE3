@@ -63,13 +63,13 @@ export default function LandingPage() {
         Funcionalidades 
         (Cards com miniaturas: Dashboard Interativo, Mapa de Calor, Busca por NCM)
       */}
-          <section id="funcionalidades" className="w-full py-20 bg-purple-100">
+          <section id="funcionalidades" className="w-full py-20">
           <div className="max-w-6xl mx-auto px-6">
               <h2 className="text-6xl font-bold text-center mb-16 text-purple-600 dark:text-purple-400">
              Funcionalidades do Produto
               </h2>
               {/* Card Dashboard Interativo */}
-              <div className="bg-white dark:bg-gray-700 rounded-xl shadow-md p-6 mb-2">
+              <div className="dark:bg-gray-800 rounded-xl shadow-md p-6 mb-2">
                 <div className="flex items-center mb-4">
                   <div className="bg-purple-100 dark:bg-purple-900 p-3 rounded-lg mr-4">
                     <LayoutDashboard className="w-6 h-6 text-purple-600 dark:text-purple-400" />
@@ -89,7 +89,7 @@ export default function LandingPage() {
                   />
                 </div>
               {/* Card Busca por NCM */}
-              <div className="bg-white dark:bg-gray-700 rounded-xl shadow-md p-6 mb-2">
+              <div className=" dark:bg-gray-800 rounded-xl shadow-md p-6 mb-2">
                 <div className="flex items-center mb-4">
                   <div className="bg-green-100 dark:bg-green-900 p-3 rounded-lg mr-4">
                     <Search className="w-6 h-6 text-green-600 dark:text-green-400" />
@@ -111,7 +111,7 @@ export default function LandingPage() {
             </div>
 
                 {/* Card Mapa de Calor */}
-          <div className="bg-white dark:bg-gray-700 rounded-xl shadow-md p-6 mb-2">
+          <div className=" dark:bg-gray-800 rounded-xl shadow-md p-6 mb-2">
               <div className="flex items-center mb-4">
                 <div className="bg-blue-100 dark:bg-blue-900 p-3 rounded-lg mr-4 ">
                   <Map className="w-6 h-6 text-blue-600 dark:text-blue-400" />
