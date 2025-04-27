@@ -69,7 +69,7 @@ export default function LandingPage() {
              Funcionalidades do Produto
               </h2>
               {/* Card Dashboard Interativo */}
-              <div className="dark:bg-gray-800 rounded-xl shadow-md p-6 mb-2">
+              <div className="border border-gray-500 dark:bg-gray-800 rounded-xl shadow-md p-6 mb-2">
                 <div className="flex items-center mb-4">
                   <div className="bg-purple-100 dark:bg-purple-900 p-3 rounded-lg mr-4">
                     <LayoutDashboard className="w-6 h-6 text-purple-600 dark:text-purple-400" />
@@ -85,11 +85,11 @@ export default function LandingPage() {
                   <img 
                     src="src/components/images/funcionalidades/DashImg.png" 
                     alt="Dashboard Interface" 
-                    className="w-full h-auto object-cover rounded-xl shadow-lg" 
+                    className="border border-gray-500 w-full h-auto object-cover rounded-xl shadow-lg" 
                   />
                 </div>
               {/* Card Busca por NCM */}
-              <div className=" dark:bg-gray-800 rounded-xl shadow-md p-6 mb-2">
+              <div className="border border-gray-500 dark:bg-gray-800 rounded-xl shadow-md p-6 mb-2">
                 <div className="flex items-center mb-4">
                   <div className="bg-green-100 dark:bg-green-900 p-3 rounded-lg mr-4">
                     <Search className="w-6 h-6 text-green-600 dark:text-green-400" />
@@ -106,12 +106,12 @@ export default function LandingPage() {
               <img 
                 src="src/components/images/funcionalidades/NCMImg.png" 
                 alt="Dashboard Interface" 
-                className="w-full h-auto object-cover rounded-xl shadow-lg" 
+                className="border border-gray-500 w-full h-auto object-cover rounded-xl shadow-lg" 
               />
             </div>
 
                 {/* Card Mapa de Calor */}
-          <div className=" dark:bg-gray-800 rounded-xl shadow-md p-6 mb-2">
+          <div className="border border-gray-500 dark:bg-gray-800 rounded-xl shadow-md p-6 mb-2">
               <div className="flex items-center mb-4">
                 <div className="bg-blue-100 dark:bg-blue-900 p-3 rounded-lg mr-4 ">
                   <Map className="w-6 h-6 text-blue-600 dark:text-blue-400" />
@@ -126,7 +126,7 @@ export default function LandingPage() {
               <img 
                 src="src/components/images/funcionalidades/MapImg.png" 
                 alt="Dashboard Interface" 
-                className="w-full h-auto object-cover rounded-xl shadow-lg" 
+                className="border border-gray-500 w-full h-auto object-cover rounded-xl shadow-lg" 
               />
             </div>
         </div>
