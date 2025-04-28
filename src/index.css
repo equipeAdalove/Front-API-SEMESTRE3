@@ -13,7 +13,7 @@
   --popover-foreground: #FFFFFF;
   --primary: #64488A;
   --primary-foreground: #D0D6E7;
-  --secondary: oklch(0.97 0 0);
+  --secondary: #8471FF;
   --secondary-foreground: oklch(0.205 0 0);
   --muted: oklch(0.97 0 0);
   --muted-foreground: #9B7EBD;
@@ -36,6 +36,8 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+  --cta: #9B7EBD;
+  --footer: #9B7EBD;
 }
 
 .dark {
@@ -70,6 +72,8 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
+    --cta: #8471FF;
+  --footer: #9B7EBD;
 }
 
 @theme inline {
