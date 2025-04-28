@@ -1,6 +1,8 @@
 // src/pages/LandingPage.tsx
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub, faLinkedin } from "@fortawesome/free-brands-svg-icons";
+import Kraken from "@/components/images/Kraken.png";
+import KrakenDark from "@/components/images/KrakenDark.png";
 
 import { useState } from 'react';
 
