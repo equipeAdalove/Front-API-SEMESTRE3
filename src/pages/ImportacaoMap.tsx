@@ -33,7 +33,9 @@ const NupPage = () => {
           <button className="text-[var(--color-primary)] font-semibold">
             Importação
           </button>
-          <button className="text-[var(--color-primary)] hover:text-[var(--color-primary-light)] focus:outline-none transition-all duration-200">
+          <button 
+          onClick={() => navigate("/exportacao_mapa")}
+          className="text-[var(--color-primary)] hover:text-[var(--color-primary-light)] focus:outline-none transition-all duration-200">
             Exportação
           </button>
           <ThemeSwitcher />
