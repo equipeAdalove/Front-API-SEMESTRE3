@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import ThemeSwitcher from "@/components/theme-provider/ButtonThemeSwitcher";
 import MapaImg from "@/components/images/MapaImportacao.jpeg";
-import MapImg from "@/components/images/MapaExportacao.png";
+import MapImg from "@/components/images/MapaExportacao.jpeg";
 
 const NupPage = () => {
   const navigate = useNavigate();
