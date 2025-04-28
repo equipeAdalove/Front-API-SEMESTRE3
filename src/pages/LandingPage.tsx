@@ -79,7 +79,7 @@ export default function LandingPage() {
   <img
     src={Kraken}
     alt="Kraken"
-    className="w-[620px] h-[625px] object-contain -mt-20 ml-4 block dark:hidden"
+    className="w-[620px] h-[618px] object-contain -mt-20 ml-4 block dark:hidden"
   />
   <img
     src={KrakenDark}
