@@ -13,6 +13,7 @@ import VisualizarMapa from "./pages/VisualizarMapa";
 import ImportacaoPage from "./pages/ImportacaoPage";
 import DashboardEstado from "./pages/ImportacaoPage";
 import ImportacaoMap from "./pages/ImportacaoMap";
+import ExportacaoMap from "./pages/ExportacaoMap";
 import LandingPage from "./pages/LandingPage";
 import Tendencias from "./pages/Tendencias";
 import Comparacoes from "./pages/Comparacoes";
@@ -36,6 +37,7 @@ function AppContent() {
           <Route path="/importacao" element={<ImportacaoPage />} />
           <Route path="/exportacao" element={<ExportacaoPage />} />
           <Route path="/importacao_mapa" element={<ImportacaoMap />} />
+          <Route path="/exportacao_mapa" element={<ExportacaoMap />} />
           <Route path="/visualizar-mapa" element={<VisualizarMapa />} />
           <Route path="/mapa" element={<VisualizarMapa />} />
           <Route path="/buscar-ncm" element={<BuscarNcm />} />
