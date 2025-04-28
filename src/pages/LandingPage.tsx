@@ -51,13 +51,41 @@ export default function LandingPage() {
         Hero Section 
         (Grande chamada com texto e imagem do polvo)
       */}
-      <section id="inicio" className="flex flex-col-reverse md:flex-row items-center justify-center p-10 gap-10 mt-35">
-        <Link to="/dashboard">
-          <button className="bg-purple-600 text-white px-8 py-3 rounded-xl text-lg shadow-lg hover:bg-purple-700">
-            Acesse a plataforma
-          </button>
-        </Link>
-      </section>
+      <section id="inicio" className="flex flex-col-reverse md:flex-row items-center justify-between px-10 py-20 gap-10">
+  {/* Texto */}
+  <div className="flex flex-col items-start gap-6 max-w-5xl w-full md:w-1/2">
+    <h1 className="text-[var(--color-foreground)] text-3xl md:text-5xl font-bold leading-tight text-left m-0">
+      Dados Precisos, Decisões Inteligentes:
+    </h1>
+    <h1 className="text-[var(--color-primary)] text-3xl md:text-5xl font-bold leading-tight text-left m-0 mt-[-20px] ">
+      Acompanhe o Comércio Exterior com Facilidade
+    </h1>
+
+    <p className="text-[var(--color-foreground)] text-base md:text-lg text-left">
+      Acompanhe os dados do comércio exterior e as tendências de importação e exportação dos estados brasileiros para otimizar suas estratégias econômicas com <span className="text-[var(--color-foreground)] font-semibold">AdaTrade</span>.
+    </p>
+
+    <Link to="/dashboard">
+      <button className="bg-purple-600 px-8 py-3 rounded-full text-white md:text-lg shadow-lg hover:bg-purple-700 transition ml-0">
+        Acesse a plataforma
+      </button>
+    </Link>
+  </div>
+
+  {/* Imagem */}
+<div className="flex-1 flex justify-center md:w-1/2">
+  <img
+    src={Kraken}
+    alt="Kraken"
+    className="w-[620px] h-[625px] object-contain -mt-20 ml-4 block dark:hidden"
+  />
+  <img
+    src={KrakenDark}
+    alt="Kraken Dark"
+    className="w-[620px] h-[615px] object-contain -mt-20 ml-4 block hidden dark:block"
+  />
+</div>
+</section>
 
       {/* 
         Funcionalidades 
