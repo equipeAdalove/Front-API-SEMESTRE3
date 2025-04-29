@@ -41,6 +41,8 @@ html {
   --sidebar-ring: oklch(0.708 0 0);
   --cta: #9B7EBD;
   --footer: #9B7EBD;
+  --ada: #9B7EBD;
+  --trade:#24274A;
 }
 
 .dark {
@@ -75,8 +77,10 @@ html {
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
-    --cta: #8471FF;
+  --cta: #8471FF;
   --footer: #9B7EBD;
+  --ada: #7D6CF3;
+  --trade: #E8E7FD;
 }
 
 @theme inline {

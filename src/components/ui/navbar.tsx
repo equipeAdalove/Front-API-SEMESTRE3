@@ -30,7 +30,8 @@ export default function Navbar() {
     <header className="w-full px-6 py-4 flex justify-between items-center fixed top-0 left-0 z-50 bg-transparent">
       {/* Logo */}
       <div className="text-2xl font-bold">
-        Ada<span className="text-purple-600">Trade</span>
+        <span className="text-[var(--ada)]">Ada</span>
+        <span className="text-[var(--trade)]">Trade</span>
       </div>
 
       {/* Botão hamburguer */}
