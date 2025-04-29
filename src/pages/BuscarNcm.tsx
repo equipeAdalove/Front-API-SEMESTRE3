@@ -41,17 +41,13 @@ export default function BuscarNcm() {
           <h1 className="text-4xl font-bold">Buscar NCM</h1>
         </div>
 
+
         {/* Container da barra de busca + ThemeSwitcher */}
-        <div className="flex items-center gap-2 bg-[var(--color-input)] px-4 py-2 rounded-xl shadow-md w-full max-w-lg">
+        <div className="flex items-center space-x-6 bg-[var(--color-card)] rounded-3xl px-6 py-3 shadow-lg">
           <Search className="text-[var(--color-muted-foreground)]" size={18} />
 
-          <input
-            type="text"
-            placeholder="Digite o código NCM"
-            className="flex-1 bg-transparent focus:outline-none text-[var(--color-foreground)] placeholder-[var(--color-muted-foreground)]"
-            value={busca}
-            onChange={(e) => setBusca(e.target.value)}
-          />
+          <input type="text" placeholder="Digite o código NCM" className="px-4 py-2 bg-transparent rounded-full w-72 text-[var(--color-foreground)] placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]"
+            value={busca} onChange={(e) => setBusca(e.target.value)} />
 
           <button
             onClick={handleBuscar}

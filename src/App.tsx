@@ -20,7 +20,6 @@ import Comparacoes from "./pages/Comparacoes";
 import ExportacaoPage from "./pages/ExportacaoPage";
 
 
-// Este componente precisa estar DENTRO do Router
 function AppContent() {
   const location = useLocation();
   const isLanding = location.pathname === "/";
@@ -41,8 +40,8 @@ function AppContent() {
           <Route path="/visualizar-mapa" element={<VisualizarMapa />} />
           <Route path="/mapa" element={<VisualizarMapa />} />
           <Route path="/buscar-ncm" element={<BuscarNcm />} />
-          <Route path="/tendencias" element={<Tendencias />} /> 
-          <Route path="/comparacoes" element={<Comparacoes />} /> 
+          <Route path="/tendencias" element={<Tendencias />} />
+          <Route path="/comparacoes" element={<Comparacoes />} />
 
         </Routes>
       </div>

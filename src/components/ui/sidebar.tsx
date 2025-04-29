@@ -6,95 +6,71 @@ import { Link } from "react-router-dom";
 export default function Sidebar() {
   return (
     <aside
-      className="h-screen w-64 shadow-md flex flex-col p-4"
-      style={{
-        backgroundColor: "var(--color-sidebar)", // Usando a variável da cor de fundo da sidebar
-        color: "var(--color-sidebar-foreground)", // Cor do texto
-      }}
+      className="h-screen w-64 shadow-md flex flex-col p-4 bg-[var(--color-sidebar)] text-[var(--color-sidebar-foreground)]"
     >
       {/* Header */}
       <div className="w-full border-b border-gray-300 pb-4">
-        <Link to="/" className="block mt-11 text-4xl font-bold text-purple-700 text-center hover:underline">
+        <Link to="/" className="block mt-5 text-4xl font-bold text-purple-500 text-center hover:underline">
           Ada<span className="text-gray-900 dark:text-white">Trade</span>
         </Link>
       </div>
 
       {/* Navigation - Centralizado Verticalmente */}
-      <nav className="flex-1 flex flex-col justify-center">
-        <ul className="space-y-5">
+      <nav className="flex-1 flex flex-col justify-center mt-2">
+        <ul className="space-y-4">
           <li>
             <Link to="/dashboard">
-              <Button
-                variant="ghost"
-                className="w-full flex items-center gap-3 justify-start"
-              >
-                <Home style={{ transform: "scale(1.5)" }} />
-                <span style={{ fontSize: "1rem" }}>Dashboard</span>
+              <Button variant="ghost" className="w-full flex items-center gap-3 justify-start">
+                <Home style={{ transform: "scale(1.3)" }} />
+                <span className="text-sm:text-base">Dashboard</span>
               </Button>
             </Link>
           </li>
           <li>
             <Link to="/buscar-ncm">
-              <Button
-                variant="ghost"
-                className="w-full flex items-center gap-3 justify-start"
-              >
-                <BarChart style={{ transform: "scale(1.6)" }} />
-                <span style={{ fontSize: "1rem" }}>Buscar NCM</span>
+              <Button variant="ghost" className="w-full flex items-center gap-3 justify-start">
+                <BarChart style={{ transform: "scale(1.3)" }} />
+                <span className="text-sm:text-base">Buscar NCM</span>
               </Button>
             </Link>
           </li>
           <li>
             <Link to="/mapa">
-              <Button
-                variant="ghost"
-                className="w-full flex items-center gap-3 justify-start"
-              >
-                <Map style={{ transform: "scale(1.5)" }} />
-                <span style={{ fontSize: "1rem" }}>Visualizar Mapa</span>
+              <Button variant="ghost" className="w-full flex items-center gap-3 justify-start">
+                <Map style={{ transform: "scale(1.3)" }} />
+                <span className="text-sm:text-base">Visualizar Mapa</span>
               </Button>
             </Link>
           </li>
           <li>
             <Link to="/exportar">
-              <Button
-                variant="ghost"
-                className="w-full flex items-center gap-3 justify-start"
-              >
-                <FileBarChart2 style={{ transform: "scale(1.5)" }} />
-                <span style={{ fontSize: "1rem" }}>Exportar - Power BI</span>
+              <Button variant="ghost" className="w-full flex items-center gap-3 justify-start">
+                <FileBarChart2 style={{ transform: "scale(1.3)" }} />
+                <span className="text-sm:text-base">Exportar - Power BI</span>
               </Button>
             </Link>
           </li>
           <li>
             <Link to="/tendencias">
-              <Button
-                variant="ghost"
-                className="w-full flex items-center gap-3 justify-start"
-    >
-                <TrendingUp style={{ transform: "scale(1.5)" }} />
-                <span style={{ fontSize: "1rem" }}>Tendências</span>
+              <Button variant="ghost" className="w-full flex items-center gap-3 justify-start">
+                <TrendingUp style={{ transform: "scale(1.3)" }} />
+                <span className="text-sm:text-base">Tendências</span>
               </Button>
             </Link>
           </li>
           <li>
-          <Link to="/comparacoes">
-              <Button
-                variant="ghost"
-                className="w-full flex items-center gap-3 justify-start"
-    >
-                <Sliders style={{ transform: "scale(1.5)" }} />
-                <span style={{ fontSize: "1rem" }}>Comparações</span>
+            <Link to="/comparacoes">
+              <Button variant="ghost" className="w-full flex items-center gap-3 justify-start">
+                <Sliders style={{ transform: "scale(1.3)" }} />
+                <span className="text-sm:text-base">Comparações</span>
               </Button>
             </Link>
           </li>
-
         </ul>
       </nav>
 
       {/* Footer */}
-      <Card
-        className="p-4 text-center"
+      <Card className="p-4 text-center mt-5"
         style={{
           backgroundColor: "var(--color-popover)",
           color: "var(--color-popover-foreground)",
@@ -104,15 +80,15 @@ export default function Sidebar() {
           src="/adalove.jpeg"
           alt="Adalove"
           className="mx-auto w-16 h-16 rounded-full"
-        />{" "}
+        />
         <p className="text-base mt-2">Equipe AdaLove®</p>
         <p className="text-sm text-white-500">
           Acesse nosso{" "}
           <a
             href="https://github.com/equipeAdalove/API-SEMESTRE3"
             target="_blank"
+            rel="noopener noreferrer"
           >
-            {" "}
             <u> GitHub</u>
           </a>{" "}
           para saber mais sobre o projeto

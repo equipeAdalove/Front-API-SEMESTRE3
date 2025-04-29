@@ -4,6 +4,7 @@ import LineChartComponent from "@/components/charts/LineChartComponent";
 import InfoCard from "@/components/cards/InfoCard";
 import RankingTable from "@/components/tables/RankingTable";
 import ThemeSwitcher from "@/components/theme-provider/ButtonThemeSwitcher";
+import { Search } from "lucide-react";
 
 export default function DashboardInit() {
   const navigate = useNavigate();
@@ -43,23 +44,16 @@ export default function DashboardInit() {
           </div>
 
           <div className="flex items-center space-x-6 bg-[var(--color-card)] rounded-3xl px-6 py-3 shadow-lg">
-            <input
-              type="text"
-              placeholder="Buscar por estado"
-              value={searchQuery}
-              onChange={handleSearchChange}
-              className="px-4 py-2 bg-transparent rounded-full w-72 text-[var(--color-foreground)] placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]"
-            />
+            <Search className="text-[var(--color-muted-foreground)]" size={18} />
+            <input type="text" placeholder="Buscar por estado" value={searchQuery} onChange={handleSearchChange}
+              className="px-4 py-2 bg-transparent rounded-full w-72 text-[var(--color-foreground)] placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]" />
             <button
               onClick={() => navigate("/importacao")}
-              className="text-[var(--color-primary)] hover:text-[var(--color-primary-light)]"
-            >
+              className="text-[var(--color-primary)] hover:text-[var(--color-primary-light)]">
               Importação
             </button>
-            <button
-              onClick={() => navigate("/exportacao")}
-              className="text-[var(--color-primary)] hover:text-[var(--color-primary-light)]"
-            >
+            <button onClick={() => navigate("/exportacao")}
+              className="text-[var(--color-primary)] hover:text-[var(--color-primary-light)]">
               Exportação
             </button>
             <ThemeSwitcher />
