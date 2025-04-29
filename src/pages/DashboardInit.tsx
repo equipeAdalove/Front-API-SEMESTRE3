@@ -36,7 +36,7 @@ export default function DashboardInit() {
       <main className="flex-1 p-10 space-y-8">
         {/* Título e Navbar */}
         <div className="flex justify-between items-center mb-6">
-          <div>
+          <div className="-mt-2">
             <p className="text-sm text-[var(--muted-foreground)]">
               Pages / Dashboard
             </p>

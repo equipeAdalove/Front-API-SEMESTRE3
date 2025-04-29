@@ -32,9 +32,9 @@ export default function BuscarNcm() {
         color: "var(--color-foreground)",
       }}
     >
-      <div className="flex justify-between items-center mb-10 flex-wrap gap-4">
+      <div className="flex justify-between items-center mb-10 flex-wrap gap-2">
         {/* Título e breadcrumb */}
-        <div className="mt-5 px-4">
+        <div className="-mt-2">
           <p className="text-sm text-[var(--muted-foreground)]">
             Pages / Buscar NCM
           </p>

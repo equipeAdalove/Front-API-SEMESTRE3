@@ -22,7 +22,7 @@ const NupPage = () => {
     <div>
       {/* Topo com título e barra de busca */}
       <div className="flex justify-between items-center mt-10 mb-10 flex-wrap gap-4 px-10">
-        <div>
+        <div className="-mt-2">
           <p className="text-sm text-[var(--muted-foreground)]">
             Pages / Visualizar Mapas
           </p>
@@ -33,9 +33,9 @@ const NupPage = () => {
           <button className="text-[var(--color-primary)] font-semibold">
             Importação
           </button>
-          <button 
-          onClick={() => navigate("/exportacao_mapa")}
-          className="text-[var(--color-primary)] hover:text-[var(--color-primary-light)] focus:outline-none transition-all duration-200">
+          <button
+            onClick={() => navigate("/exportacao_mapa")}
+            className="text-[var(--color-primary)] hover:text-[var(--color-primary-light)] focus:outline-none transition-all duration-200">
             Exportação
           </button>
           <ThemeSwitcher />

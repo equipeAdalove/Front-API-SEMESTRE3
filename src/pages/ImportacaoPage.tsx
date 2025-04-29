@@ -90,7 +90,7 @@ export default function ImportacaoPage() {
       <main className="flex-1 p-10 space-y-8">
         {/* Topo com Título e Navbar */}
         <div className="flex justify-between items-center mb-6">
-          <div>
+          <div className="-mt-2">
             <p className="text-sm text-[var(--muted-foreground)]">
               Pages / DashBoard{" "}
             </p>
@@ -107,21 +107,19 @@ export default function ImportacaoPage() {
             />
             <button
               onClick={() => navigate("/importacao")}
-              className={`font-semibold ${
-                location.pathname === "/importacao"
-                  ? "text-[var(--color-primary)] underline underline-offset-4"
-                  : "text-[var(--color-muted-foreground)]"
-              }`}
+              className={`font-semibold ${location.pathname === "/importacao"
+                ? "text-[var(--color-primary)] underline underline-offset-4"
+                : "text-[var(--color-muted-foreground)]"
+                }`}
             >
               Importação
             </button>
             <button
               onClick={() => navigate("/exportacao")}
-              className={`font-semibold ${
-                location.pathname === "/exportacao"
-                  ? "text-[var(--color-primary)] underline underline-offset-4"
-                  : "text-[var(--color-muted-foreground)]"
-              }`}
+              className={`font-semibold ${location.pathname === "/exportacao"
+                ? "text-[var(--color-primary)] underline underline-offset-4"
+                : "text-[var(--color-muted-foreground)]"
+                }`}
             >
               Exportação
             </button>
