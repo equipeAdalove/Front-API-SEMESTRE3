@@ -15,7 +15,8 @@ const NupPage = () => {
         </div>
 
         {/* Apenas o ThemeSwitcher permanece aqui */}
-        <div className="flex items-center space-x-6 bg-[var(--color-card)] rounded-3xl px-6 py-3 shadow-lg">
+        {/* Botão de tema */}
+        <div className="ml-auto">
           <ThemeSwitcher />
         </div>
       </div>

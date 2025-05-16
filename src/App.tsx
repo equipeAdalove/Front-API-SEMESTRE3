@@ -18,6 +18,7 @@ import LandingPage from "./pages/LandingPage";
 import Tendencias from "./pages/Tendencias";
 import Comparacoes from "./pages/Comparacoes";
 import ExportacaoPage from "./pages/ExportacaoPage";
+import AnalisesEDados from "./pages/AnalisesEDados";
 
 
 function AppContent() {
@@ -39,6 +40,7 @@ function AppContent() {
           <Route path="/exportacao_mapa" element={<ExportacaoMap />} />
           <Route path="/visualizar-mapa" element={<VisualizarMapa />} />
           <Route path="/mapa" element={<VisualizarMapa />} />
+          <Route path="/exportar" element={<AnalisesEDados />} />
           <Route path="/buscar-ncm" element={<BuscarNcm />} />
           <Route path="/tendencias" element={<Tendencias />} />
           <Route path="/comparacoes" element={<Comparacoes />} />
