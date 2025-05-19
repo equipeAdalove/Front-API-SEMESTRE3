@@ -49,12 +49,24 @@ const FAQ: React.FC = () => {
     return (
         <section id="faq" className="w-full px-0">
             <div className="w-full max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
-                <h2
-                    className="text-4xl sm:text-5xl font-bold text-center mb-12"
-                    style={{ color: "var(--footer)" }}
-                >
-                    Dúvidas Frequentes (FAQ)
-                </h2>
+                <div>
+  <style>
+    {`
+      .faq-title {
+        color: var[#64488A];
+      }
+      .dark .faq-title {
+        color: white;
+      }
+    `}
+  </style>
+
+  <h2
+    className="text-4xl sm:text-5xl font-bold text-center mb-12 faq-title"
+  >
+    Dúvidas Frequentes (FAQ)
+  </h2>
+</div>
 
 
                 <div className="w-full space-y-4">
