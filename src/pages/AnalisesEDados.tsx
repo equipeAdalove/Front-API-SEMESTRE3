@@ -69,9 +69,9 @@ export default function AnalisesEDados() {
                         { label: "Exportações", href: "https://drive.google.com/file/d/1TS8RRisUNK1FufVPnFBGNjZqHzTsFZNh/view?usp=sharing" },
                         { label: "Importações", href: "https://drive.google.com/file/d/1v_ChzkjPKFOGbAH7lgjZtl6FJZimIIgs/view?usp=sharing" },
                     ].map((item, index) => (
-                        <a key={index} href={item.href}
-                            download className="p-4 bg-[var(--color-card)] border rounded-xl shadow-sm hover:shadow-md transition duration-200"
+                        <a key={index} href={item.href} target="_blank" rel="noopener noreferrer" className="p-4 bg-[var(--color-card)] border rounded-xl shadow-sm hover:shadow-md transition duration-200"
                             style={{ borderColor: "var(--color-border)" }}>
+
                             <span className="font-medium text-[var(--color-foreground)]">{item.label}</span>
                             <p className="text-xs text-[var(--muted-foreground)] mt-1"> Clique para baixar </p>
                         </a>
