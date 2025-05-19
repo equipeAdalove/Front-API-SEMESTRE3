@@ -135,3 +135,14 @@ html {
 * {
   font-family: "Poppins", sans-serif;
 }
+
+/* Garantir que o footer ocupe toda a largura */
+footer {
+  width: 100vw !important;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw !important;
+  margin-right: -50vw !important;
+}
+
