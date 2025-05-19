@@ -44,7 +44,7 @@ export default function Sidebar() {
               <Link to="/exportar">
                 <Button variant="ghost" className="w-full flex items-center gap-3 justify-start">
                   <FileBarChart2 style={{ transform: "scale(1.3)" }} />
-                  <span className="text-sm:text-base">Exportar - Power BI</span>
+                  <span className="text-sm:text-base">Exportar Dados</span>
                 </Button>
               </Link>
             </li>

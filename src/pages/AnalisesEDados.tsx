@@ -13,9 +13,9 @@ export default function AnalisesEDados() {
             <div className="flex justify-between items-center mb-10 flex-wrap gap-2">
                 <div className="-mt-2">
                     <p className="text-sm text-[var(--muted-foreground)]">
-                        Pages / Análises e Dados
+                        Pages / Exportar Dados
                     </p>
-                    <h1 className="text-4xl font-bold">Análises e Dados</h1>
+                    <h1 className="text-4xl font-bold">Exportar Dados</h1>
                 </div>
                 <div className="ml-auto">
                     <ThemeSwitcher />
@@ -31,7 +31,7 @@ export default function AnalisesEDados() {
                 <div className="w-full aspect-video rounded-xl overflow-hidden shadow-lg border"
                     style={{ borderColor: "var(--color-border)" }}>
                     <iframe
-                        src="https://app.powerbi.com/view?r=eyJrIjoiY2UxNmY2NmMtZTc2My00ZDA1LTlhODYtNDk2MTY2Y2E2MWZmIiwidCI6ImNmNzJlMmJkLTdhMmItNDc4My1iZGViLTM5ZDU3YjA3Zjc2ZiIsImMiOjR9"
+                        src="https://app.powerbi.com/view?r=eyJrIjoiMTM5ZDNjNDItNGVmMi00MDcyLWIwYWUtNGEzOTM3YjQxODE3IiwidCI6ImNmNzJlMmJkLTdhMmItNDc4My1iZGViLTM5ZDU3YjA3Zjc2ZiIsImMiOjR9"
                         width="100%"
                         height="100%"
                         frameBorder="2"
@@ -40,25 +40,34 @@ export default function AnalisesEDados() {
                     ></iframe>
                 </div>
                 <div className="left-grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                    <Button variant="ghost" className="w-full flex items-center gap-3 justify-start">
+                    <Button
+                        variant="ghost"
+                        className="w-full flex items-center gap-3 justify-start"
+                        onClick={() =>
+                            window.open(
+                                "https://app.powerbi.com/view?r=eyJrIjoiMTM5ZDNjNDItNGVmMi00MDcyLWIwYWUtNGEzOTM3YjQxODE3IiwidCI6ImNmNzJlMmJkLTdhMmItNDc4My1iZGViLTM5ZDU3YjA3Zjc2ZiIsImMiOjR9",
+                                "_blank"
+                            )
+                        }
+                    >
                         <SquareArrowOutUpRight style={{ transform: "scale(1.3)" }} />
-
                         <span className="text-sm:text-base">Acessar em outra guia</span>
                     </Button>
                 </div>
+
             </section>
 
             {/* Seção de downloads */}
             <section>
-                <h2 className="text-2xl font-semibold mb-4">Baixar Dados CSV</h2>
+                <h2 className="text-2xl font-semibold mb-4">Download dos dados</h2>
                 <p className="text-sm text-[var(--muted-foreground)] mb-4">
-                    Acesse os dados em formato CSV organizados por categoria.
+                    Acesse os dados em formato CSV.
                 </p>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                     {[
-                        { label: "Exportações", href: "/downloads/exportacoes.csv" },
-                        { label: "Importações", href: "/downloads/importacoes.csv" },
+                        { label: "Exportações", href: "https://drive.google.com/file/d/1TS8RRisUNK1FufVPnFBGNjZqHzTsFZNh/view?usp=sharing" },
+                        { label: "Importações", href: "https://drive.google.com/file/d/1v_ChzkjPKFOGbAH7lgjZtl6FJZimIIgs/view?usp=sharing" },
                     ].map((item, index) => (
                         <a key={index} href={item.href}
                             download className="p-4 bg-[var(--color-card)] border rounded-xl shadow-sm hover:shadow-md transition duration-200"
