@@ -29,9 +29,23 @@ export default function LandingPage() {
         <section id="inicio" className="flex flex-col-reverse md:flex-row items-center justify-between px-10 py-20 gap-10 mt-24">
           {/* Texto */}
           <div className="flex flex-col items-start gap-6 max-w-5xl w-full md:w-1/2">
-            <h1 className="text-[var(--color-foreground)] md:text-5xl font-bold leading-tight text-left m-0">
-              Dados Precisos, Decisões Inteligentes:
-            </h1>
+            <div>
+              <style>
+                {`
+                  .headline {
+                    color: #9B7EBD;
+                  }
+                  .dark .headline {
+                    color: white;
+                  }
+                `}
+              </style>
+
+              <h1 className="headline md:text-5xl font-bold leading-tight text-left m-0">
+                Dados Precisos, Decisões Inteligentes:
+              </h1>
+            </div>
+
             <h1 className="text-[var(--color-primary)] md:text-4xl font-bold leading-tight text-left m-0 mt-[-20px] ">
               Acompanhe o Comércio Exterior com Facilidade
             </h1>
@@ -51,24 +65,34 @@ export default function LandingPage() {
             <img
               src={Kraken}
               alt="Kraken"
-              className="w-[620px] h-[618px] object-contain -mt-20 ml-4 block dark:hidden"
+              className="w-[1010px] h-[673px] object-contain -mt-35 ml-4 block dark:hidden"
             />
             <img
               src={KrakenDark}
               alt="Kraken Dark"
-              className="w-[620px] h-[615px] object-contain -mt-20 ml-4 block hidden dark:block"
+              className="w-[1000px] h-[667px] object-contain -mt-35 ml-4 block hidden dark:block"
             />
           </div>
         </section>
 
-        {/* Titulo */}
-        <div className="max-w-6xl mx-auto px-6 mt-12">
-          <h2 className="text-6xl font-bold text-center text-purple-600 dark:text-purple-400">
-            Funcionalidades do Produto
-          </h2>
-        </div>
-
         <section id="funcionalidades" className="w-full py-20">
+           {/* Titulo */}
+       <div className="max-w-6xl mx-auto px-6 mt-12">
+        <style>
+          {`
+            .func-title {
+              color: #6C4D8D;
+            }
+            .dark .func-title {
+              color: white;
+            }
+          `}
+        </style>
+
+        <h2 className="text-6xl font-bold text-center func-title">
+          Funcionalidades do Produto
+        </h2>
+      </div>
           {/* Container principal usando flexbox */}
           <div className="flex flex-col md:flex-row gap-6 md:items-stretch">
             {/* Imagem do dashboard - agora com altura proporcional aos cards */}
@@ -141,7 +165,22 @@ export default function LandingPage() {
         <section id="sobre" className="w-full py-20">
           {/* Título alinhado à esquerda e mais próximo */}
           <div className="max-w-5xl mx-auto mb-6 text-left">
-            <h2 className="text-[var(--color-primary)] text-3xl font-bold mb-0">Sobre nós</h2>
+          <div>
+            <style>
+              {`
+                .about-title {
+                  color: #9B7EBD;
+                }
+                .dark .about-title {
+                  color: #8471FF;
+                }
+              `}
+            </style>
+
+            <h2 className="about-title text-3xl font-bold mb-0">
+              Sobre nós
+            </h2>
+          </div>
             <h3 className="text-[var(--color-foreground)] text-6xl font-extrabold -mt-2">AdaLove</h3>
           </div>
 
@@ -203,23 +242,15 @@ export default function LandingPage() {
       {/* 
         Rodapé - Posicionado no final da página ocupando toda a largura
       */}
-      <footer 
-        className="w-full text-white py-6" 
-        style={{ 
-          backgroundColor: "var(--footer)",
-          width: "100vw",
-          marginLeft: "calc(50% - 50vw)",
-          marginRight: "calc(50% - 50vw)"
-        }}
-      >
-        <div className="flex flex-col md:flex-row justify-between items-center w-full max-w-none mx-auto px-4">
-          <p>© {new Date().getFullYear()} AdaLove - Todos os direitos reservados.</p>
-          <div className="flex items-center gap-2 mt-2 md:mt-0">
-            <img src="/src/components/images/logo-cps.png" alt="CPS" className="h-12" />
-            <img src="/src/components/images/bannerAdaLove.png" alt="AdaLove Mini" className="h-12" />
-          </div>
-        </div>
-      </footer>
+      <footer className="w-full text-sm py-6 mt-10 text-white dark:text-[#4B2C6F] bg-[#6C4D8D] dark:bg-[#8471FF]">
+  <div className="flex flex-col md:flex-row justify-between items-center w-full mx-auto px-4">
+    <p>© {new Date().getFullYear()} AdaLove - Todos os direitos reservados.</p>
+    <div className="flex items-center gap-2 mt-2 md:mt-0">
+      <img src="/src/components/images/logo-cps.png" alt="CPS" className="h-12" />
+      <img src="/src/components/images/bannerAdaLove.png" alt="AdaLove Mini" className="h-12" />
+    </div>
+  </div>
+</footer>
     </>
   );
 }
