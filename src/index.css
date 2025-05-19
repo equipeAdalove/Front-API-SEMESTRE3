@@ -138,10 +138,11 @@ html {
 
 /* Garantir que o footer ocupe toda a largura */
 footer {
-  width: 100vw !important;
+  width: 99.5vw !important;
   position: relative;
   left: 50%;
   right: 50%;
+  margin-bottom: -50vw ! important;
   margin-left: -50vw !important;
   margin-right: -50vw !important;
 }
