@@ -14,7 +14,7 @@ export default function Sidebar() {
           <span className="text-[var(--trade)]">Trade</span>
         </Link>
         {/* Navigation - Centralizado Verticalmente */}
-        <nav className="flex-1 flex flex-col justify-center mt-15">
+        <nav className="flex-1 flex flex-col justify-center mt-10">
           <ul className="space-y-4">
             <li>
               <Link to="/dashboard">
