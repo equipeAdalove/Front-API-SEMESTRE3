@@ -26,7 +26,7 @@ export default function LandingPage() {
           Hero Section 
           (Grande chamada com texto e imagem do polvo)
         */}
-        <section id="inicio" className="flex flex-col-reverse md:flex-row items-center justify-between px-10 py-20 gap-10 mt-24">
+        <section id="inicio" className="flex flex-col-reverse md:flex-row items-center justify-between px-10 py-5 gap-10 mt-24">
           {/* Texto */}
           <div className="flex flex-col items-start gap-6 max-w-5xl w-full md:w-1/2">
             <div>
@@ -65,17 +65,17 @@ export default function LandingPage() {
             <img
               src={Kraken}
               alt="Kraken"
-              className="w-[1010px] h-[673px] object-contain -mt-35 ml-4 block dark:hidden"
+              className="w-[1010px] h-[673px] object-contain -mt-21 ml-4 block dark:hidden"
             />
             <img
               src={KrakenDark}
               alt="Kraken Dark"
-              className="w-[1000px] h-[667px] object-contain -mt-35 ml-4 block hidden dark:block"
+              className="w-[1000px] h-[667px] object-contain -mt-21 ml-4 block hidden dark:block"
             />
           </div>
         </section>
 
-        <section id="funcionalidades" className="w-full py-20">
+        <section id="funcionalidades" className="w-full py-5">
            {/* Titulo */}
        <div className="max-w-6xl mx-auto px-6 mt-12">
         <style>
@@ -97,7 +97,7 @@ export default function LandingPage() {
           <div className="flex flex-col md:flex-row gap-6 md:items-stretch">
             {/* Imagem do dashboard - agora com altura proporcional aos cards */}
             <div className="md:w-1/2">
-            <div className="relative w-full aspect-video">
+            <div className="relative w-full min-h-[400px] py-10">
               <img
                 src="src/components/images/funcionalidades/DashImg1.png"
                 alt="Dashboard Interface"
@@ -107,9 +107,9 @@ export default function LandingPage() {
             </div>
 
             {/* Coluna da direita - Cards */}
-            <div className="md:w-1/2 flex flex-col justify-between gap-4">
+            <div className="md:w-1/2 flex flex-col justify-between gap-4 py-10">
               {/* Card Dashboard Interativo */}
-              <div className="border border-gray-500 dark:bg-gray-800 rounded-xl shadow-md p-6 mb-2 flex-1">
+              <div className="border border-gray-500 dark:bg-gray-800 rounded-xl shadow-md p-3 mb-2 flex-1">
                 <div className="flex items-center mb-4">
                   <div className="bg-purple-100 dark:bg-purple-900 p-3 rounded-lg mr-4">
                     <LayoutDashboard className="w-6 h-6 text-purple-600 dark:text-purple-400" />
@@ -122,7 +122,7 @@ export default function LandingPage() {
               </div>
 
               {/* Card Busca por NCM */}
-              <div className="border border-gray-500 dark:bg-gray-800 rounded-xl shadow-md p-6 mb-2 flex-1">
+              <div className="border border-gray-500 dark:bg-gray-800 rounded-xl shadow-md p-3 mb-2 flex-1">
                 <div className="flex items-center mb-4">
                   <div className="bg-green-100 dark:bg-green-900 p-3 rounded-lg mr-4">
                     <Search className="w-6 h-6 text-green-600 dark:text-green-400" />
@@ -135,7 +135,7 @@ export default function LandingPage() {
               </div>
 
               {/* Card Mapa de Calor */}
-              <div className="border border-gray-500 dark:bg-gray-800 rounded-xl shadow-md p-6 mb-2 flex-1">
+              <div className="border border-gray-500 dark:bg-gray-800 rounded-xl shadow-md p-3 mb-2 flex-1">
                 <div className="flex items-center mb-4">
                   <div className="bg-blue-100 dark:bg-blue-900 p-3 rounded-lg mr-4">
                     <Map className="w-6 h-6 text-blue-600 dark:text-blue-400" />
