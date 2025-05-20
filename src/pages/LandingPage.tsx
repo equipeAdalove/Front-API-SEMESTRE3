@@ -97,13 +97,13 @@ export default function LandingPage() {
           <div className="flex flex-col md:flex-row gap-6 md:items-stretch">
             {/* Imagem do dashboard - agora com altura proporcional aos cards */}
             <div className="md:w-1/2">
-              <div className="relative w-full" style={{ paddingTop: '56.25%' /* 16:9 ratio */ }}>
-                <img
-                  src="src/components/images/funcionalidades/DashImg.png"
-                  alt="Dashboard Interface"
-                  className="absolute top-0 left-0 w-full h-full object-cover rounded-xl shadow-lg border border-gray-500"
-                />
-              </div>
+            <div className="relative w-full aspect-video">
+              <img
+                src="src/components/images/funcionalidades/DashImg1.png"
+                alt="Dashboard Interface"
+                className="w-full h-full object-contain rounded-xl shadow-lg border border-gray-500"
+              />
+            </div>
             </div>
 
             {/* Coluna da direita - Cards */}
