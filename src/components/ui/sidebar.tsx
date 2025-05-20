@@ -14,7 +14,7 @@ export default function Sidebar() {
           <span className="text-[var(--trade)]">Trade</span>
         </Link>
         {/* Navigation - Centralizado Verticalmente */}
-        <nav className="flex-1 flex flex-col justify-center mt-10">
+        <nav className="flex-1 flex flex-col justify-center mt-15">
           <ul className="space-y-4">
             <li>
               <Link to="/dashboard">
@@ -71,7 +71,7 @@ export default function Sidebar() {
 
 
       {/* Footer */}
-      <Card className="p-4 text-center mt-5"
+      <Card className="p-5 text-center mt-5"
         style={{
           backgroundColor: "var(--color-popover)",
           color: "var(--color-popover-foreground)",
