@@ -17,7 +17,6 @@ import Tendencias from "./pages/Tendencias";
 import Comparacoes from "./pages/Comparacoes";
 import ExportacaoPage from "./pages/ExportacaoPage";
 import AnalisesEDados from "./pages/AnalisesEDados";
-import HeatMap from './components/map/HeatMap';
 
 function AppContent() {
   const location = useLocation();

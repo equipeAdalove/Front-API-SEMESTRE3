@@ -16,8 +16,8 @@ import * as RadioGroup from '@radix-ui/react-radio-group';
 interface HeatMapData {
   NCM: string;
   CO_PAIS: string;
-  VL_FOB: number;
-  KG_LIQUIDO: number;
+  vl_fob_total: number;
+  kg_liq_total: number;
   ISO3: string;
 }
 
@@ -29,7 +29,7 @@ const HeatMap = () => {
   const [ncm, setNcm] = useState<string>('');
   const [metric, setMetric] = useState<MetricType>('VL_FOB');
   const [rawData, setRawData] = useState<HeatMapData[]>([]);
-  const [filteredData, setFilteredData] = useState<HeatMapData[]>([]);
+  const [dataById, setDataById] = useState<Record<string, HeatMapData>>({});
 
   useEffect(() => {
     parse<HeatMapData>('/csv/exportacao_heatmap_com_iso3.csv', {
@@ -39,7 +39,7 @@ const HeatMap = () => {
       complete: (results: ParseResult<HeatMapData>) => {
         const parsedData = results.data
           .filter(row => row.ISO3)
-          .map((row) => ({
+          .map((row: HeatMapData) => ({
             ...row,
             NCM: String(row.NCM).padStart(8, '0'),
             ISO3: row.ISO3.toUpperCase(),
@@ -52,25 +52,25 @@ const HeatMap = () => {
   const handleSearch = () => {
     const formattedNCM = ncm.padStart(8, '0');
     const filtered = rawData.filter(item => item.NCM === formattedNCM);
-    setFilteredData(filtered);
-  };
 
-  const dataById = useMemo(() => {
     const byId: Record<string, HeatMapData> = {};
-    for (const row of filteredData) {
+    for (const row of filtered) {
       const idNum = iso3ToId[row.ISO3 as keyof typeof iso3ToId];
       if (idNum) {
         byId[idNum] = row;
       }
     }
-    return byId;
-  }, [filteredData]);
+
+    console.log('IDs encontrados para NCM:', formattedNCM, Object.keys(byId));
+    setDataById(byId);
+  };
 
   const maxValue = useMemo(() => {
+    if (!Object.keys(dataById).length) return 1;
     const values = Object.values(dataById).map(d =>
-      metric === 'VL_FOB' ? d.VL_FOB : d.KG_LIQUIDO
+      metric === 'VL_FOB' ? d.vl_fob_total : d.kg_liq_total
     );
-    return values.length ? Math.max(...values) : 1;
+    return Math.max(...values);
   }, [dataById, metric]);
 
   const colorScale = useMemo(() =>
@@ -131,12 +131,12 @@ const HeatMap = () => {
                 const id = String(geo.id);
                 const data = dataById[id];
                 const value = data
-                  ? (metric === 'VL_FOB' ? data.VL_FOB : data.KG_LIQUIDO)
+                  ? (metric === 'VL_FOB' ? data.vl_fob_total : data.kg_liq_total)
                   : 0;
 
                 return (
                   <Geography
-                    key={`${geo.rsmKey}-${geo.id}`}
+                    key={geo.rsmKey}
                     geography={geo}
                     fill={value > 0 ? colorScale(value) : '#f0f0f0'}
                     stroke="#ffffff"
@@ -154,26 +154,26 @@ const HeatMap = () => {
       </div>
 
       {Object.keys(dataById).length > 0 && (
-        <div className="mt-6 p-4 bg-muted rounded-md shadow-md">
-          <div className="flex items-center flex-wrap gap-2">
-            <span className="font-semibold text-sm mr-2">
-              Legenda ({metric === 'VL_FOB' ? 'R$' : 'KG'}):
-            </span>
-            {colorScale.range().map((color) => {
-              const [min] = colorScale.invertExtent(color);
-              return (
-                <div
-                  key={color}
-                  className="text-[10px] w-[60px] h-[20px] border text-center flex items-center justify-center text-white"
-                  style={{ backgroundColor: color, borderColor: '#ccc' }}
-                >
-                  {Math.round(min)}
-                </div>
-              );
-            })}
-          </div>
+      <div className="mt-6 p-4 bg-muted rounded-md shadow-md">
+        <div className="flex items-center flex-wrap gap-2">
+          <span className="font-semibold text-sm mr-2">
+            Legenda ({metric === 'VL_FOB' ? 'R$' : 'KG'}):
+          </span>
+          {colorScale.range().map((color) => {
+            const [min] = colorScale.invertExtent(color);
+            return (
+              <div
+                key={color}
+                className="text-[10px] w-[60px] h-[20px] border text-center flex items-center justify-center text-white" // Adicionado text-white aqui
+                style={{ backgroundColor: color, borderColor: '#ccc' }}
+              >
+                {Math.round(min)}
+              </div>
+            );
+          })}
         </div>
-      )}
+      </div>
+    )}
     </div>
   );
 };
