@@ -7,6 +7,8 @@ import RankingTableMunicipios from "@/components/tables/RankingTableMunicipios";
 import RankingTableProdutos from "@/components/tables/RankingTableProdutos";
 import ThemeSwitcher from "@/components/theme-provider/ButtonThemeSwitcher";
 
+import { importacaoService } from "@/services/importacaoService";
+
 export default function ImportacaoPage() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -16,73 +18,16 @@ export default function ImportacaoPage() {
     setSearchQuery(event.target.value);
   };
 
-  const dataImportacao = [
-    { year: "2014", valorAgregado: 32000, quilograma: 260 },
-    { year: "2015", valorAgregado: 18000, quilograma: 220 },
-    { year: "2016", valorAgregado: 47000, quilograma: 210 },
-    { year: "2017", valorAgregado: 25000, quilograma: 310 },
-    { year: "2018", valorAgregado: 60000, quilograma: 280 },
-    { year: "2019", valorAgregado: 42000, quilograma: 430 },
-    { year: "2020", valorAgregado: 70000, quilograma: 390 },
-    { year: "2021", valorAgregado: 30000, quilograma: 500 },
-    { year: "2022", valorAgregado: 65000, quilograma: 250 },
-  ];
+  // Dados vindo do service
+  const dataImportacao = importacaoService.getDataImportacao();
+  const pieData = importacaoService.getPieData();
+  const municipiosData = importacaoService.getMunicipiosData();
+  const dadosProdutos = importacaoService.getDadosProdutos();
 
-  const pieData = [
-    { name: "Marítima", value: 52 },
-    { name: "Rodoviária", value: 33 },
-    { name: "Aérea", value: 9 },
-    { name: "Fluvial", value: 4 },
-    { name: "Ferroviária", value: 2 },
-  ];
+  const COLORS = ["#FF6347", "#6A5ACD", "#20B2AA", "#FFD700", "#8A2BE2"];
 
-  const COLORS = ["#FF6347", "#6A5ACD", "#20B2AA", "#FFD700", "#8A2BE2"]; // Definindo cores para o gráfico de pizza
-
-  const municipiosData = [
-    { municipio: "Uberlândia – MG", valor: "4.789.456.123" },
-    { municipio: "Belo Horizonte – MG", valor: "4.203.112.870" },
-    { municipio: "Contagem – MG", valor: "3.865.900.543" },
-    { municipio: "Betim – MG", valor: "3.441.777.210" },
-    { municipio: "Juiz de Fora – MG", valor: "2.992.311.407" },
-    { municipio: "Montes Claros – MG", valor: "2.478.908.152" },
-  ];
-
-  const dadosProdutos = [
-    {
-      name: "Soja em grãos",
-      valor: "US$ 28.300",
-      variacao: "12,5%",
-      participacao: "22%",
-    },
-    {
-      name: "Minério de ferro",
-      valor: "US$ 21.500",
-      variacao: "9,8%",
-      participacao: "16,7%",
-    },
-    {
-      name: "Óleo de soja bruto",
-      valor: "US$ 5.780",
-      variacao: "-3,4%",
-      participacao: "4,5%",
-    },
-    {
-      name: "Celulose",
-      valor: "US$ 7.900",
-      variacao: "6,1%",
-      participacao: "6,1%",
-    },
-    {
-      name: "Carne bovina congelada",
-      valor: "US$ 6.200",
-      variacao: "15,2%",
-      participacao: "4,8%",
-    },
-  ];
-
-  // Resetando o valor de busca ao carregar a página
   useEffect(() => {
-    setSearchQuery(""); // Limpa o campo de pesquisa ao montar o componente
+    setSearchQuery("");
   }, []);
 
   return (
@@ -107,19 +52,21 @@ export default function ImportacaoPage() {
             />
             <button
               onClick={() => navigate("/importacao")}
-              className={`font-semibold ${location.pathname === "/importacao"
-                ? "text-[var(--color-primary)] underline underline-offset-4"
-                : "text-[var(--color-muted-foreground)]"
-                }`}
+              className={`font-semibold ${
+                location.pathname === "/importacao"
+                  ? "text-[var(--color-primary)] underline underline-offset-4"
+                  : "text-[var(--color-muted-foreground)]"
+              }`}
             >
               Importação
             </button>
             <button
               onClick={() => navigate("/exportacao")}
-              className={`font-semibold ${location.pathname === "/exportacao"
-                ? "text-[var(--color-primary)] underline underline-offset-4"
-                : "text-[var(--color-muted-foreground)]"
-                }`}
+              className={`font-semibold ${
+                location.pathname === "/exportacao"
+                  ? "text-[var(--color-primary)] underline underline-offset-4"
+                  : "text-[var(--color-muted-foreground)]"
+              }`}
             >
               Exportação
             </button>
@@ -221,16 +168,12 @@ export default function ImportacaoPage() {
             </div>
             <RankingTableMunicipios data={municipiosData} />
           </div>
-
-          <div className="bg-[var(--color-card)] p-6 rounded-2xl shadow-md">
-            <div className="flex justify-between items-center mb-4">
-              <h3 className="text-lg font-semibold">
-                Ranking – Produtos (2024)
-              </h3>
-              <button className="text-xl">⋯</button>
-            </div>
-            <RankingTableProdutos data={dadosProdutos} />
-          </div>
+          <RankingTableProdutos
+            estado="Minas Gerais"
+            ncm="Todos"
+            titulo="Ranking – Produtos (2024)"
+            data={dadosProdutos}
+          />
         </section>
       </main>
     </div>

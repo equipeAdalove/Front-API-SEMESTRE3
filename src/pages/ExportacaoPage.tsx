@@ -7,6 +7,8 @@ import RankingTableMunicipios from "@/components/tables/RankingTableMunicipios";
 import RankingTableProdutos from "@/components/tables/RankingTableProdutos";
 import ThemeSwitcher from "@/components/theme-provider/ButtonThemeSwitcher";
 
+import { exportacaoService } from "@/services/exportacaoService";
+
 export default function ExportacaoPage() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -16,71 +18,15 @@ export default function ExportacaoPage() {
     setSearchQuery(event.target.value);
   };
 
-  const dataExportacao = [
-    { year: "2014", valorAgregado: 120000, quilograma: 160000 },
-    { year: "2015", valorAgregado: 980000, quilograma: 180000 },
-    { year: "2016", valorAgregado: 250000, quilograma: 230000 },
-    { year: "2017", valorAgregado: 900000, quilograma: 260000 },
-    { year: "2018", valorAgregado: 300000, quilograma: 310000 },
-    { year: "2019", valorAgregado: 870000, quilograma: 290000 },
-    { year: "2020", valorAgregado: 400000, quilograma: 370000 },
-    { year: "2021", valorAgregado: 950000, quilograma: 330000 },
-    { year: "2022", valorAgregado: 280000, quilograma: 390000 },
-  ];
+  const dataExportacao = exportacaoService.getDataExportacao();
+  const pieData = exportacaoService.getPieData();
+  const municipiosData = exportacaoService.getMunicipiosData();
+  const dadosProdutos = exportacaoService.getDadosProdutos();
 
-  const pieData = [
-    { name: "Marítima", value: 63 },
-    { name: "Aérea", value: 25 },
-    { name: "Outras", value: 12 },
-  ];
+  const COLORS = ["#FF6347", "#6A5ACD", "#20B2AA"];
 
-  const COLORS = ["#FF6347", "#6A5ACD", "#20B2AA"]; // Definindo cores para o gráfico de pizza
-
-  const municipiosData = [
-    { municipio: "Santos – SP", valor: "6.681.393.984" },
-    { municipio: "São Paulo – SP", valor: "5.213.719.447" },
-    { municipio: "São Bernardo do Campo – SP", valor: "3.738.399.961" },
-    { municipio: "São José dos Campos – SP", valor: "3.680.199.856" },
-    { municipio: "Piracicaba – SP", valor: "3.159.969.189" },
-    { municipio: "Ilhabela – SP", valor: "2.618.590.901" },
-  ];
-
-  const dadosProdutos = [
-    {
-      name: "Açúcares e Melaços",
-      valor: "US$ 11.600",
-      variacao: "19,6%",
-      participacao: "16%",
-    },
-    {
-      name: "Óleos combustíveis de petróleo ou...",
-      valor: "US$ 862",
-      variacao: "18,6%",
-      participacao: "8,9%",
-    },
-    {
-      name: "Sucos de Frutas ou de vegetais",
-      valor: "US$ 573",
-      variacao: "40,6%",
-      participacao: "5,9%",
-    },
-    {
-      name: "Demais produtos da indústria de...",
-      valor: "US$ 438",
-      variacao: "-8,69%",
-      participacao: "4,5%",
-    },
-    {
-      name: "Veículos automóveis de passageiros",
-      valor: "US$ 424",
-      variacao: "28,4%",
-      participacao: "4,4%",
-    },
-  ];
-
-  // Resetando o valor de busca ao carregar a página
   useEffect(() => {
-    setSearchQuery(""); // Limpa o campo de pesquisa ao montar o componente
+    setSearchQuery("");
   }, []);
 
   return (
@@ -105,19 +51,21 @@ export default function ExportacaoPage() {
             />
             <button
               onClick={() => navigate("/importacao")}
-              className={`font-semibold ${location.pathname === "/importacao"
-                ? "text-[var(--color-primary)] underline underline-offset-4"
-                : "text-[var(--color-muted-foreground)]"
-                }`}
+              className={`font-semibold ${
+                location.pathname === "/importacao"
+                  ? "text-[var(--color-primary)] underline underline-offset-4"
+                  : "text-[var(--color-muted-foreground)]"
+              }`}
             >
               Importação
             </button>
             <button
               onClick={() => navigate("/exportacao")}
-              className={`font-semibold ${location.pathname === "/exportacao"
-                ? "text-[var(--color-primary)] underline underline-offset-4"
-                : "text-[var(--color-muted-foreground)]"
-                }`}
+              className={`font-semibold ${
+                location.pathname === "/exportacao"
+                  ? "text-[var(--color-primary)] underline underline-offset-4"
+                  : "text-[var(--color-muted-foreground)]"
+              }`}
             >
               Exportação
             </button>
@@ -187,7 +135,6 @@ export default function ExportacaoPage() {
             icon="🏭"
           />
         </section>
-
         {/* Tabelas de Ranking */}
         <section className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <div className="bg-[var(--color-card)] p-6 rounded-2xl shadow-md">
@@ -199,16 +146,12 @@ export default function ExportacaoPage() {
             </div>
             <RankingTableMunicipios data={municipiosData} />
           </div>
-
-          <div className="bg-[var(--color-card)] p-6 rounded-2xl shadow-md">
-            <div className="flex justify-between items-center mb-4">
-              <h3 className="text-lg font-semibold">
-                Ranking – Produtos (2024)
-              </h3>
-              <button className="text-xl">⋯</button>
-            </div>
-            <RankingTableProdutos data={dadosProdutos} />
-          </div>
+          <RankingTableProdutos
+            estado="Minas Gerais"
+            ncm="Todos"
+            titulo="Ranking – Produtos (2024)"
+            data={dadosProdutos}
+          />
         </section>
       </main>
     </div>

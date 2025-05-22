@@ -6,6 +6,11 @@ import RankingTable from "@/components/tables/RankingTable";
 import ThemeSwitcher from "@/components/theme-provider/ButtonThemeSwitcher";
 import { Search } from "lucide-react";
 
+import {
+  getDataDashboardProdutos,
+  getDadosExportacaoEstados,
+} from "@/services/dashboardService";
+
 export default function DashboardInit() {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
@@ -14,22 +19,8 @@ export default function DashboardInit() {
     setSearchQuery(event.target.value);
   };
 
-  const dataDashboard = [
-    { year: "2019", ProdutoA: 5000, ProdutoB: 6000 },
-    { year: "2020", ProdutoA: 5500, ProdutoB: 6500 },
-    { year: "2021", ProdutoA: 6200, ProdutoB: 7000 },
-    { year: "2022", ProdutoA: 5900, ProdutoB: 7400 },
-    { year: "2023", ProdutoA: 6400, ProdutoB: 7500 },
-    { year: "2024", ProdutoA: 7000, ProdutoB: 8000 },
-  ];
-
-  const dadosExportacaoEstados = [
-    { label: "SP", value: 120000000 },
-    { label: "MG", value: 89000000 },
-    { label: "RJ", value: 76000000 },
-    { label: "RS", value: 54000000 },
-    { label: "PR", value: 47000000 },
-  ];
+  const dataDashboard = getDataDashboardProdutos();
+  const dadosExportacaoEstados = getDadosExportacaoEstados();
 
   return (
     <div className="flex min-h-screen bg-[var(--color-background)] text-[var(--color-foreground)]">
@@ -44,16 +35,27 @@ export default function DashboardInit() {
           </div>
 
           <div className="flex items-center space-x-6 bg-[var(--color-card)] rounded-3xl px-6 py-3 shadow-lg">
-            <Search className="text-[var(--color-muted-foreground)]" size={18} />
-            <input type="text" placeholder="Buscar por estado" value={searchQuery} onChange={handleSearchChange}
-              className="px-4 py-2 bg-transparent rounded-full w-72 text-[var(--color-foreground)] placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]" />
+            <Search
+              className="text-[var(--color-muted-foreground)]"
+              size={18}
+            />
+            <input
+              type="text"
+              placeholder="Buscar por estado"
+              value={searchQuery}
+              onChange={handleSearchChange}
+              className="px-4 py-2 bg-transparent rounded-full w-72 text-[var(--color-foreground)] placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]"
+            />
             <button
               onClick={() => navigate("/importacao")}
-              className="text-[var(--color-primary)] hover:text-[var(--color-primary-light)]">
+              className="text-[var(--color-primary)] hover:text-[var(--color-primary-light)]"
+            >
               Importação
             </button>
-            <button onClick={() => navigate("/exportacao")}
-              className="text-[var(--color-primary)] hover:text-[var(--color-primary-light)]">
+            <button
+              onClick={() => navigate("/exportacao")}
+              className="text-[var(--color-primary)] hover:text-[var(--color-primary-light)]"
+            >
               Exportação
             </button>
             <ThemeSwitcher />
@@ -64,14 +66,42 @@ export default function DashboardInit() {
         <section className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <div className="bg-[var(--color-card)] p-6 rounded-2xl shadow-md">
             <h3 className="text-lg font-semibold mb-2">
-              Comparação de Produtos
+              Comparação de Produtos - Importação e Exportação
             </h3>
             <LineChartComponent
               data={dataDashboard}
               xAxisKey="year"
               lines={[
-                { dataKey: "ProdutoA", stroke: "#7e22ce", label: "Produto A" },
-                { dataKey: "ProdutoB", stroke: "#4c51bf", label: "Produto B" },
+                {
+                  dataKey: "soja_import",
+                  stroke: "#f59e0b",
+                  label: "Soja Importação",
+                },
+                {
+                  dataKey: "soja_export",
+                  stroke: "#d97706",
+                  label: "Soja Exportação",
+                },
+                {
+                  dataKey: "ferro_import",
+                  stroke: "#ef4444",
+                  label: "Ferro Importação",
+                },
+                {
+                  dataKey: "ferro_export",
+                  stroke: "#b91c1c",
+                  label: "Ferro Exportação",
+                },
+                {
+                  dataKey: "oleo_import",
+                  stroke: "#3b82f6",
+                  label: "Óleo Importação",
+                },
+                {
+                  dataKey: "oleo_export",
+                  stroke: "#2563eb",
+                  label: "Óleo Exportação",
+                },
               ]}
             />
           </div>
