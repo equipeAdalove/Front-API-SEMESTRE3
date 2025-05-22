@@ -7,7 +7,7 @@ import Navbar from "@/components/ui/navbar";
 import { LayoutDashboard, Map, Search } from 'lucide-react';
 import FAQ from "@/components/ui/FAQ";
 
-import React, { useState } from "react";
+import { useState } from "react";
 
 export default function LandingPage() {
   const [imagemSelecionada, setImagemSelecionada] = useState("src/components/images/funcionalidades/DashImg1.png");
