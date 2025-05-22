@@ -12,14 +12,12 @@ import BuscarNcm from "./pages/BuscarNcm";
 import VisualizarMapa from "./pages/VisualizarMapa";
 import ImportacaoPage from "./pages/ImportacaoPage";
 import DashboardEstado from "./pages/ImportacaoPage";
-import ImportacaoMap from "./pages/ImportacaoMap";
-import ExportacaoMap from "./pages/ExportacaoMap";
 import LandingPage from "./pages/LandingPage";
 import Tendencias from "./pages/Tendencias";
 import Comparacoes from "./pages/Comparacoes";
 import ExportacaoPage from "./pages/ExportacaoPage";
 import AnalisesEDados from "./pages/AnalisesEDados";
-
+import HeatMap from './components/map/HeatMap';
 
 function AppContent() {
   const location = useLocation();
@@ -36,8 +34,6 @@ function AppContent() {
           <Route path="/dashboard/:uf" element={<DashboardEstado />} />
           <Route path="/importacao" element={<ImportacaoPage />} />
           <Route path="/exportacao" element={<ExportacaoPage />} />
-          <Route path="/importacao_mapa" element={<ImportacaoMap />} />
-          <Route path="/exportacao_mapa" element={<ExportacaoMap />} />
           <Route path="/visualizar-mapa" element={<VisualizarMapa />} />
           <Route path="/mapa" element={<VisualizarMapa />} />
           <Route path="/exportar" element={<AnalisesEDados />} />
@@ -56,6 +52,7 @@ function App() {
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <Router>
         <AppContent />
+          <HeatMap />
       </Router>
     </ThemeProvider>
   );
