@@ -52,7 +52,6 @@ function App() {
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <Router>
         <AppContent />
-          <HeatMap />
       </Router>
     </ThemeProvider>
   );
