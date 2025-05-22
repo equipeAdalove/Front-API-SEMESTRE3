@@ -78,24 +78,24 @@ export default function DashboardInit() {
                   label: "Soja Importação",
                 },
                 {
-                  dataKey: "ferro_import",
-                  stroke: "#ef4444",
-                  label: "Ferro Importação",
-                },
-                {
-                  dataKey: "oleo_import",
-                  stroke: "#3b82f6",
-                  label: "Óleo Importação",
-                },
-                {
                   dataKey: "soja_export",
                   stroke: "#d97706",
                   label: "Soja Exportação",
                 },
                 {
+                  dataKey: "ferro_import",
+                  stroke: "#ef4444",
+                  label: "Ferro Importação",
+                },
+                {
                   dataKey: "ferro_export",
                   stroke: "#b91c1c",
                   label: "Ferro Exportação",
+                },
+                {
+                  dataKey: "oleo_import",
+                  stroke: "#3b82f6",
+                  label: "Óleo Importação",
                 },
                 {
                   dataKey: "oleo_export",
