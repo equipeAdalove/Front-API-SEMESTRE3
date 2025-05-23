@@ -1,22 +1,18 @@
-import React from "react";
-
 type Produto = {
   name: string;
-  valor: string; 
-  variacao: string; 
-  participacao: string; 
+  valor: string | number;
+  variacao: string;
+  participacao: string;
 };
 
 interface RankingTableProdutosProps {
-  estado: string;
-  ncm: string;
   titulo: string;
   data: Produto[];
+  estado?: string;
+  ncm?: string;
 }
 
 const RankingTableProdutos: React.FC<RankingTableProdutosProps> = ({
-  estado,
-  ncm,
   titulo,
   data,
 }) => {
@@ -46,7 +42,7 @@ const RankingTableProdutos: React.FC<RankingTableProdutosProps> = ({
           {data.length === 0 ? (
             <tr>
               <td colSpan={4} className="py-6 text-center italic text-gray-500">
-                Nenhum dado disponível para {estado} - NCM {ncm}.
+                Nenhum dado disponível.
               </td>
             </tr>
           ) : (
