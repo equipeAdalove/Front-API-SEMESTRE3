@@ -32,6 +32,12 @@ const HeatMap = () => {
   const [rawData, setRawData] = useState<HeatMapData[]>([]);
   const [dataById, setDataById] = useState<Record<string, HeatMapData>>({});
 
+  const [selectedYear, setSelectedYear] = useState("2024");
+
+  const handleYearChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedYear(event.target.value);
+  };
+
   useEffect(() => {
     parse<HeatMapData>('/csv/exportacao_heatmap_com_iso3.csv', {
       download: true,
@@ -130,6 +136,22 @@ const HeatMap = () => {
               <span className={metric === 'KG_LIQUIDO' ? 'font-bold' : ''}>KG_LIQUIDO</span>
             </RadioGroup.Item>
           </RadioGroup.Root>
+
+          <select
+              value={selectedYear}
+              onChange={handleYearChange}
+              className="px-4 py-2 bg-transparent rounded-full border border-gray-300 text-[var(--color-foreground)] placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]"
+            >
+              {Array.from({ length: 11 }, (_, i) => 2014 + i).map((year) => (
+                <option
+                  key={year}
+                  value={year.toString()}
+                  className="text-black dark:text-black"
+                >
+                  {year}
+                </option>
+              ))}
+            </select>
 
           <Button className="text-[#fff]" onClick={handleSearch}>
             Pesquisar
