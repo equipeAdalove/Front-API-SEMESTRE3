@@ -7,7 +7,14 @@ import Navbar from "@/components/ui/navbar";
 import { LayoutDashboard, Map, Search } from 'lucide-react';
 import FAQ from "@/components/ui/FAQ";
 
+import { useState } from "react";
+
 export default function LandingPage() {
+  const [imagemSelecionada, setImagemSelecionada] = useState("src/components/images/funcionalidades/DashImg1.png");
+
+  function trocarImagem(novaImagem: string) {
+    setImagemSelecionada(novaImagem);
+  }
   return (
     <>
       {/* 
@@ -99,7 +106,7 @@ export default function LandingPage() {
             <div className="md:w-1/2">
             <div className="relative w-full min-h-[400px] py-10">
               <img
-                src="src/components/images/funcionalidades/DashImg1.png"
+                src={imagemSelecionada}
                 alt="Dashboard Interface"
                 className="w-full h-full object-contain rounded-xl shadow-lg border border-gray-500"
               />
@@ -109,7 +116,10 @@ export default function LandingPage() {
             {/* Coluna da direita - Cards */}
             <div className="md:w-1/2 flex flex-col justify-between gap-4 py-10">
               {/* Card Dashboard Interativo */}
-              <div className="border border-gray-500 dark:bg-gray-800 rounded-xl shadow-md p-3 mb-2 flex-1">
+              <div
+              onClick={() => trocarImagem("src/components/images/funcionalidades/DashImg1.png")}
+              className="cursor-pointer border border-gray-500 dark:bg-gray-800 rounded-xl shadow-md p-3 mb-2 flex-1 hover:ring-2 hover:ring-purple-500 transition-all duration-200"
+              >
                 <div className="flex items-center mb-4">
                   <div className="bg-purple-100 dark:bg-purple-900 p-3 rounded-lg mr-4">
                     <LayoutDashboard className="w-6 h-6 text-purple-600 dark:text-purple-400" />
@@ -122,7 +132,10 @@ export default function LandingPage() {
               </div>
 
               {/* Card Busca por NCM */}
-              <div className="border border-gray-500 dark:bg-gray-800 rounded-xl shadow-md p-3 mb-2 flex-1">
+              <div
+                onClick={() => trocarImagem("src/components/images/funcionalidades/NCMImg.png")}
+                className="cursor-pointer border border-gray-500 dark:bg-gray-800 rounded-xl shadow-md p-3 mb-2 flex-1 hover:ring-2 hover:ring-green-500 transition-all duration-200"
+              >
                 <div className="flex items-center mb-4">
                   <div className="bg-green-100 dark:bg-green-900 p-3 rounded-lg mr-4">
                     <Search className="w-6 h-6 text-green-600 dark:text-green-400" />
@@ -135,7 +148,10 @@ export default function LandingPage() {
               </div>
 
               {/* Card Mapa de Calor */}
-              <div className="border border-gray-500 dark:bg-gray-800 rounded-xl shadow-md p-3 mb-2 flex-1">
+              <div
+                onClick={() => trocarImagem("src/components/images/funcionalidades/MapImg.png")}
+                className="cursor-pointer border border-gray-500 dark:bg-gray-800 rounded-xl shadow-md p-3 mb-2 flex-1 hover:ring-2 hover:ring-blue-500 transition-all duration-200"
+              >
                 <div className="flex items-center mb-4">
                   <div className="bg-blue-100 dark:bg-blue-900 p-3 rounded-lg mr-4">
                     <Map className="w-6 h-6 text-blue-600 dark:text-blue-400" />

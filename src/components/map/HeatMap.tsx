@@ -91,6 +91,7 @@ const HeatMap = () => {
   return (
     <div className="max-w-screen-xl mx-auto p-4">
       <div className="flex flex-wrap items-center gap-4 mb-6">
+        <div className="flex items-center space-x-6 bg-[var(--color-card)] rounded-3xl px-6 py-3 shadow-lg">
         <Input
           type="text"
           placeholder="Digite o NCM (ex: 10011100)"
@@ -118,12 +119,13 @@ const HeatMap = () => {
           </RadioGroup.Item>
         </RadioGroup.Root>
 
-        <Button onClick={handleSearch}>
+        <Button className="text-[#fff]" onClick={handleSearch}>
           Pesquisar
         </Button>
+        </div>
       </div>
 
-      <div className="w-full h-auto">
+      <div className="w-full h-auto bg-[var(--color-popover)] rounded-3xl">
         <ComposableMap projection="geoMercator" width={1000}>
           <Geographies geography={geoUrl}>
             {({ geographies }) =>
@@ -154,7 +156,7 @@ const HeatMap = () => {
       </div>
 
       {Object.keys(dataById).length > 0 && (
-      <div className="mt-6 p-4 bg-muted rounded-md shadow-md">
+      <div className="mt-6 p-4 bg-[var(--color-card)] rounded-md shadow-md">
         <div className="flex items-center flex-wrap gap-2">
           <span className="font-semibold text-sm mr-2">
             Legenda ({metric === 'VL_FOB' ? 'R$' : 'KG'}):
