@@ -12,23 +12,40 @@ import { importacaoService } from "@/services/importacaoService";
 export default function ImportacaoPage() {
   const navigate = useNavigate();
   const location = useLocation();
+
+  const anosDisponiveis = [
+    "2014",
+    "2015",
+    "2016",
+    "2017",
+    "2018",
+    "2019",
+    "2020",
+    "2021",
+    "2022",
+    "2023",
+    "2024",
+  ];
+
+  const [anoSelecionado, setAnoSelecionado] = useState("2024");
   const [searchQuery, setSearchQuery] = useState("São Paulo");
+
+  // Estados para armazenar os dados filtrados
+  const [dataImportacao, setDataImportacao] = useState<any[]>([]);
+  const [pieData, setPieData] = useState<any[]>([]);
+  const [municipiosData, setMunicipiosData] = useState<any[]>([]);
+  const [dadosProdutos, setDadosProdutos] = useState<any[]>([]);
+
+  useEffect(() => {
+    setDataImportacao(importacaoService.getDataImportacao());
+    setPieData(importacaoService.getPieData(anoSelecionado));
+    setMunicipiosData(importacaoService.getMunicipiosData(anoSelecionado));
+    setDadosProdutos(importacaoService.getDadosProdutos(anoSelecionado));
+  }, [anoSelecionado]);
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(event.target.value);
   };
-
-  // Dados vindo do service
-  const dataImportacao = importacaoService.getDataImportacao();
-  const pieData = importacaoService.getPieData();
-  const municipiosData = importacaoService.getMunicipiosData();
-  const dadosProdutos = importacaoService.getDadosProdutos();
-
-  const COLORS = ["#FF6347", "#6A5ACD", "#20B2AA", "#FFD700", "#8A2BE2"];
-
-  useEffect(() => {
-    setSearchQuery("");
-  }, []);
 
   return (
     <div className="flex min-h-screen bg-[var(--color-background)] text-[var(--color-foreground)]">
@@ -42,7 +59,7 @@ export default function ImportacaoPage() {
             <h2 className="text-4xl font-bold">Importação</h2>
           </div>
 
-          <div className="flex items-center space-x-6 bg-[var(--color-card)] rounded-3xl px-6 py-3 shadow-lg">
+          <div className="flex items-center space-x-4 bg-[var(--color-card)] rounded-3xl px-6 py-3 shadow-lg">
             <input
               type="text"
               placeholder="São Paulo"
@@ -50,6 +67,17 @@ export default function ImportacaoPage() {
               onChange={handleSearchChange}
               className="px-4 py-2 bg-transparent rounded-full w-72 text-[var(--color-foreground)] placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]"
             />
+            <select
+              value={anoSelecionado}
+              onChange={(e) => setAnoSelecionado(e.target.value)}
+              className="rounded-full border border-gray-300 bg-transparent px-4 py-2 text-black dark:text-white placeholder-gray- focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]"
+            >
+              {anosDisponiveis.map((ano) => (
+                <option key={ano} value={ano} className="text-black bg-white">
+                  {ano}
+                </option>
+              ))}
+            </select>
             <button
               onClick={() => navigate("/importacao")}
               className={`font-semibold ${
@@ -101,38 +129,19 @@ export default function ImportacaoPage() {
           <div className="bg-[var(--color-card)] p-6 rounded-2xl shadow-md">
             <h3 className="text-lg font-semibold mb-4">Vias de Transporte</h3>
             <div className="flex items-center gap-6">
-              <PieChartComponent data={pieData} colors={COLORS} />
+              <PieChartComponent
+                data={pieData}
+                colors={["#FF6347", "#6A5ACD", "#20B2AA", "#FFD700", "#8A2BE2"]}
+              />
               <div className="text-sm space-y-2">
-                <div>
-                  <span className="font-bold text-[var(--color-foreground)]">
-                    Marítima:
-                  </span>{" "}
-                  52%
-                </div>
-                <div>
-                  <span className="font-bold text-[var(--color-foreground)]">
-                    Rodoviária:
-                  </span>{" "}
-                  33%
-                </div>
-                <div>
-                  <span className="font-bold text-[var(--color-foreground)]">
-                    Aérea:
-                  </span>{" "}
-                  9%
-                </div>
-                <div>
-                  <span className="font-bold text-[var(--color-foreground)]">
-                    Fluvial:
-                  </span>{" "}
-                  4%
-                </div>
-                <div>
-                  <span className="font-bold text-[var(--color-foreground)]">
-                    Ferroviária:
-                  </span>{" "}
-                  2%
-                </div>
+                {pieData.map((item) => (
+                  <div key={item.name}>
+                    <span className="font-bold text-[var(--color-foreground)]">
+                      {item.name}:
+                    </span>{" "}
+                    {item.value}%
+                  </div>
+                ))}
               </div>
             </div>
           </div>
@@ -141,17 +150,17 @@ export default function ImportacaoPage() {
         {/* Cards de Info */}
         <section className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <InfoCard
-            title="Top Países de Origem – 2024"
+            title={`Top Países de Origem – ${anoSelecionado}`}
             value="China, EUA, Alemanha"
             icon="🌐"
           />
           <InfoCard
-            title="Top Produtos Importados – 2024"
+            title={`Top Produtos Importados – ${anoSelecionado}`}
             value="Eletrônicos, Fertilizantes, Máquinas"
             icon="📦"
           />
           <InfoCard
-            title="Empresas Importadoras – 2024"
+            title={`Empresas Importadoras – ${anoSelecionado}`}
             value="+12.350"
             icon="🏢"
           />
@@ -159,19 +168,14 @@ export default function ImportacaoPage() {
 
         {/* Tabelas de Ranking */}
         <section className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div className="bg-[var(--color-card)] p-6 rounded-2xl shadow-md">
-            <div className="flex justify-between items-center mb-4">
-              <h3 className="text-lg font-semibold">Ranking – Municípios</h3>
-              <span className="bg-[var(--color-muted)] text-sm px-2 py-1 rounded-md">
-                2024
-              </span>
-            </div>
-            <RankingTableMunicipios data={municipiosData} />
-          </div>
+          <RankingTableMunicipios
+            titulo={`Ranking – Municípios (${anoSelecionado})`}
+            data={municipiosData}
+          />
           <RankingTableProdutos
             estado="Minas Gerais"
             ncm="Todos"
-            titulo="Ranking – Produtos (2024)"
+            titulo={`Ranking – Produtos (${anoSelecionado})`}
             data={dadosProdutos}
           />
         </section>
