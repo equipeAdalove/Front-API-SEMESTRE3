@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import ThemeSwitcher from "@/components/theme-provider/ButtonThemeSwitcher";
-import HeatMap from "../components/map/HeatMap"; // Importação do HeatMap
+import HeatMap from "../components/map/HeatMap_Impo"; // Importação do HeatMap
 
 function NupPage() {
   const navigate = useNavigate();
@@ -13,19 +13,27 @@ function NupPage() {
           <p className="text-sm text-[var(--muted-foreground)]">
             Pages / Visualizar Mapas
           </p>
-          <h1 className="text-4xl font-bold">Importação</h1>
+          <h1 className="text-4xl font-bold">Exportação</h1>
         </div>
 
         <div className="flex items-center space-x-6 bg-[var(--color-card)] rounded-3xl px-6 py-3 shadow-lg">
             <button
-              onClick={() => navigate("/importacao")}
-              className="text-[var(--color-primary)] hover:text-[var(--color-primary-light)]"
+              onClick={() => navigate("/importacao-map")}
+              className={`font-semibold ${
+                location.pathname === "/importacao-map"
+                  ? "text-[var(--color-primary)] underline underline-offset-4"
+                  : "text-[var(--color-muted-foreground)]"
+              }`}
             >
               Importação
             </button>
             <button
-              onClick={() => navigate("/exportacao")}
-              className="text-[var(--color-primary)] hover:text-[var(--color-primary-light)]"
+              onClick={() => navigate("/exportacao-map")}
+              className={`font-semibold ${
+                location.pathname === "/exportacao-map"
+                  ? "text-[var(--color-primary)] underline underline-offset-4"
+                  : "text-[var(--color-muted-foreground)]"
+              }`}
             >
               Exportação
             </button>

@@ -9,7 +9,8 @@ import {
 import Sidebar from "./components/ui/sidebar";
 import DashboardInit from "./pages/DashboardInit";
 import BuscarNcm from "./pages/BuscarNcm";
-import VisualizarMapa from "./pages/VisualizarMapa";
+import VisualizarMapa_Impo from "./pages/VisualizarMapa_Impo";
+import VisualizarMapa_Expo from "./pages/VisualizarMapa_Expo";
 import ImportacaoPage from "./pages/ImportacaoPage";
 import DashboardEstado from "./pages/ImportacaoPage";
 import LandingPage from "./pages/LandingPage";
@@ -33,12 +34,14 @@ function AppContent() {
           <Route path="/dashboard/:uf" element={<DashboardEstado />} />
           <Route path="/importacao" element={<ImportacaoPage />} />
           <Route path="/exportacao" element={<ExportacaoPage />} />
-          <Route path="/visualizar-mapa" element={<VisualizarMapa />} />
-          <Route path="/mapa" element={<VisualizarMapa />} />
+          <Route path="/visualizar-mapa-impo" element={<VisualizarMapa_Impo />} />
+          <Route path="/mapa" element={<VisualizarMapa_Impo />} />
           <Route path="/exportar" element={<AnalisesEDados />} />
           <Route path="/buscar-ncm" element={<BuscarNcm />} />
           <Route path="/tendencias" element={<Tendencias />} />
           <Route path="/comparacoes" element={<Comparacoes />} />
+          <Route path="/importacao-map" element={<VisualizarMapa_Impo/>} />
+          <Route path="/exportacao-map" element={<VisualizarMapa_Expo />} />
 
         </Routes>
       </div>

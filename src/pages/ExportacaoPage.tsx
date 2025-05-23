@@ -31,7 +31,7 @@ export default function ExportacaoPage() {
   const dadosProdutos =
     exportacaoService.getDadosExportacaoEstados(anoSelecionado);
 
-  const COLORS = ["#FF6347", "#6A5ACD", "#20B2AA"];
+  const COLORS = ['#d1b3ff', '#b380ff', '#944dff'];
 
   useEffect(() => {
     // Atualiza dados conforme o ano muda

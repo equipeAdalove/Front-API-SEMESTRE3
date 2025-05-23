@@ -237,8 +237,8 @@ const ComparacoesPage = () => {
           data={dadosComparacao}
           xAxisKey="year"
           lines={[
-            { dataKey: "A", stroke: "#a855f7", label: estadoA },
-            { dataKey: "B", stroke: "#10b981", label: estadoB },
+            { dataKey: "A", stroke: "#9B7EBD", label: estadoA },
+            { dataKey: "B", stroke: "#8471FF", label: estadoB },
           ]}
         />
       </section>

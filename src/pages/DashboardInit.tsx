@@ -98,32 +98,32 @@ export default function DashboardInit() {
               lines={[
                 {
                   dataKey: "soja_import",
-                  stroke: "#f59e0b",
+                  stroke: '#d1b3ff',
                   label: "Soja Importação",
                 },
                 {
                   dataKey: "soja_export",
-                  stroke: "#d97706",
+                  stroke: '#b380ff',
                   label: "Soja Exportação",
                 },
                 {
                   dataKey: "ferro_import",
-                  stroke: "#ef4444",
+                  stroke: '#944dff',
                   label: "Ferro Importação",
                 },
                 {
                   dataKey: "ferro_export",
-                  stroke: "#b91c1c",
+                  stroke: '#6600cc',
                   label: "Ferro Exportação",
                 },
                 {
                   dataKey: "oleo_import",
-                  stroke: "#3b82f6",
+                  stroke: '#4d0099',
                   label: "Óleo Importação",
                 },
                 {
                   dataKey: "oleo_export",
-                  stroke: "#2563eb",
+                  stroke: '#330066',
                   label: "Óleo Exportação",
                 },
               ]}

@@ -1,64 +1,40 @@
+import { useState } from "react";
 import Kraken from "@/components/images/Kraken.png";
 import KrakenDark from "@/components/images/KrakenDark.png";
 
-import { Link } from "react-router-dom"; // Se estiver usando Next.js, troca para "next/link"
+import { Link } from "react-router-dom";
 import Navbar from "@/components/ui/navbar";
 
-import { LayoutDashboard, Map, Search } from 'lucide-react';
+import { LayoutDashboard, Map, ChartLine } from "lucide-react";
 import FAQ from "@/components/ui/FAQ";
 
-import { useState } from "react";
-
 export default function LandingPage() {
-  const [imagemSelecionada, setImagemSelecionada] = useState("src/components/images/funcionalidades/DashImg1.png");
+  const [imageSrc, setImageSrc] = useState("src/components/images/funcionalidades/Dash.jpeg");
 
-  function trocarImagem(novaImagem: string) {
-    setImagemSelecionada(novaImagem);
-  }
   return (
     <>
-      {/* 
-        Header 
-        (Menu com: Início, Funcionalidades, FAQ, Sobre nós, Acessar + ThemeSwitcher)
-      */}
       <Navbar />
-
-      {/* Conteúdo principal */}
-      <main className="w-full"
+      <main
+        className="w-full"
         style={{
           backgroundColor: "var(--color-background)",
           color: "var(--color-foreground)",
-        }}>
-        {/* 
-          Hero Section 
-          (Grande chamada com texto e imagem do polvo)
-        */}
+        }}
+      >
         <section id="inicio" className="flex flex-col-reverse md:flex-row items-center justify-between px-10 py-5 gap-10 mt-24">
-          {/* Texto */}
           <div className="flex flex-col items-start gap-6 max-w-5xl w-full md:w-1/2">
-            <div>
-              <style>
-                {`
-                  .headline {
-                    color: #9B7EBD;
-                  }
-                  .dark .headline {
-                    color: white;
-                  }
-                `}
-              </style>
-
-              <h1 className="headline md:text-5xl font-bold leading-tight text-left m-0">
-                Dados Precisos, Decisões Inteligentes:
-              </h1>
-            </div>
-
-            <h1 className="text-[var(--color-primary)] md:text-4xl font-bold leading-tight text-left m-0 mt-[-20px] ">
+            <style>{`
+              .headline { color: #9B7EBD; }
+              .dark .headline { color: white; }
+            `}</style>
+            <h1 className="headline md:text-5xl font-bold leading-tight text-left m-0">
+              Dados Precisos, Decisões Inteligentes:
+            </h1>
+            <h1 className="text-[var(--color-primary)] md:text-4xl font-bold leading-tight text-left m-0 mt-[-20px]">
               Acompanhe o Comércio Exterior com Facilidade
             </h1>
-
             <p className="text-[var(--color-foreground)] text-base md:text-md text-left">
-              Acompanhe os dados do comércio exterior e as tendências de importação e exportação dos estados brasileiros para otimizar suas estratégias econômicas com <span className="text-[var(--color-foreground)] font-semibold">AdaTrade</span>.
+              Acompanhe os dados do comércio exterior e as tendências de importação e exportação dos estados brasileiros para otimizar suas estratégias econômicas com <span className="font-semibold">AdaTrade</span>.
             </p>
             <Link to="/dashboard">
               <button className="bg-[var(--color-primary)] px-8 py-3 rounded-full text-white md:text-lg shadow-lg hover:bg-[var(--color-secondary)] transition ml-0">
@@ -67,104 +43,84 @@ export default function LandingPage() {
             </Link>
           </div>
 
-          {/* Imagem */}
           <div className="flex-1 flex justify-center md:w-1/2">
-            <img
-              src={Kraken}
-              alt="Kraken"
-              className="w-[1010px] h-[673px] object-contain -mt-21 ml-4 block dark:hidden"
-            />
-            <img
-              src={KrakenDark}
-              alt="Kraken Dark"
-              className="w-[1000px] h-[667px] object-contain -mt-21 ml-4 block hidden dark:block"
-            />
+            <img src={Kraken} alt="Kraken" className="w-[1010px] h-[673px] object-contain -mt-21 ml-4 block dark:hidden" />
+            <img src={KrakenDark} alt="Kraken Dark" className="w-[1000px] h-[667px] object-contain -mt-21 ml-4 block hidden dark:block" />
           </div>
         </section>
 
         <section id="funcionalidades" className="w-full py-5">
-           {/* Titulo */}
-       <div className="max-w-6xl mx-auto px-6 mt-12">
-        <style>
-          {`
-            .func-title {
-              color: #6C4D8D;
-            }
-            .dark .func-title {
-              color: white;
-            }
-          `}
-        </style>
+          <div className="max-w-6xl mx-auto px-6 mt-12">
+            <style>{`
+              .func-title { color: #6C4D8D; }
+              .dark .func-title { color: white; }
+            `}</style>
+            <h2 className="text-6xl font-bold text-center func-title">Funcionalidades do Produto</h2>
+          </div>
 
-        <h2 className="text-6xl font-bold text-center func-title">
-          Funcionalidades do Produto
-        </h2>
-      </div>
-          {/* Container principal usando flexbox */}
           <div className="flex flex-col md:flex-row gap-6 md:items-stretch">
-            {/* Imagem do dashboard - agora com altura proporcional aos cards */}
-            <div className="md:w-1/2">
-            <div className="relative w-full min-h-[400px] py-10">
+            
+            {/* Imagem com mesma largura da coluna dos botões */}
+            <div className="w-[2100px] py-8 md:h-auto">
               <img
-                src={imagemSelecionada}
+                src={imageSrc}
                 alt="Dashboard Interface"
-                className="w-full h-full object-contain rounded-xl shadow-lg border border-gray-500"
+                className="w-full h-[550px] object-cover rounded-xl shadow-lg border border-gray-500"
               />
             </div>
-            </div>
 
-            {/* Coluna da direita - Cards */}
-            <div className="md:w-1/2 flex flex-col justify-between gap-4 py-10">
-              {/* Card Dashboard Interativo */}
-              <div
-              onClick={() => trocarImagem("src/components/images/funcionalidades/DashImg1.png")}
-              className="cursor-pointer border border-gray-500 dark:bg-gray-800 rounded-xl shadow-md p-3 mb-2 flex-1 hover:ring-2 hover:ring-purple-500 transition-all duration-200"
+            {/* Botões interativos */}
+            <div className="md:w-1/2 flex flex-col justify-between gap-4 py-8">
+              <button
+                onClick={() => setImageSrc("src/components/images/funcionalidades/Dash.jpeg")}
+                className="border border-gray-500 bg-[var(--color-popover)] dark:bg-[var(--color-popover)] rounded-xl shadow-md p-4 mb-2 w-[400px] ml-auto text-left"
               >
-                <div className="flex items-center mb-4">
-                  <div className="bg-purple-100 dark:bg-purple-900 p-3 rounded-lg mr-4">
-                    <LayoutDashboard className="w-6 h-6 text-purple-600 dark:text-purple-400" />
+                <div className="flex items-center mb-5.5">
+                  <div className="bg-purple-100 dark:bg-blue-900 p-3 rounded-lg mr-4">
+                    <LayoutDashboard className="w-6 h-6 text-purple-600 dark:text-blue-200" />
                   </div>
-                  <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100">Dashboard Interativo</h3>
+                  <h3 className="text-xl font-bold text-white dark:text-white">Dashboard Interativo</h3>
                 </div>
-                <p className="text-gray-600 dark:text-gray-300">
-                  Acesse gráficos e visualizações dinâmicas que facilitam a interpretação dos dados de importação e exportação dos estados brasileiros. Identifique tendências e tome decisões estratégicas com base em informações precisas.
+                <p className="text-white dark:text-white">
+                  Veja gráficos interativos que facilitam a análise dos dados de importação e exportação dos estados.
                 </p>
-              </div>
+              </button>
 
-              {/* Card Busca por NCM */}
-              <div
-                onClick={() => trocarImagem("src/components/images/funcionalidades/NCMImg.png")}
-                className="cursor-pointer border border-gray-500 dark:bg-gray-800 rounded-xl shadow-md p-3 mb-2 flex-1 hover:ring-2 hover:ring-green-500 transition-all duration-200"
+              <button
+                onClick={() => setImageSrc("src/components/images/funcionalidades/Futuro.jpeg")}
+                className="border border-gray-500 bg-[var(--color-primary)] dark:bg-[var(--color-popover)] rounded-xl shadow-md p-4 mb-2 w-[400px] ml-auto text-left"
               >
-                <div className="flex items-center mb-4">
-                  <div className="bg-green-100 dark:bg-green-900 p-3 rounded-lg mr-4">
-                    <Search className="w-6 h-6 text-green-600 dark:text-green-400" />
+                <div className="flex items-center mb-5">
+                  <div className="bg-purple-100 dark:bg-blue-900 p-3 rounded-lg mr-4">
+                    <ChartLine className="w-6 h-6 text-purple-600 dark:text-blue-200" />
                   </div>
-                  <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100">Busca por NCM</h3>
+                  <h3 className="text-xl font-bold text-white dark:text-white">Tendências Futuras</h3>
                 </div>
-                <p className="text-gray-600 dark:text-gray-300">
-                  Busca de carga por meio do código NCM (Nomenclatura Comum do Mercosul).
+                <p className="text-white dark:text-white">
+                  Explore projeções e insights para antecipar o futuro do comércio exterior brasileiro.
                 </p>
-              </div>
+              </button>
 
-              {/* Card Mapa de Calor */}
-              <div
-                onClick={() => trocarImagem("src/components/images/funcionalidades/MapImg.png")}
-                className="cursor-pointer border border-gray-500 dark:bg-gray-800 rounded-xl shadow-md p-3 mb-2 flex-1 hover:ring-2 hover:ring-blue-500 transition-all duration-200"
+              <button
+                onClick={() => setImageSrc("src/components/images/funcionalidades/Mapa.jpeg")}
+                className="border border-gray-500 bg-[var(--color-popover)] dark:bg-[var(--color-popover)] rounded-xl shadow-md p-4 mb-2 w-[400px] ml-auto text-left"
               >
-                <div className="flex items-center mb-4">
-                  <div className="bg-blue-100 dark:bg-blue-900 p-3 rounded-lg mr-4">
-                    <Map className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+                <div className="flex items-center mb-5">
+                  <div className="bg-purple-100 dark:bg-blue-900 p-3 rounded-lg mr-4">
+                    <Map className="w-6 h-6 text-purple-600 dark:text-blue-200" />
                   </div>
-                  <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100">Mapa de Calor</h3>
+                  <h3 className="text-xl font-bold text-white dark:text-gray-100">Mapa de Calor</h3>
                 </div>
-                <p className="text-gray-600 dark:text-gray-300">
-                  Visualize o desempenho do comércio exterior de cada estado brasileiro em um mapa de calor dinâmico, onde as cores representam variações nos volumes de importação e exportação.
+                <p className="text-white dark:text-white">
+                  Visualize o desempenho do comércio exterior de cada estado brasileiro em um mapa de calor dinâmico.
                 </p>
-              </div>
+              </button>
             </div>
           </div>
         </section>
+
+
+
 
         {/* 
           FAQ 
@@ -258,15 +214,15 @@ export default function LandingPage() {
       {/* 
         Rodapé - Posicionado no final da página ocupando toda a largura
       */}
-      <footer className="w-full text-sm py-6 mt-10 text-white dark:text-[#4B2C6F] bg-[#6C4D8D] dark:bg-[#8471FF]">
-  <div className="flex flex-col md:flex-row justify-between items-center w-full mx-auto px-4">
-    <p>© {new Date().getFullYear()} AdaLove - Todos os direitos reservados.</p>
-    <div className="flex items-center gap-2 mt-2 md:mt-0">
-      <img src="/src/components/images/logo-cps.png" alt="CPS" className="h-12" />
-      <img src="/src/components/images/bannerAdaLove.png" alt="AdaLove Mini" className="h-12" />
-    </div>
-  </div>
-</footer>
+      <footer className="w-full text-sm py-6 mt-10 text-white bg-[#6C4D8D] dark:bg-[#8471FF]">
+        <div className="flex flex-col md:flex-row justify-between items-center w-full mx-auto px-4">
+          <p>© {new Date().getFullYear()} AdaLove - Todos os direitos reservados.</p>
+          <div className="flex items-center gap-2 mt-2 md:mt-0">
+            <img src="/src/components/images/logo-cps.png" alt="CPS" className="h-12" />
+            <img src="/src/components/images/bannerAdaLove.png" alt="AdaLove Mini" className="h-12" />
+          </div>
+        </div>
+      </footer>
     </>
   );
 }

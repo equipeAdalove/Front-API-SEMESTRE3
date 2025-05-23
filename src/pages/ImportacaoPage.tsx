@@ -131,7 +131,7 @@ export default function ImportacaoPage() {
             <div className="flex items-center gap-6">
               <PieChartComponent
                 data={pieData}
-                colors={["#FF6347", "#6A5ACD", "#20B2AA", "#FFD700", "#8A2BE2"]}
+                colors={['#d1b3ff', '#b380ff', '#944dff', '#6600cc', '#4d0099']}
               />
               <div className="text-sm space-y-2">
                 {pieData.map((item) => (
