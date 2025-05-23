@@ -10,14 +10,14 @@ export default function AnalisesEDados() {
                 color: "var(--color-foreground)",
             }}>
             {/* Título e Breadcrumb */}
-            <div className="flex justify-between items-center mb-10 flex-wrap gap-2">
+            <div className="flex justify-between items-center mt-5 mb-10 flex-wrap gap-4 px-5">
                 <div className="-mt-2">
                     <p className="text-sm text-[var(--muted-foreground)]">
                         Pages / Exportar Dados
                     </p>
                     <h1 className="text-4xl font-bold">Exportar Dados</h1>
                 </div>
-                <div className="ml-auto">
+                <div className="ml-auto flex items-center space-x-6 bg-[var(--color-card)] rounded-3xl px-6 py-3 shadow-lg">
                     <ThemeSwitcher />
                 </div>
             </div>

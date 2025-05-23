@@ -9,6 +9,7 @@ import {
   buscarDadosComparacao,
   buscarInfoCard,
 } from "@/services/comparacoesService";
+import { color } from "framer-motion";
 
 const estados = [
   "Acre",
@@ -97,7 +98,7 @@ const ComparacoesPage = () => {
   return (
     <div>
       {/* Cabeçalho */}
-      <div className="flex justify-between items-center mt-10 mb-10 flex-wrap gap-4 px-10">
+      <div className="flex justify-between items-center mt-12 mb-12 flex-wrap gap-4 px-10">
         <div className="-mt-2">
           <p className="text-sm text-[var(--muted-foreground)]">
             Pages / Comparações
@@ -107,7 +108,7 @@ const ComparacoesPage = () => {
       </div>
 
       {/* Seletores, filtro de tipo e busca de NCM */}
-      <div className="flex items-center space-x-6 bg-[var(--color-card)] rounded-3xl px-6 py-3 shadow-lg mb-10 flex-wrap gap-4 justify-center">
+      <div className="flex items-center space-x-6 bg-[var(--color-card)] rounded-3xl px-6 py-3 shadow-lg mb-5 flex-wrap gap-4 justify-center">
         {/* Filtro Exportação / Importação */}
         <div className="flex items-center space-x-2 bg-[var(--color-card)] rounded-full px-3 py-1 shadow-inner select-none cursor-pointer">
           <label
@@ -197,7 +198,7 @@ const ComparacoesPage = () => {
             className="text-sm px-3 py-1 rounded-lg"
             style={{
               backgroundColor: "var(--color-primary)",
-              color: "var(--color-primary-foreground)",
+              color: "#fff",
             }}
           >
             Buscar

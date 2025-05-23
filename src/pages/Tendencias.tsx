@@ -6,7 +6,7 @@ const NupPage = () => {
   return (
     <div>
       {/* Topo com título e barra de busca */}
-      <div className="flex justify-between items-center mt-10 mb-10 flex-wrap gap-4 px-10">
+      <div className="flex justify-between items-center mt-12 mb-12 flex-wrap gap-4 px-10">
         <div className="-mt-2">
           <p className="text-sm text-[var(--muted-foreground)]">
             Pages / Tendências

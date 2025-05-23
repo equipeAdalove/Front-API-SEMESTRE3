@@ -229,7 +229,7 @@ const HeatMap = () => {
             </tbody>
           </table>
         </div>
-    )}
+  )}
 
     </div>
   );
