@@ -8,9 +8,9 @@ import {
 } from "recharts";
 
 interface PieChartComponentProps {
-  data: { name: string; value: number }[]; // Dados flexíveis
-  colors: string[]; // Cores personalizáveis
-  height?: number; // Altura customizável
+  data: { name: string; value: number }[];
+  colors: string[];
+  height?: number;
 }
 
 export default function PieChartComponent({

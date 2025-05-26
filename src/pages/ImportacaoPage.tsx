@@ -1,184 +1,336 @@
-import { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import LineChartComponent from "@/components/charts/LineChartComponent";
 import InfoCard from "@/components/cards/InfoCard";
-import PieChartComponent from "@/components/charts/PieChartComponent";
-import RankingTableMunicipios from "@/components/tables/RankingTableMunicipios";
-import RankingTableProdutos from "@/components/tables/RankingTableProdutos";
 import ThemeSwitcher from "@/components/theme-provider/ButtonThemeSwitcher";
-
-import { importacaoService } from "@/services/importacaoService";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Label } from "@/components/ui/label";
+import DataTables from "@/components/tables/DataTables";
+import PieChartViasTransporte from "@/components/charts/PieChartViasTransporte";
 
 export default function ImportacaoPage() {
+  const [params] = useSearchParams();
   const navigate = useNavigate();
-  const location = useLocation();
+  const estado = params.get("estado") || "SP";
+  const anoURL = params.get("ano") || "2024";
+  const [ano, setAno] = useState(anoURL);
 
-  const anosDisponiveis = [
-    "2014",
-    "2015",
-    "2016",
-    "2017",
-    "2018",
-    "2019",
-    "2020",
-    "2021",
-    "2022",
-    "2023",
-    "2024",
-  ];
+  const [vaTipo, setVaTipo] = useState("va_kg_import");
+  const [chartData, setChartData] = useState<any[]>([]);
+  const [diferencaData, setDiferencaData] = useState<any[]>([]);
+  const [resumoAno, setResumoAno] = useState<any>(null);
+  const [resumoTotal, setResumoTotal] = useState<any>(null);
 
-  const [anoSelecionado, setAnoSelecionado] = useState("2024");
-  const [searchQuery, setSearchQuery] = useState("São Paulo");
-
-  // Estados para armazenar os dados filtrados
-  const [dataImportacao, setDataImportacao] = useState<any[]>([]);
-  const [pieData, setPieData] = useState<any[]>([]);
-  const [municipiosData, setMunicipiosData] = useState<any[]>([]);
-  const [dadosProdutos, setDadosProdutos] = useState<any[]>([]);
+  const [rankingProdutos, setRankingProdutos] = useState<any[]>([]);
+  const [paisesOrigem, setPaisesOrigem] = useState<any[]>([]);
+  const [municipios, setMunicipios] = useState<any[]>([]);
+  const [loadingExtra, setLoadingExtra] = useState(true);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
   useEffect(() => {
-    setDataImportacao(importacaoService.getDataImportacao());
-    setPieData(importacaoService.getPieData(anoSelecionado));
-    setMunicipiosData(importacaoService.getMunicipiosData(anoSelecionado));
-    setDadosProdutos(importacaoService.getDadosProdutos(anoSelecionado));
-  }, [anoSelecionado]);
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const res = await fetch(
+          `http://localhost:3000/estado/${estado}/valor-agregado`,
+        );
+        const json = await res.json();
 
-  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchQuery(event.target.value);
-  };
+        const format = (obj: any) =>
+          Object.entries(obj || {})
+            .filter(([ano]) => ano !== "ALL")
+            .map(([ano, valor]) => ({ year: ano, valorAgregado: valor }));
+
+        setChartData(format(json[vaTipo]));
+        setDiferencaData(format(json.va_diferenca_export_import));
+      } catch (err) {
+        setError("Erro ao carregar os dados da API.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [estado, vaTipo]);
+
+  useEffect(() => {
+    const fetchResumo = async () => {
+      try {
+        const resAno = await fetch(
+          `http://localhost:3000/estado/${estado}/ano/${ano}`,
+        );
+        const resTotal = await fetch(
+          `http://localhost:3000/estado/${estado}/total`,
+        );
+        const jsonAno = await resAno.json();
+        const jsonTotal = await resTotal.json();
+        setResumoAno(jsonAno);
+        setResumoTotal(jsonTotal);
+      } catch (err) {
+        console.error("Erro ao buscar resumo", err);
+      }
+    };
+
+    fetchResumo();
+  }, [estado, ano]);
+
+  useEffect(() => {
+    const fetchExtra = async () => {
+      setLoadingExtra(true);
+      try {
+        const [produtosRes, paisesRes, municipiosRes] = await Promise.all([
+          fetch(
+            `http://localhost:3000/importacao/${estado}/ano/${ano}/ranking-produtos`,
+          ),
+          fetch(
+            `http://localhost:3000/importacao/${estado}/ano/${ano}/paises-origem`,
+          ),
+          fetch(
+            `http://localhost:3000/importacao/${estado}/ano/${ano}/municipios`,
+          ),
+        ]);
+
+        const produtos = await produtosRes.json();
+        const paises = await paisesRes.json();
+        const municipios = await municipiosRes.json();
+
+        setRankingProdutos(produtos);
+        setPaisesOrigem(paises);
+        setMunicipios(municipios);
+      } catch (err) {
+        setError("Erro ao carregar os dados adicionais da API.");
+      } finally {
+        setLoadingExtra(false);
+      }
+    };
+
+    fetchExtra();
+  }, [estado, ano]);
 
   return (
-    <div className="flex min-h-screen bg-[var(--color-background)] text-[var(--color-foreground)]">
-      <main className="flex-1 p-10 space-y-8">
-        {/* Topo com Título e Navbar */}
-        <div className="flex justify-between items-center mb-6">
-          <div className="-mt-2">
-            <p className="text-sm text-[var(--muted-foreground)]">
-              Pages / DashBoard{" "}
+    <div className="flex min-h-screen bg-background text-foreground">
+      <main className="flex-1 p-4 sm:p-6 md:p-8 lg:p-10 space-y-8 w-full max-w-none">
+        {/* Header com botão de Exportação */}
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+          <div>
+            <p className="text-sm text-muted-foreground mb-1">
+              Pages / Importação
             </p>
-            <h2 className="text-4xl font-bold">Importação</h2>
+            <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight">
+              Importação - <span className="text-primary">{estado}</span>
+            </h1>
           </div>
-
-          <div className="flex items-center space-x-4 bg-[var(--color-card)] rounded-3xl px-6 py-3 shadow-lg">
-            <input
-              type="text"
-              placeholder="São Paulo"
-              value={searchQuery}
-              onChange={handleSearchChange}
-              className="px-4 py-2 bg-transparent rounded-full w-72 text-[var(--color-foreground)] placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]"
-            />
-            <select
-              value={anoSelecionado}
-              onChange={(e) => setAnoSelecionado(e.target.value)}
-              className="rounded-full border border-gray-300 bg-transparent px-4 py-2 text-black dark:text-white placeholder-gray- focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]"
-            >
-              {anosDisponiveis.map((ano) => (
-                <option key={ano} value={ano} className="text-black bg-white">
-                  {ano}
-                </option>
-              ))}
-            </select>
+          <div className="flex items-center gap-4">
             <button
-              onClick={() => navigate("/importacao")}
-              className={`font-semibold ${
-                location.pathname === "/importacao"
-                  ? "text-[var(--color-primary)] underline underline-offset-4"
-                  : "text-[var(--color-muted-foreground)]"
-              }`}
+              onClick={() =>
+                navigate(`/exportacao?estado=${estado}&ano=${ano}`)
+              }
+              className="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors font-medium flex items-center gap-2"
             >
-              Importação
-            </button>
-            <button
-              onClick={() => navigate("/exportacao")}
-              className={`font-semibold ${
-                location.pathname === "/exportacao"
-                  ? "text-[var(--color-primary)] underline underline-offset-4"
-                  : "text-[var(--color-muted-foreground)]"
-              }`}
-            >
-              Exportação
+              <span>Ir para Exportação</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M7 17l9.2-9.2M17 17V7H7" />
+              </svg>
             </button>
             <ThemeSwitcher />
           </div>
         </div>
 
-        {/* Gráfico de Linha e Pizza */}
-        <section className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div className="col-span-2 bg-[var(--color-card)] p-6 rounded-2xl shadow-md">
-            <h3 className="text-lg font-semibold mb-2">
-              Valor Agregado / Quilograma Líquido
-            </h3>
-            <LineChartComponent
-              data={dataImportacao}
-              xAxisKey="year"
-              lines={[
-                {
-                  dataKey: "valorAgregado",
-                  stroke: "#a855f7",
-                  label: "Valor Agregado",
-                },
-                {
-                  dataKey: "quilograma",
-                  stroke: "#7c3aed",
-                  label: "Quilograma Líquido",
-                },
-              ]}
-            />
-          </div>
-
-          <div className="bg-[var(--color-card)] p-6 rounded-2xl shadow-md">
-            <h3 className="text-lg font-semibold mb-4">Vias de Transporte</h3>
-            <div className="flex items-center gap-6">
-              <PieChartComponent
-                data={pieData}
-                colors={['#d1b3ff', '#b380ff', '#944dff', '#6600cc', '#4d0099']}
-              />
-              <div className="text-sm space-y-2">
-                {pieData.map((item) => (
-                  <div key={item.name}>
-                    <span className="font-bold text-[var(--color-foreground)]">
-                      {item.name}:
-                    </span>{" "}
-                    {item.value}%
-                  </div>
-                ))}
-              </div>
+        {/* Filtros - Versão simplificada */}
+        <div className="bg-muted/10 p-4 rounded-lg border space-y-4">
+          <div className="flex flex-col md:flex-row gap-4 md:items-center">
+            {/* Seletor de Ano */}
+            <div className="flex items-center gap-2">
+              <Label
+                htmlFor="year-select"
+                className="whitespace-nowrap font-medium"
+              >
+                Ano
+              </Label>
+              <Select
+                value={ano}
+                onValueChange={(value) => {
+                  setAno(value);
+                  navigate(`/importacao?estado=${estado}&ano=${value}`);
+                }}
+              >
+                <SelectTrigger id="year-select" className="w-[120px]">
+                  <SelectValue placeholder="Selecione" />
+                </SelectTrigger>
+                <SelectContent>
+                  {Array.from({ length: 11 }, (_, i) => 2014 + i).map((a) => (
+                    <SelectItem key={a} value={a.toString()}>
+                      {a}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
           </div>
-        </section>
 
-        {/* Cards de Info */}
-        <section className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <InfoCard
-            title={`Top Países de Origem – ${anoSelecionado}`}
-            value="China, EUA, Alemanha"
-            icon="🌐"
-          />
-          <InfoCard
-            title={`Top Produtos Importados – ${anoSelecionado}`}
-            value="Eletrônicos, Fertilizantes, Máquinas"
-            icon="📦"
-          />
-          <InfoCard
-            title={`Empresas Importadoras – ${anoSelecionado}`}
-            value="+12.350"
-            icon="🏢"
-          />
-        </section>
+          {/* Seletor de Tipo de Valor */}
+          <div className="flex flex-col gap-6">
+            <Label className="font-medium mt-6">Valor Agregado</Label>
+            <div className="flex gap-4">
+              <button
+                onClick={() => setVaTipo("va_kg_import")}
+                className={`px-4 py-2 rounded-md transition-colors font-medium ${
+                  vaTipo === "va_kg_import"
+                    ? "bg-primary text-primary-foreground"
+                    : "bg-muted/50 hover:bg-muted"
+                }`}
+              >
+                VA por KG
+              </button>
+              <button
+                onClick={() => setVaTipo("va_unidade_import")}
+                className={`px-4 py-2 rounded-md transition-colors font-medium ${
+                  vaTipo === "va_unidade_import"
+                    ? "bg-primary text-primary-foreground"
+                    : "bg-muted/50 hover:bg-muted"
+                }`}
+              >
+                VA por Unidade
+              </button>
+            </div>
+          </div>
+        </div>
+        {/* Gráficos e InfoCards */}
+        {loading ? (
+          <div className="space-y-6">
+            <Skeleton className="h-64 w-full rounded-lg" />
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <Skeleton className="h-32 rounded-lg" />
+              <Skeleton className="h-32 rounded-lg" />
+              <Skeleton className="h-32 rounded-lg" />
+            </div>
+          </div>
+        ) : error ? (
+          <Card className="border-destructive/50 bg-destructive/10">
+            <CardHeader>
+              <CardTitle className="text-destructive">Erro</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-destructive">{error}</p>
+            </CardContent>
+          </Card>
+        ) : (
+          <>
+            <section className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <Card className="border rounded-lg">
+                <CardHeader className="bg-primary/5 px-6 py-4 border-b">
+                  <CardTitle className="text-lg font-semibold">
+                    Valor Agregado – Importação
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="p-6">
+                  <LineChartComponent
+                    data={chartData}
+                    xAxisKey="year"
+                    lines={[
+                      {
+                        dataKey: "valorAgregado",
+                        stroke: "#8b5cf6", // Roxo
+                        label:
+                          vaTipo === "va_kg_import" ? "VA/KG" : "VA/Unidade",
+                      },
+                    ]}
+                  />
+                </CardContent>
+              </Card>
 
-        {/* Tabelas de Ranking */}
-        <section className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <RankingTableMunicipios
-            titulo={`Ranking – Municípios (${anoSelecionado})`}
-            data={municipiosData}
-          />
-          <RankingTableProdutos
-            estado="Minas Gerais"
-            ncm="Todos"
-            titulo={`Ranking – Produtos (${anoSelecionado})`}
-            data={dadosProdutos}
-          />
-        </section>
+              <Card className="border rounded-lg">
+                <CardHeader className="bg-primary/5 px-6 py-4 border-b">
+                  <CardTitle className="text-lg font-semibold">
+                    Diferença VA Exportação - Importação
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="p-6">
+                  <LineChartComponent
+                    data={diferencaData}
+                    xAxisKey="year"
+                    lines={[
+                      {
+                        dataKey: "valorAgregado",
+                        stroke: "#8b5cf6", // Roxo
+                        label: "Diferença",
+                      },
+                    ]}
+                  />
+                </CardContent>
+              </Card>
+            </section>
+
+            <PieChartViasTransporte tipo="importacao" />
+
+            {resumoAno && resumoTotal && (
+              <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <InfoCard
+                  title={`FOB Exportação (${ano})`}
+                  value={`US$ ${Number(resumoAno.vl_fob_exp).toLocaleString("pt-BR")}`}
+                  icon="📤"
+                  trend={
+                    resumoAno.vl_fob_exp > resumoTotal.vl_fob_exp
+                      ? "up"
+                      : "down"
+                  }
+                  className="bg-primary/5"
+                />
+                <InfoCard
+                  title={`FOB Importação (${ano})`}
+                  value={`US$ ${Number(resumoAno.vl_fob_imp).toLocaleString("pt-BR")}`}
+                  icon="📥"
+                  trend={
+                    resumoAno.vl_fob_imp > resumoTotal.vl_fob_imp
+                      ? "up"
+                      : "down"
+                  }
+                  className="bg-primary/5"
+                />
+                <InfoCard
+                  title={`KG Líquido Importado (${ano})`}
+                  value={Number(resumoAno.kg_liquido_imp).toLocaleString(
+                    "pt-BR",
+                  )}
+                  icon="⚖️"
+                  trend={
+                    resumoAno.kg_liquido_imp > resumoTotal.kg_liquido_imp
+                      ? "up"
+                      : "down"
+                  }
+                  className="bg-primary/5"
+                />
+              </section>
+            )}
+
+            {/* Tabelas */}
+            <DataTables
+              rankingProdutos={rankingProdutos}
+              paisesOrigem={paisesOrigem}
+              municipios={municipios}
+              loading={loadingExtra}
+            />
+          </>
+        )}
       </main>
     </div>
   );

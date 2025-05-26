@@ -1,15 +1,16 @@
 import { useState, useEffect } from "react";
-import { Search } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import LineChartComponent from "@/components/charts/LineChartComponent";
 import InfoCard from "@/components/cards/InfoCard";
 import ThemeSwitcher from "@/components/theme-provider/ButtonThemeSwitcher";
+import { Label } from "@/components/ui/label";
 import {
-  buscarNcm,
-  buscarDadosComparacao,
-  buscarInfoCard,
-} from "@/services/comparacoesService";
-import { color } from "framer-motion";
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+} from "@/components/ui/select";
 
 const estados = [
   "Acre",
@@ -41,241 +42,275 @@ const estados = [
   "Tocantins",
 ];
 
+const ufMap: Record<string, string> = {
+  Acre: "AC",
+  Alagoas: "AL",
+  Amapá: "AP",
+  Amazonas: "AM",
+  Bahia: "BA",
+  Ceará: "CE",
+  "Distrito Federal": "DF",
+  "Espírito Santo": "ES",
+  Goiás: "GO",
+  Maranhão: "MA",
+  "Mato Grosso": "MT",
+  "Mato Grosso do Sul": "MS",
+  "Minas Gerais": "MG",
+  Pará: "PA",
+  Paraíba: "PB",
+  Paraná: "PR",
+  Pernambuco: "PE",
+  Piauí: "PI",
+  "Rio de Janeiro": "RJ",
+  "Rio Grande do Norte": "RN",
+  "Rio Grande do Sul": "RS",
+  Rondônia: "RO",
+  Roraima: "RR",
+  "Santa Catarina": "SC",
+  "São Paulo": "SP",
+  Sergipe: "SE",
+  Tocantins: "TO",
+};
+
 const ComparacoesPage = () => {
   const navigate = useNavigate();
 
   const [estadoA, setEstadoA] = useState("São Paulo");
   const [estadoB, setEstadoB] = useState("Rio de Janeiro");
-  const [ncmBusca, setNcmBusca] = useState("");
-  const [ncmResultado, setNcmResultado] = useState<{
-    codigo: string;
-    descricao: string;
-  } | null>(null);
-
-  const [dadosComparacao, setDadosComparacao] = useState<
-    { year: string; A: number; B: number }[]
-  >([]);
-
-  // Novo estado para tipo de comércio
+  const [anoSelecionado, setAnoSelecionado] = useState(2024);
   const [tipoComercio, setTipoComercio] = useState<"exportacao" | "importacao">(
-    "exportacao"
+    "exportacao",
   );
+  const [tipoValor, setTipoValor] = useState<"vl_fob" | "kg_liquido">("vl_fob");
+  const [dadosGrafico, setDadosGrafico] = useState<any[]>([]);
+  const [cards, setCards] = useState({ A: 0, B: 0 });
 
-  // Quando clicar em buscar NCM
-  const handleBuscarNCM = () => {
-    const ncm = buscarNcm(ncmBusca);
-    if (ncm) {
-      setNcmResultado(ncm);
-    } else {
-      setNcmResultado(null);
-      setDadosComparacao([]);
-    }
-  };
+  const anos = Array.from({ length: 2024 - 2014 + 1 }, (_, i) => 2014 + i);
 
-  // Atualiza dados do gráfico toda vez que muda estado, NCM selecionado ou tipo de comércio
   useEffect(() => {
-    if (ncmResultado) {
-      const dados = buscarDadosComparacao(
-        ncmResultado.codigo,
-        estadoA,
-        estadoB,
-        tipoComercio // Passa o filtro para a busca
-      );
-      setDadosComparacao(dados);
-    } else {
-      setDadosComparacao([]);
-    }
-  }, [estadoA, estadoB, ncmResultado, tipoComercio]);
+    const fetchData = async () => {
+      const promises = anos.map(async (ano) => {
+        const resA = await fetch(
+          `http://localhost:3000/estado/${ufMap[estadoA]}/ano/${ano}`,
+        ).then((res) => res.json());
+        const resB = await fetch(
+          `http://localhost:3000/estado/${ufMap[estadoB]}/ano/${ano}`,
+        ).then((res) => res.json());
 
-  // Busca infoCard para estadoA e estadoB
-  const infoCardA = ncmResultado
-    ? buscarInfoCard(ncmResultado.codigo, estadoA)
-    : null;
-  const infoCardB = ncmResultado
-    ? buscarInfoCard(ncmResultado.codigo, estadoB)
-    : null;
+        const valorA =
+          tipoValor === "vl_fob"
+            ? tipoComercio === "exportacao"
+              ? Number(resA.vl_fob_exp)
+              : Number(resA.vl_fob_imp)
+            : tipoComercio === "exportacao"
+              ? Number(resA.kg_liquido_exp)
+              : Number(resA.kg_liquido_imp);
+
+        const valorB =
+          tipoValor === "vl_fob"
+            ? tipoComercio === "exportacao"
+              ? Number(resB.vl_fob_exp)
+              : Number(resB.vl_fob_imp)
+            : tipoComercio === "exportacao"
+              ? Number(resB.kg_liquido_exp)
+              : Number(resB.kg_liquido_imp);
+
+        return {
+          year: ano.toString(),
+          A: valorA,
+          B: valorB,
+        };
+      });
+
+      const result = await Promise.all(promises);
+      setDadosGrafico(result);
+    };
+
+    fetchData();
+  }, [estadoA, estadoB, tipoComercio, tipoValor]);
+
+  useEffect(() => {
+    const fetchCards = async () => {
+      const resA = await fetch(
+        `http://localhost:3000/estado/${ufMap[estadoA]}/ano/${anoSelecionado}`,
+      ).then((res) => res.json());
+      const resB = await fetch(
+        `http://localhost:3000/estado/${ufMap[estadoB]}/ano/${anoSelecionado}`,
+      ).then((res) => res.json());
+
+      const valorA =
+        tipoValor === "vl_fob"
+          ? tipoComercio === "exportacao"
+            ? Number(resA.vl_fob_exp)
+            : Number(resA.vl_fob_imp)
+          : tipoComercio === "exportacao"
+            ? Number(resA.kg_liquido_exp)
+            : Number(resA.kg_liquido_imp);
+
+      const valorB =
+        tipoValor === "vl_fob"
+          ? tipoComercio === "exportacao"
+            ? Number(resB.vl_fob_exp)
+            : Number(resB.vl_fob_imp)
+          : tipoComercio === "exportacao"
+            ? Number(resB.kg_liquido_exp)
+            : Number(resB.kg_liquido_imp);
+
+      setCards({ A: valorA, B: valorB });
+    };
+
+    fetchCards();
+  }, [estadoA, estadoB, tipoComercio, tipoValor, anoSelecionado]);
+
+  const unidade = tipoValor === "vl_fob" ? "US$" : "kg";
 
   return (
-    <div>
-      {/* Cabeçalho */}
-      <div className="flex justify-between items-center mt-12 mb-12 flex-wrap gap-4 px-10">
+    <div className="container mx-auto px-4">
+      <div className="flex justify-between items-center mt-12 mb-12 flex-wrap gap-4">
         <div className="-mt-2">
-          <p className="text-sm text-[var(--muted-foreground)]">
-            Pages / Comparações
-          </p>
+          <p className="text-sm text-muted-foreground">Pages / Comparações</p>
           <h1 className="text-4xl font-bold">Comparações</h1>
         </div>
       </div>
 
-      {/* Seletores, filtro de tipo e busca de NCM */}
-      <div className="flex items-center space-x-6 bg-[var(--color-card)] rounded-3xl px-6 py-3 shadow-lg mb-5 flex-wrap gap-4 justify-center">
-        {/* Filtro Exportação / Importação */}
-        <div className="flex items-center space-x-2 bg-[var(--color-card)] rounded-full px-3 py-1 shadow-inner select-none cursor-pointer">
-          <label
-            className={`px-4 py-1 rounded-full ${
-              tipoComercio === "exportacao"
-                ? "bg-[var(--color-primary)] text-white"
-                : "text-[var(--muted-foreground)]"
-            }`}
-          >
-            <input
-              type="radio"
-              name="tipoComercio"
-              value="exportacao"
-              checked={tipoComercio === "exportacao"}
-              onChange={() => setTipoComercio("exportacao")}
-              className="hidden"
-            />
-            Exportação
-          </label>
-          <label
-            className={`px-4 py-1 rounded-full ${
-              tipoComercio === "importacao"
-                ? "bg-[var(--color-primary)] text-white"
-                : "text-[var(--muted-foreground)]"
-            }`}
-          >
-            <input
-              type="radio"
-              name="tipoComercio"
-              value="importacao"
-              checked={tipoComercio === "importacao"}
-              onChange={() => setTipoComercio("importacao")}
-              className="hidden"
-            />
-            Importação
-          </label>
+      {/* Seção de Filtros - Reorganizada */}
+      <div className="bg-card rounded-2xl p-6 shadow-lg mb-6">
+        <div className="flex flex-col gap-6">
+          {/* Primeira linha - Tipo de Comércio e Valor */}
+          <div className="flex flex-col md:flex-row gap-4 items-start md:items-center">
+            <div className="space-y-2 w-full md:w-auto">
+              <Label className="font-medium">Tipo de Comércio</Label>
+              <div className="flex bg-muted/20 p-1 rounded-lg">
+                {["exportacao", "importacao"].map((tipo) => (
+                  <button
+                    key={tipo}
+                    onClick={() => setTipoComercio(tipo as any)}
+                    className={`px-6 py-2 rounded-md text-sm font-medium transition-colors ${
+                      tipoComercio === tipo
+                        ? "bg-primary text-primary-foreground shadow"
+                        : "text-muted-foreground hover:bg-muted/30"
+                    }`}
+                  >
+                    {tipo === "exportacao" ? "Exportação" : "Importação"}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="space-y-2 w-full md:w-auto">
+              <Label className="font-medium">Tipo de Valor</Label>
+              <div className="flex bg-muted/20 p-1 rounded-lg">
+                {["vl_fob", "kg_liquido"].map((tipo) => (
+                  <button
+                    key={tipo}
+                    onClick={() => setTipoValor(tipo as any)}
+                    className={`px-6 py-2 rounded-md text-sm font-medium transition-colors ${
+                      tipoValor === tipo
+                        ? "bg-primary text-primary-foreground shadow"
+                        : "text-muted-foreground hover:bg-muted/30"
+                    }`}
+                  >
+                    {tipo === "vl_fob" ? "Valor FOB" : "KG Líquido"}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Segunda linha - Estados e Ano */}
+          <div className="flex flex-col md:flex-row gap-4 items-start md:items-center">
+            <div className="flex flex-col md:flex-row gap-4 items-center w-full">
+              <div className="space-y-2 w-full md:w-[240px] my-8">
+                <Label className="font-medium">Estado A</Label>
+                <Select value={estadoA} onValueChange={setEstadoA}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Selecione um estado" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {estados.map((e) => (
+                      <SelectItem key={e} value={e}>
+                        {e}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <span className="text-muted-foreground font-semibold mt-6 md:mt-0">
+                vs
+              </span>
+
+              <div className="space-y-2 w-full md:w-[240px]">
+                <Label className="font-medium">Estado B</Label>
+                <Select value={estadoB} onValueChange={setEstadoB}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Selecione um estado" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {estados.map((e) => (
+                      <SelectItem key={e} value={e}>
+                        {e}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="space-y-2 w-full md:w-[120px]">
+                <Label className="font-medium">Ano</Label>
+                <Select
+                  value={anoSelecionado.toString()}
+                  onValueChange={(value) => setAnoSelecionado(Number(value))}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Selecione" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {anos.map((a) => (
+                      <SelectItem key={a} value={a.toString()}>
+                        {a}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+
+            <div className="md:ml-auto mt-4 md:mt-0">
+              <ThemeSwitcher />
+            </div>
+          </div>
         </div>
-
-        {/* Select Estado A */}
-        <select
-          className="bg-transparent rounded-lg px-4 py-2 text-[var(--color-foreground)] focus:outline-none"
-          value={estadoA}
-          onChange={(e) => setEstadoA(e.target.value)}
-        >
-          {estados.map((estado) => (
-            <option
-              key={estado}
-              value={estado}
-              className="text-[var(--color-foreground)]"
-            >
-              {estado}
-            </option>
-          ))}
-        </select>
-
-        <span className="text-[var(--muted-foreground)] font-semibold">vs</span>
-
-        {/* Select Estado B */}
-        <select
-          className="bg-transparent rounded-lg px-4 py-2 text-[var(--color-foreground)] focus:outline-none"
-          value={estadoB}
-          onChange={(e) => setEstadoB(e.target.value)}
-        >
-          {estados.map((estado) => (
-            <option
-              key={estado}
-              value={estado}
-              className="text-[var(--color-foreground)]"
-            >
-              {estado}
-            </option>
-          ))}
-        </select>
-
-        {/* Busca NCM */}
-        <div className="flex items-center space-x-2 ml-4">
-          <Search className="text-[var(--color-muted-foreground)]" size={18} />
-          <input
-            type="text"
-            placeholder="Código NCM"
-            className="px-3 py-1 bg-transparent rounded-full w-40 text-[var(--color-foreground)] placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]"
-            value={ncmBusca}
-            onChange={(e) => setNcmBusca(e.target.value)}
-          />
-          <button
-            onClick={handleBuscarNCM}
-            className="text-sm px-3 py-1 rounded-lg"
-            style={{
-              backgroundColor: "var(--color-primary)",
-              color: "#fff",
-            }}
-          >
-            Buscar
-          </button>
-        </div>
-        <ThemeSwitcher />
       </div>
 
-      {/* Resultado da busca */}
-      {ncmResultado && (
-        <div
-          className="border rounded-xl p-6 shadow-md mx-10 mb-10"
-          style={{
-            backgroundColor: "var(--color-card)",
-            borderColor: "var(--color-border)",
-          }}
-        >
-          <h2 className="text-xl font-semibold mb-2">NCM Encontrado</h2>
-          <div className="flex justify-between text-sm text-gray-400 border-b pb-2 mb-2">
-            <span>Código</span>
-            <span>Descrição</span>
-          </div>
-          <div className="flex justify-between text-lg font-medium">
-            <span>{ncmResultado.codigo}</span>
-            <span>{ncmResultado.descricao}</span>
-          </div>
-        </div>
-      )}
-
-      {/* Gráfico comparativo */}
-      <section className="bg-[var(--color-card)] p-6 rounded-2xl shadow-md mx-10 mb-10">
+      {/* Resto do código permanece igual */}
+      <section className="bg-card p-6 rounded-2xl shadow-md mb-6">
         <h3 className="text-xl font-semibold mb-4">
           {tipoComercio === "exportacao" ? "Exportações" : "Importações"} de{" "}
-          {estadoA} vs {estadoB} ({ncmResultado?.codigo ?? ""}) (2014–2024)
+          {estadoA} vs {estadoB} (2014–2024)
         </h3>
         <LineChartComponent
-          data={dadosComparacao}
+          data={dadosGrafico}
           xAxisKey="year"
           lines={[
-            { dataKey: "A", stroke: "#9B7EBD", label: estadoA },
-            { dataKey: "B", stroke: "#8471FF", label: estadoB },
+            { dataKey: "A", stroke: "#8b5cf6", label: estadoA },
+            { dataKey: "B", stroke: "#7c3aed", label: estadoB },
           ]}
         />
       </section>
 
-      {/* Cards informativos */}
-      <section className="grid grid-cols-1 md:grid-cols-3 gap-4 mx-10 mb-10">
+      <section className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-10">
         <InfoCard
-          title={`${
-            tipoComercio === "exportacao" ? "Exportações" : "Importações"
-          } totais – ${estadoA}`}
-          value={`US$ ${
-            infoCardA
-              ? tipoComercio === "exportacao"
-                ? infoCardA.exportacoesTotais.toLocaleString()
-                : infoCardA.importacoesTotais?.toLocaleString() ?? "0"
-              : "0"
-          },00`}
+          title={`${tipoComercio === "exportacao" ? "Exportações" : "Importações"} – ${estadoA} (${anoSelecionado})`}
+          value={`${unidade} ${cards.A.toLocaleString()}`}
           icon="📦"
+          className="bg-primary/5"
         />
         <InfoCard
-          title={`${
-            tipoComercio === "exportacao" ? "Exportações" : "Importações"
-          } totais – ${estadoB}`}
-          value={`US$ ${
-            infoCardB
-              ? tipoComercio === "exportacao"
-                ? infoCardB.exportacoesTotais.toLocaleString()
-                : infoCardB.importacoesTotais?.toLocaleString() ?? "0"
-              : "0"
-          },00`}
+          title={`${tipoComercio === "exportacao" ? "Exportações" : "Importações"} – ${estadoB} (${anoSelecionado})`}
+          value={`${unidade} ${cards.B.toLocaleString()}`}
           icon="📦"
-        />
-        <InfoCard
-          title="Produto em destaque"
-          value={infoCardA?.produtoDestaque ?? "-"}
-          icon="🌾"
+          className="bg-primary/5"
         />
       </section>
     </div>

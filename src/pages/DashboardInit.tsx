@@ -1,196 +1,164 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import LineChartComponent from "@/components/charts/LineChartComponent";
-import InfoCard from "@/components/cards/InfoCard";
-import RankingTable from "@/components/tables/RankingTable";
+import { estados } from "@/utils/estados.ts";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import ThemeSwitcher from "@/components/theme-provider/ButtonThemeSwitcher";
-import { Search } from "lucide-react";
-
 import {
-  getDataDashboardProdutos,
-  getDadosExportacaoEstados,
-  getDadosImportacaoEstados,
-} from "@/services/dashboardService";
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+} from "@/components/ui/card";
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+} from "@/components/ui/select";
+import { Button } from "@/components/ui/button";
 
 export default function DashboardInit() {
   const navigate = useNavigate();
-  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedUF, setSelectedUF] = useState("SP");
   const [selectedYear, setSelectedYear] = useState("2024");
+  const [tipo, setTipo] = useState("exportacao");
 
-  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchQuery(event.target.value);
+  const handleRedirect = () => {
+    navigate(`/${tipo}?estado=${selectedUF}&ano=${selectedYear}`);
   };
-
-  const handleYearChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedYear(event.target.value);
-  };
-
-  const dataDashboard = getDataDashboardProdutos();
-  const currentData = dataDashboard.find((d) => d.year === selectedYear);
-  const dadosExportacaoEstados = getDadosExportacaoEstados(selectedYear);
-  const dadosImportacaoEstados = getDadosImportacaoEstados(selectedYear);
 
   return (
-    <div className="flex min-h-screen bg-[var(--color-background)] text-[var(--color-foreground)]">
-      <main className="flex-1 p-10 space-y-8">
-        {/* Título e Navbar */}
-        <div className="flex justify-between items-center mb-6">
-          <div className="-mt-2">
-            <p className="text-sm text-[var(--muted-foreground)]">
-              Pages / Dashboard
+    <div className="flex min-h-screen bg-background text-foreground">
+      <main className="flex-1 p-6 md:p-10 space-y-8">
+        <div className="flex justify-between items-center">
+          <div>
+            <h1 className="text-2xl md:text-4xl font-bold tracking-tight">
+              Dashboard Comercial
+            </h1>
+            <p className="text-sm text-muted-foreground mt-1">
+              Selecione os parâmetros para visualizar os dados
             </p>
-            <h2 className="text-4xl font-bold">Dashboard</h2>
           </div>
-
-          <div className="flex items-center space-x-6 bg-[var(--color-card)] rounded-3xl px-6 py-3 shadow-lg">
-            <Search
-              className="text-[var(--color-muted-foreground)]"
-              size={18}
-            />
-            <input
-              type="text"
-              placeholder="Buscar por estado"
-              value={searchQuery}
-              onChange={handleSearchChange}
-              className="px-4 py-2 bg-transparent rounded-full w-72 text-[var(--color-foreground)] placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]"
-            />
-            <select
-              value={selectedYear}
-              onChange={handleYearChange}
-              className="px-4 py-2 bg-transparent rounded-full border border-gray-300 text-[var(--color-foreground)] placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]"
-            >
-              {Array.from({ length: 11 }, (_, i) => 2014 + i).map((year) => (
-                <option
-                  key={year}
-                  value={year.toString()}
-                  className="text-black dark:text-black"
-                >
-                  {year}
-                </option>
-              ))}
-            </select>
-
-            <button
-              onClick={() => navigate("/importacao")}
-              className="text-[var(--color-primary)] hover:text-[var(--color-primary-light)]"
-            >
-              Importação
-            </button>
-            <button
-              onClick={() => navigate("/exportacao")}
-              className="text-[var(--color-primary)] hover:text-[var(--color-primary-light)]"
-            >
-              Exportação
-            </button>
-            <ThemeSwitcher />
-          </div>
+          <ThemeSwitcher />
         </div>
 
-        {/* Gráfico e Cards principais */}
-        <section className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div className="bg-[var(--color-card)] p-6 rounded-2xl shadow-md">
-            <h3 className="text-lg font-semibold mb-2">
-              Comparação de Produtos - Importação e Exportação
-            </h3>
-            <LineChartComponent
-              data={dataDashboard}
-              xAxisKey="year"
-              lines={[
-                {
-                  dataKey: "soja_import",
-                  stroke: '#d1b3ff',
-                  label: "Soja Importação",
-                },
-                {
-                  dataKey: "soja_export",
-                  stroke: '#b380ff',
-                  label: "Soja Exportação",
-                },
-                {
-                  dataKey: "ferro_import",
-                  stroke: '#944dff',
-                  label: "Ferro Importação",
-                },
-                {
-                  dataKey: "ferro_export",
-                  stroke: '#6600cc',
-                  label: "Ferro Exportação",
-                },
-                {
-                  dataKey: "oleo_import",
-                  stroke: '#4d0099',
-                  label: "Óleo Importação",
-                },
-                {
-                  dataKey: "oleo_export",
-                  stroke: '#330066',
-                  label: "Óleo Exportação",
-                },
-              ]}
-            />
-          </div>
+        <Card className="border-0 shadow-sm">
+          <CardHeader>
+            <CardTitle className="text-lg">Filtros</CardTitle>
+            <CardDescription>
+              Personalize sua análise selecionando estado, ano e tipo de
+              operação
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="flex flex-col md:flex-row md:items-end gap-4 md:gap-6">
+              <div className="flex-1 space-y-2">
+                <label className="text-sm font-medium leading-none">
+                  Estado
+                </label>
+                <Select value={selectedUF} onValueChange={setSelectedUF}>
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Selecione um estado" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {estados.map((estado) => (
+                      <SelectItem key={estado.sigla} value={estado.sigla}>
+                        {estado.nome}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4">
-            <InfoCard
-              title={`Saldo US$ Milhões (${selectedYear})`}
-              value={
-                currentData
-                  ? (
-                      currentData.soja_export +
-                      currentData.ferro_export +
-                      currentData.oleo_export -
-                      currentData.soja_import -
-                      currentData.ferro_import -
-                      currentData.oleo_import
-                    ).toLocaleString("pt-BR")
-                  : "-"
-              }
-              icon="$"
-            />
-            <InfoCard
-              title={`Importações US$ Milhões (${selectedYear})`}
-              value={
-                currentData
-                  ? (
-                      currentData.soja_import +
-                      currentData.ferro_import +
-                      currentData.oleo_import
-                    ).toLocaleString("pt-BR")
-                  : "-"
-              }
-              icon="📥"
-            />
-            <InfoCard
-              title={`Exportações US$ Milhões (${selectedYear})`}
-              value={
-                currentData
-                  ? (
-                      currentData.soja_export +
-                      currentData.ferro_export +
-                      currentData.oleo_export
-                    ).toLocaleString("pt-BR")
-                  : "-"
-              }
-              icon="📤"
-            />
-          </div>
-        </section>
-        {/* Ranking de Importação por Estado */}
-        <section className="bg-[var(--color-card)] p-6 rounded-2xl shadow-md">
-          <RankingTable
-            title={`Ranking por Estado – Importações (${selectedYear})`}
-            data={dadosImportacaoEstados}
-            unit="US$"
-          />
-        </section>
-        {/* Ranking de Exportação por Estado */}
-        <section className="bg-[var(--color-card)] p-6 rounded-2xl shadow-md">
-          <RankingTable
-            title={`Ranking por Estado – Exportações (${selectedYear})`}
-            data={dadosExportacaoEstados}
-            unit="US$"
-          />
-        </section>
+              <div className="flex-1 space-y-2">
+                <label className="text-sm font-medium leading-none">Ano</label>
+                <Select value={selectedYear} onValueChange={setSelectedYear}>
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Selecione um ano" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {Array.from({ length: 11 }, (_, i) => 2014 + i).map(
+                      (ano) => (
+                        <SelectItem key={ano} value={ano.toString()}>
+                          {ano}
+                        </SelectItem>
+                      ),
+                    )}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="flex-1 space-y-2">
+                <label className="text-sm font-medium leading-none">
+                  Tipo de Operação
+                </label>
+                <ToggleGroup
+                  type="single"
+                  value={tipo}
+                  onValueChange={setTipo}
+                  className="grid grid-cols-2 gap-1 p-1 bg-muted rounded-lg"
+                >
+                  <ToggleGroupItem
+                    value="exportacao"
+                    className="data-[state=on]:bg-primary data-[state=on]:text-primary-foreground rounded-md"
+                  >
+                    Exportação
+                  </ToggleGroupItem>
+                  <ToggleGroupItem
+                    value="importacao"
+                    className="data-[state=on]:bg-primary data-[state=on]:text-primary-foreground rounded-md"
+                  >
+                    Importação
+                  </ToggleGroupItem>
+                </ToggleGroup>
+              </div>
+
+              <Button onClick={handleRedirect} className="h-10 md:h-auto">
+                Visualizar Dashboard
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <Card className="hover:shadow-md transition-shadow">
+            <CardHeader>
+              <CardTitle className="text-lg">Exportações</CardTitle>
+              <CardDescription>Dados de comércio exterior</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <p className="text-muted-foreground text-sm">
+                Visualize gráficos e estatísticas sobre exportações brasileiras.
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card className="hover:shadow-md transition-shadow">
+            <CardHeader>
+              <CardTitle className="text-lg">Importações</CardTitle>
+              <CardDescription>Dados de comércio exterior</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <p className="text-muted-foreground text-sm">
+                Analise os principais produtos importados pelo Brasil.
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card className="hover:shadow-md transition-shadow">
+            <CardHeader>
+              <CardTitle className="text-lg">Comparativo</CardTitle>
+              <CardDescription>Análise comparativa</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <p className="text-muted-foreground text-sm">
+                Compare dados entre estados ou períodos diferentes.
+              </p>
+            </CardContent>
+          </Card>
+        </div>
       </main>
     </div>
   );
