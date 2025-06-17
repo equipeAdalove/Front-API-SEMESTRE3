@@ -30,7 +30,8 @@ export default function PieChartComponent({
           paddingAngle={5}
           dataKey="value"
         >
-          {data.map((entry, index) => (
+          //@ts-ignore
+          {data.map((_entry, index) => (
             <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />
           ))}
         </Pie>

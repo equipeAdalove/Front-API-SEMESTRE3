@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import LineChartComponent from "@/components/charts/LineChartComponent";
 import InfoCard from "@/components/cards/InfoCard";
 import ThemeSwitcher from "@/components/theme-provider/ButtonThemeSwitcher";
@@ -73,8 +72,6 @@ const ufMap: Record<string, string> = {
 };
 
 const ComparacoesPage = () => {
-  const navigate = useNavigate();
-
   const [estadoA, setEstadoA] = useState("São Paulo");
   const [estadoB, setEstadoB] = useState("Rio de Janeiro");
   const [anoSelecionado, setAnoSelecionado] = useState(2024);

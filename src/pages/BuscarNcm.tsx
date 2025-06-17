@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { Search } from "lucide-react";
+import { FaEraser } from "react-icons/fa";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import ThemeSwitcher from "@/components/theme-provider/ButtonThemeSwitcher";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -39,16 +40,29 @@ export default function BuscarNcm() {
 
   const [filtros, setFiltros] = useState({
     co_ano: "",
-    co_mes: "",
     sg_uf_ncm: "",
     co_pais: "",
     vl_fob_min: "",
     vl_fob_max: "",
   });
 
+  const resetarFiltros = () => {
+    setFiltros({
+      co_ano: "",
+      sg_uf_ncm: "",
+      co_pais: "",
+      vl_fob_min: "",
+      vl_fob_max: "",
+    });
+    setNcm("");
+    setInfo(null);
+    setTotal(null);
+    setSugestoes([]);
+    setTransacoes([]);
+  };
+
   useEffect(() => {
     carregarPaises().catch(console.error);
-    buscarTransacoes(1);
   }, []);
 
   useEffect(() => {
@@ -69,7 +83,9 @@ export default function BuscarNcm() {
     setFiltros((prev) => ({ ...prev, [name]: value }));
   };
 
-  const buscarTransacoes = async (page = 1) => {
+  const buscarTransacoes = async (page = 1, codigoNCM?: string) => {
+    if (!codigoNCM && !info?.co_ncm) return;
+
     setLoading(true);
     try {
       const filtrosLimpos = Object.fromEntries(
@@ -80,11 +96,8 @@ export default function BuscarNcm() {
         page,
         limit: 15,
         ...filtrosLimpos,
+        co_ncm: codigoNCM || info?.co_ncm,
       };
-
-      if (info?.co_ncm) {
-        params.co_ncm = info.co_ncm;
-      }
 
       const { data } = await axios.get(
         `http://localhost:3000/${tipoTransacao}/filter`,
@@ -111,8 +124,10 @@ export default function BuscarNcm() {
     }
   };
 
-  const buscarNCM = async () => {
-    if (!ncm.match(/^\d{8}$/)) {
+  const buscarNCM = async (codigo?: string) => {
+    const valorNCM = codigo ?? ncm;
+
+    if (!/^[0-9]{8}$/.test(valorNCM)) {
       setError("Digite um código NCM válido (8 dígitos)");
       setInfo(null);
       setTotal(null);
@@ -123,13 +138,14 @@ export default function BuscarNcm() {
       setLoading(true);
       setError("");
       const [infoRes, totalRes] = await Promise.all([
-        axios.get(`http://localhost:3000/ncm/${ncm}/info`),
-        axios.get(`http://localhost:3000/ncm/${ncm}/total`),
+        axios.get(`http://localhost:3000/ncm/${valorNCM}/info`),
+        axios.get(`http://localhost:3000/ncm/${valorNCM}/total`),
       ]);
       setInfo(infoRes.data);
       setTotal(totalRes.data);
       setCurrentPage(1);
-      buscarTransacoes(1);
+      setNcm(valorNCM);
+      buscarTransacoes(1, valorNCM); // ← Buscar dados automaticamente
     } catch {
       setError("NCM não encontrado ou erro na conexão");
       setInfo(null);
@@ -157,21 +173,18 @@ export default function BuscarNcm() {
             onChange={(e) => setNcm(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && buscarNCM()}
           />
-          <Button onClick={buscarNCM}>Buscar NCM</Button>
+          <Button onClick={() => buscarNCM()}>Buscar NCM</Button>
           <ThemeSwitcher />
           {sugestoes.length > 0 && (
-            <div className="absolute top-full left-12 z-10 w-[350px] mt-2 bg-popover border rounded shadow max-h-60 overflow-auto">
+            <div className="absolute top-full left-12 z-10 w-[350px] mt-2 rounded-xl border shadow-lg bg-card text-foreground max-h-60 overflow-auto">
               {sugestoes.map((s) => (
                 <div
                   key={s.co_ncm}
-                  onClick={() => {
-                    setNcm(s.co_ncm);
-                    setSugestoes([]);
-                    buscarNCM();
-                  }}
-                  className="px-4 py-2 hover:bg-accent cursor-pointer"
+                  onClick={() => buscarNCM(s.co_ncm)}
+                  className="px-4 py-2 cursor-pointer hover:bg-accent"
                 >
-                  <strong>{s.co_ncm}</strong> – {s.no_ncm_por}
+                  <span className="font-semibold">{s.co_ncm}</span> –{" "}
+                  {s.no_ncm_por}
                 </div>
               ))}
             </div>
@@ -188,177 +201,194 @@ export default function BuscarNcm() {
 
       <div className="space-y-6">
         {info && (
-          <Card>
-            <CardHeader>
-              <CardTitle>Informações Básicas</CardTitle>
-            </CardHeader>
-            <CardContent className="grid grid-cols-2 gap-4">
-              <div>
-                <p className="text-muted-foreground">Código NCM</p>
-                <p className="text-lg font-semibold">{info.co_ncm}</p>
-              </div>
-              <div>
-                <p className="text-muted-foreground">Descrição</p>
-                <p className="text-lg font-semibold">{info.descricao}</p>
-              </div>
-            </CardContent>
-          </Card>
-        )}
+          <>
+            <Card>
+              <CardHeader>
+                <CardTitle>Informações Básicas</CardTitle>
+              </CardHeader>
+              <CardContent className="grid grid-cols-2 gap-4">
+                <div>
+                  <p className="text-muted-foreground">Código NCM</p>
+                  <p className="text-lg font-semibold">{info.co_ncm}</p>
+                </div>
+                <div>
+                  <p className="text-muted-foreground">Descrição</p>
+                  <p className="text-lg font-semibold">{info.descricao}</p>
+                </div>
+              </CardContent>
+            </Card>
 
-        {total && (
-          <Card>
-            <CardHeader>
-              <CardTitle>Valores Totais</CardTitle>
-            </CardHeader>
-            <CardContent className="grid grid-cols-3 gap-4">
-              <div>
-                <p className="text-muted-foreground">FOB Exportação</p>
-                <p className="text-2xl font-bold">
-                  ${parseFloat(total.vl_fob_exp || "0").toLocaleString("pt-BR")}
-                </p>
-              </div>
-              <div>
-                <p className="text-muted-foreground">FOB Importação</p>
-                <p className="text-2xl font-bold">
-                  ${parseFloat(total.vl_fob_imp || "0").toLocaleString("pt-BR")}
-                </p>
-              </div>
-              <div>
-                <p className="text-muted-foreground">Valor Agregado</p>
-                <p className="text-2xl font-bold">
-                  $
-                  {parseFloat(total.valor_agregado || "0").toLocaleString(
-                    "pt-BR",
-                  )}
-                </p>
-              </div>
-            </CardContent>
-          </Card>
-        )}
+            {total && (
+              <Card>
+                <CardHeader>
+                  <CardTitle>Valores Totais</CardTitle>
+                </CardHeader>
+                <CardContent className="grid grid-cols-3 gap-4">
+                  <div>
+                    <p className="text-muted-foreground">FOB Exportação</p>
+                    <p className="text-2xl font-bold">
+                      $
+                      {parseFloat(total.vl_fob_exp || "0").toLocaleString(
+                        "pt-BR",
+                      )}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-muted-foreground">FOB Importação</p>
+                    <p className="text-2xl font-bold">
+                      $
+                      {parseFloat(total.vl_fob_imp || "0").toLocaleString(
+                        "pt-BR",
+                      )}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-muted-foreground">Valor Agregado</p>
+                    <p className="text-2xl font-bold">
+                      $
+                      {parseFloat(total.valor_agregado || "0").toLocaleString(
+                        "pt-BR",
+                      )}
+                    </p>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
 
-        <Tabs
-          defaultValue="exportacao"
-          onValueChange={(v) => {
-            setTipoTransacao(v as any);
-            setCurrentPage(1);
-            buscarTransacoes(1);
-          }}
-        >
-          <TabsList className="grid grid-cols-2 w-[400px]">
-            <TabsTrigger value="exportacao">Exportação</TabsTrigger>
-            <TabsTrigger value="importacao">Importação</TabsTrigger>
-          </TabsList>
-          <TabsContent value="exportacao" />
-          <TabsContent value="importacao" />
-        </Tabs>
-
-        <Card>
-          <CardHeader>
-            <CardTitle>Filtros</CardTitle>
-          </CardHeader>
-          <CardContent className="grid grid-cols-6 gap-4">
-            <Select onValueChange={(val) => handleFiltroChange("co_ano", val)}>
-              <SelectTrigger>
-                <SelectValue placeholder="Ano" />
-              </SelectTrigger>
-              <SelectContent>
-                {[...Array(11)].map((_, i) => (
-                  <SelectItem key={i} value={(2014 + i).toString()}>
-                    {2014 + i}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-
-            <Select onValueChange={(val) => handleFiltroChange("co_mes", val)}>
-              <SelectTrigger>
-                <SelectValue placeholder="Mês" />
-              </SelectTrigger>
-              <SelectContent>
-                {[...Array(12)].map((_, i) => (
-                  <SelectItem key={i + 1} value={(i + 1).toString()}>
-                    {i + 1}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-
-            <Select
-              onValueChange={(val) => handleFiltroChange("sg_uf_ncm", val)}
+            <Tabs
+              defaultValue="exportacao"
+              onValueChange={(v) => {
+                setTipoTransacao(v as any);
+                setCurrentPage(1);
+                buscarTransacoes(1);
+              }}
             >
-              <SelectTrigger>
-                <SelectValue placeholder="UF" />
-              </SelectTrigger>
-              <SelectContent>
-                {[
-                  "AC",
-                  "AL",
-                  "AP",
-                  "AM",
-                  "BA",
-                  "CE",
-                  "DF",
-                  "ES",
-                  "GO",
-                  "MA",
-                  "MT",
-                  "MS",
-                  "MG",
-                  "PA",
-                  "PB",
-                  "PR",
-                  "PE",
-                  "PI",
-                  "RJ",
-                  "RN",
-                  "RS",
-                  "RO",
-                  "RR",
-                  "SC",
-                  "SP",
-                  "SE",
-                  "TO",
-                ].map((uf) => (
-                  <SelectItem key={uf} value={uf}>
-                    {uf}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+              <TabsList className="grid grid-cols-2 w-[400px]">
+                <TabsTrigger value="exportacao">Exportação</TabsTrigger>
+                <TabsTrigger value="importacao">Importação</TabsTrigger>
+              </TabsList>
+              <TabsContent value="exportacao" />
+              <TabsContent value="importacao" />
+            </Tabs>
 
-            <Input
-              type="text"
-              name="co_pais"
-              placeholder="Código País"
-              onChange={(e) => handleFiltroChange("co_pais", e.target.value)}
-            />
-            <Input
-              type="number"
-              name="vl_fob_min"
-              placeholder="FOB Mín"
-              onChange={(e) => handleFiltroChange("vl_fob_min", e.target.value)}
-            />
-            <Input
-              type="number"
-              name="vl_fob_max"
-              placeholder="FOB Máx"
-              onChange={(e) => handleFiltroChange("vl_fob_max", e.target.value)}
-            />
-          </CardContent>
-          <div className="px-6 pb-4">
-            <Button onClick={() => buscarTransacoes(1)}>Aplicar Filtros</Button>
-          </div>
-        </Card>
+            <Card className="border rounded-lg shadow-sm">
+              <CardHeader className="border-b p-4">
+                <div className="flex items-center justify-between">
+                  <CardTitle className="text-lg font-semibold">
+                    Filtros
+                  </CardTitle>
+                  <div className="flex items-center gap-2">
+                    <Button onClick={() => buscarTransacoes(1)}>
+                      Aplicar Filtros
+                    </Button>
+                    <Button
+                      variant="outline"
+                      onClick={resetarFiltros}
+                      className="flex items-center gap-2"
+                    >
+                      <FaEraser size={14} /> Limpar
+                    </Button>
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent className="p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-3">
+                <Select
+                  value={filtros.co_ano}
+                  onValueChange={(val) => handleFiltroChange("co_ano", val)}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Ano" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {Array.from({ length: 11 }, (_, i) =>
+                      (2014 + i).toString(),
+                    ).map((y) => (
+                      <SelectItem key={y} value={y}>
+                        {y}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <Select
+                  value={filtros.sg_uf_ncm}
+                  onValueChange={(val) => handleFiltroChange("sg_uf_ncm", val)}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="UF" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {[
+                      "AC",
+                      "AL",
+                      "AP",
+                      "AM",
+                      "BA",
+                      "CE",
+                      "DF",
+                      "ES",
+                      "GO",
+                      "MA",
+                      "MT",
+                      "MS",
+                      "MG",
+                      "PA",
+                      "PB",
+                      "PR",
+                      "PE",
+                      "PI",
+                      "RJ",
+                      "RN",
+                      "RS",
+                      "RO",
+                      "RR",
+                      "SC",
+                      "SP",
+                      "SE",
+                      "TO",
+                    ].map((uf) => (
+                      <SelectItem key={uf} value={uf}>
+                        {uf}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <Input
+                  value={filtros.co_pais}
+                  onChange={(e) =>
+                    handleFiltroChange("co_pais", e.target.value)
+                  }
+                  placeholder="Código País"
+                />
+                <Input
+                  value={filtros.vl_fob_min}
+                  type="number"
+                  onChange={(e) =>
+                    handleFiltroChange("vl_fob_min", e.target.value)
+                  }
+                  placeholder="FOB Mín"
+                />
+                <Input
+                  value={filtros.vl_fob_max}
+                  type="number"
+                  onChange={(e) =>
+                    handleFiltroChange("vl_fob_max", e.target.value)
+                  }
+                  placeholder="FOB Máx"
+                />
+              </CardContent>
+            </Card>
 
-        <TransacoesTable
-          transacoes={transacoes}
-          tipo={tipoTransacao}
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={(page) => buscarTransacoes(page)}
-          onSelect={setSelectedTransacao}
-          selectedTransacao={selectedTransacao}
-        />
+            <TransacoesTable
+              transacoes={transacoes}
+              tipo={tipoTransacao}
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={(page) => buscarTransacoes(page)}
+              onSelect={setSelectedTransacao}
+              selectedTransacao={selectedTransacao}
+            />
+          </>
+        )}
       </div>
     </main>
   );
